@@ -1,5 +1,5 @@
 {
-  "name": "reclameli",
+  "name": "saldoaudit",
   "version": "0.1.0",
   "description": "Motor determinístico de auditoría y recupero de fondos en Mercado Libre Argentina",
   "main": "src/engine.js",
