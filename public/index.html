@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SaldoAudit — Auditoría de Devoluciones y Fondos Retenidos en Mercado Libre</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Crect width='32' height='32' rx='8' fill='%231D4ED8'/%3E%3Ccircle cx='14.5' cy='14.5' r='8.5' stroke='%23ffffff' stroke-width='2.2'/%3E%3Cpath d='M21 21L27 27' stroke='%2338BDF8' stroke-width='3' stroke-linecap='round'/%3E%3Crect x='10.5' y='15' width='2.2' height='4' rx='1' fill='%2393C5FD'/%3E%3Crect x='13.5' y='12' width='2.2' height='7' rx='1' fill='%23ffffff'/%3E%3Crect x='16.5' y='9.5' width='2.2' height='9.5' rx='1' fill='%2334D399'/%3E%3C/svg%3E">
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- SheetJS para leer y exportar .xlsx y .xls en el navegador sin dependencias de servidor -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     .dropzone-active {
-      border-color: #2563eb !important;
+      border-color: #1d4ed8 !important;
       background-color: #eff6ff !important;
     }
     /* Reglas obligatorias para dialog nativo (modern-web-guidance) */
@@ -28,21 +29,32 @@
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-10">
     
-    <!-- Header Ejecutivo -->
+    <!-- Header Ejecutivo con Identidad "Radar Forense" -->
     <header class="mb-6 md:mb-8 border-b border-slate-200 pb-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 mb-2.5">
-          <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-          SaldoAudit Beta — Auditoría Forense para Sellers
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Versión Beta — Motor de Auditoría Forense para Sellers
         </div>
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg shadow-sm">
-            S
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center shadow-md shrink-0" style="background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);">
+            <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
+              <path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+              <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/>
+              <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
+              <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/>
+            </svg>
           </div>
-          <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">SaldoAudit</h1>
+          <div>
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight leading-none">
+              <span class="text-slate-900">Saldo</span><span class="text-blue-700">Audit</span>
+            </h1>
+            <span class="text-xs font-medium text-slate-400 tracking-wide">Conciliación de Devoluciones &bull; Mercado Libre Argentina</span>
+          </div>
         </div>
-        <p class="text-sm text-slate-600 mt-1.5 max-w-2xl">
-          Cruza el reporte oficial de ventas de Mercado Libre Argentina con los plazos legales de reclamo (72 hs post-entrega, fecha prometida y caducidad de 60 días) para recuperar fondos y mercadería no indemnizada.
+        <p class="text-sm text-slate-600 mt-2.5 max-w-2xl">
+          Cruza el reporte oficial de ventas con los plazos legales de reclamo (72 hs post-entrega, fecha prometida y caducidad de 60 días) para recuperar fondos y mercadería no indemnizada.
         </p>
       </div>
       <div class="flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end gap-2 shrink-0">
