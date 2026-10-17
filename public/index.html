@@ -3,33 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SaldoAudit — Auditor de Devoluciones y Envíos (Mercado Libre)</title>
+  <title>SaldoAudit — Auditoría de Devoluciones y Fondos Retenidos en Mercado Libre</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- SheetJS para leer .xlsx y .xls en el navegador sin dependencias de servidor -->
+  <!-- SheetJS para leer y exportar .xlsx y .xls en el navegador sin dependencias de servidor -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     .dropzone-active {
       border-color: #2563eb !important;
       background-color: #eff6ff !important;
     }
+    /* Reglas obligatorias para dialog nativo (modern-web-guidance) */
+    dialog:modal {
+      overscroll-behavior: contain;
+    }
+    dialog::backdrop {
+      overflow: hidden;
+      overscroll-behavior: contain;
+      background-color: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(4px);
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<body class="bg-slate-50 text-slate-800 min-h-screen overflow-x-hidden antialiased">
 
-  <div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-10">
     
-    <!-- Header principal -->
-    <header class="mb-8 border-b border-slate-200 pb-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <!-- Header Ejecutivo -->
+    <header class="mb-6 md:mb-8 border-b border-slate-200 pb-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 mb-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          SaldoAudit Engine — Auditor Forense Oficial
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 mb-2.5">
+          <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+          SaldoAudit Beta — Auditoría Forense para Sellers
         </div>
-        <h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">SaldoAudit</h1>
-        <p class="text-sm text-slate-500 mt-1">Detección de fondos retenidos, devoluciones demoradas y siniestros no indemnizados según los plazos reglamentarios de Mercado Libre Argentina.</p>
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+            S
+          </div>
+          <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">SaldoAudit</h1>
+        </div>
+        <p class="text-sm text-slate-600 mt-1.5 max-w-2xl">
+          Cruza el reporte oficial de ventas de Mercado Libre Argentina con los plazos legales de reclamo (72 hs post-entrega, fecha prometida y caducidad de 60 días) para recuperar fondos y mercadería no indemnizada.
+        </p>
       </div>
-      <div class="text-xs text-slate-400 font-mono bg-white px-3 py-2 rounded-lg border border-slate-200 shadow-sm">
-        🔒 Privacidad: Procesamiento 100% local en tu navegador. Tus datos no viajan a ningún servidor.
+      <div class="flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end gap-2 shrink-0">
+        <div class="text-xs text-slate-600 font-medium bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2">
+          <span class="text-emerald-600 text-base">🔒</span>
+          <span><strong>100% Local y Privado:</strong> Se procesa en tu navegador. No sube datos ni pide claves.</span>
+        </div>
       </div>
     </header>
 
@@ -37,119 +57,150 @@
     <section class="mb-8">
       <div 
         id="dropzone" 
-        class="border-2 border-dashed border-slate-300 rounded-2xl p-8 md:p-12 text-center bg-white hover:border-blue-500 hover:bg-slate-50/50 transition-all cursor-pointer shadow-sm"
+        class="border-2 border-dashed border-slate-300 rounded-2xl p-6 sm:p-8 md:p-10 text-center bg-white hover:border-blue-500 hover:bg-slate-50/50 transition-all cursor-pointer shadow-sm"
       >
         <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden">
         
-        <div class="w-16 h-16 mx-auto mb-4 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-14 h-14 mx-auto mb-3.5 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center border border-blue-100">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
           </svg>
         </div>
 
-        <h3 class="text-lg font-semibold text-slate-800 mb-1">Arrastrá acá tu reporte de ventas o devoluciones</h3>
-        <p class="text-sm text-slate-500 mb-5">Soporta <span class="font-medium text-slate-700">.xlsx, .xls y .csv</span> oficiales de Mercado Libre (salta automáticamente banners y detecta encabezados reales)</p>
+        <h2 class="text-base sm:text-lg font-bold text-slate-800 mb-1">Arrastrá acá el reporte de Ventas de Mercado Libre (últimos 60 días)</h2>
+        <p class="text-xs sm:text-sm text-slate-500 mb-5 max-w-xl mx-auto">
+          Soporta archivos <span class="font-semibold text-slate-700">.xlsx, .xls y .csv</span> descargados desde <em>Ventas &rarr; Exportar</em>. Detecta encabezados automáticamente y procesa fechas en español.
+        </p>
 
-        <div class="flex flex-wrap items-center justify-center gap-3">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 max-w-md sm:max-w-none mx-auto">
           <button 
             type="button" 
             onclick="document.getElementById('fileInput').click()" 
-            class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition shadow-sm hover:shadow"
+            class="min-h-[44px] px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition shadow-sm hover:shadow flex items-center justify-center gap-2"
           >
-            Seleccionar archivo
+            <span>📤</span> Seleccionar reporte Excel / CSV
           </button>
           <button 
             type="button" 
             id="btnSample" 
-            class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition border border-slate-200"
+            class="min-h-[44px] px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition border border-slate-200 flex items-center justify-center gap-2"
           >
-            📁 Probar con archivo de muestra
+            <span>🧪</span> Cargar demo con casos reales simulados
           </button>
         </div>
 
-        <div id="fileInfo" class="mt-4 text-xs font-mono text-slate-500 hidden"></div>
+        <div id="fileInfo" class="mt-4 text-xs font-mono text-blue-700 bg-blue-50/80 inline-block px-3 py-1.5 rounded-lg border border-blue-100 hidden"></div>
 
         <!-- Reglas auditadas según normativa MeLi -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-6 text-left border-t border-slate-100 pt-5">
           <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/80">
             <div class="text-xs font-bold text-rose-700 flex items-center gap-1.5 mb-1">
-              <span>🚨</span> Alerta Crítica de 72 Horas
+              <span>🚨</span> 1. Ventana Crítica de 72 Horas
             </div>
-            <p class="text-[11px] text-slate-500 leading-relaxed">
-              Detecta devoluciones entregadas hace ≤3 días para reportar roturas o paquete vacío antes de que MeLi libere el dinero al comprador.
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Detecta devoluciones entregadas hace ≤3 días corridos para reclamar roturas, faltantes o cajas vacías antes de que MeLi libere el dinero.
             </p>
           </div>
           <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/80">
             <div class="text-xs font-bold text-blue-700 flex items-center gap-1.5 mb-1">
-              <span>⏱️</span> Control de Fecha Prometida
+              <span>⏱️</span> 2. Control de Fecha Prometida
             </div>
-            <p class="text-[11px] text-slate-500 leading-relaxed">
-              Prioriza la fecha de arribo comprometida por el correo por fila para intimar a soporte sin riesgo de desestimación.
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Evalúa la fecha comprometida de entrega del correo y detecta devoluciones congeladas en tránsito por más de 15 días.
             </p>
           </div>
           <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/80">
             <div class="text-xs font-bold text-amber-700 flex items-center gap-1.5 mb-1">
-              <span>🛡️</span> Límite Máximo de 60 Días
+              <span>🛡️</span> 3. Caducidad de 60 Días y Full
             </div>
-            <p class="text-[11px] text-slate-500 leading-relaxed">
-              Monitorea el plazo perentorio de caducidad desde el despacho de la devolución para exigir la indemnización por extravío o demora.
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Alerta siniestros de correo o faltantes en depósito Full antes de que se cumpla el plazo límite de 60 días donde se pierde el derecho a cobro.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Resumen de Métricas (KPIs) -->
+    <!-- Resumen de Métricas y Resultados -->
     <section id="resultsSection" class="hidden space-y-6">
       
+      <!-- Barra de Herramientas para el Auditor / Consultor -->
+      <div class="bg-slate-900 text-white p-4 sm:p-5 rounded-2xl shadow-md flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400 block">Panel de Entrega de Diagnóstico</span>
+          <h3 class="text-sm sm:text-base font-bold mt-0.5">Compartí o descargá el resultado de esta auditoría en 1 clic</h3>
+        </div>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+          <button 
+            type="button"
+            id="btnCopySummary"
+            class="min-h-[44px] px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-semibold rounded-xl transition flex items-center justify-center gap-2 shadow-sm"
+          >
+            <span>📲</span> Copiar Resumen para WhatsApp / LinkedIn
+          </button>
+          <button 
+            type="button"
+            id="btnExportExcel"
+            class="min-h-[44px] px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold rounded-xl transition border border-white/15 flex items-center justify-center gap-2"
+          >
+            <span>📥</span> Descargar Dossier en Excel (.xlsx)
+          </button>
+        </div>
+      </div>
+
+      <!-- KPIs -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- KPI 1: Dinero Recuperable -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Monto Total en Riesgo</span>
-          <div id="kpiAmount" class="text-2xl md:text-3xl font-bold text-emerald-600 mt-1">$ 0,00 ARS</div>
-          <span class="text-xs text-slate-500 mt-1 block">Pasibles de indemnización inmediata</span>
+          <div id="kpiAmount" class="text-2xl md:text-3xl font-extrabold text-emerald-600 mt-1">$ 0,00</div>
+          <span class="text-xs text-slate-500 mt-1 block">En órdenes con anomalías detectadas</span>
         </div>
 
         <!-- KPI 2: Casos Críticos -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Vencimiento Inminente</span>
-          <div id="kpiCritical" class="text-2xl md:text-3xl font-bold text-rose-600 mt-1">0 casos</div>
-          <span class="text-xs text-rose-500 mt-1 block font-medium">🚨 < 10 días para el límite de 60d</span>
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Acción Inmediata</span>
+          <div id="kpiCritical" class="text-2xl md:text-3xl font-extrabold text-rose-600 mt-1">0 casos</div>
+          <span class="text-xs text-rose-600 mt-1 block font-medium">🚨 Ventana 72hs o &lt;10 días de caducar</span>
         </div>
 
         <!-- KPI 3: Inconsistencias -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Órdenes Afectadas</span>
-          <div id="kpiDiscrepancies" class="text-2xl md:text-3xl font-bold text-slate-900 mt-1">0</div>
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Órdenes para Reclamar</span>
+          <div id="kpiDiscrepancies" class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-1">0</div>
           <span id="kpiTotalAudited" class="text-xs text-slate-500 mt-1 block">de 0 ventas analizadas</span>
         </div>
 
         <!-- KPI 4: Ventana de Cobertura -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Límite Máximo</span>
-          <div class="text-2xl md:text-3xl font-bold text-amber-600 mt-1">60 días</div>
-          <span class="text-xs text-slate-500 mt-1 block">Caducidad de MeLi desde la devolución</span>
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Plazo Reglamentario</span>
+          <div class="text-2xl md:text-3xl font-extrabold text-amber-600 mt-1">60 días</div>
+          <span class="text-xs text-slate-500 mt-1 block">Caducidad máxima de Mercado Libre</span>
         </div>
       </div>
 
-      <!-- Tabla de Inconsistencias Detectadas -->
+      <!-- Listado de Inconsistencias Detectadas -->
       <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+        <div class="px-5 sm:px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2">
           <h2 class="text-base font-bold text-slate-900">Expedientes con Causa de Reclamo Detectada</h2>
-          <span id="badgeCounter" class="text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded-full font-semibold"></span>
+          <span id="badgeCounter" class="text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded-full font-semibold border border-blue-100"></span>
         </div>
 
-        <div class="overflow-x-auto">
+        <!-- Vista Mobile (Cards ergonómicas 1 columna en < md) -->
+        <div id="discrepanciesMobileCards" class="md:hidden divide-y divide-slate-100"></div>
+
+        <!-- Vista Desktop (Tabla ejecutiva en >= md) -->
+        <div class="hidden md:block overflow-x-auto">
           <table class="w-full text-left text-sm">
             <thead class="bg-slate-50/80 text-xs text-slate-500 uppercase border-b border-slate-100 font-semibold">
               <tr>
                 <th class="px-6 py-3.5">Orden / Tracking</th>
                 <th class="px-6 py-3.5">Producto</th>
                 <th class="px-6 py-3.5">Monto (ARS)</th>
-                <th class="px-6 py-3.5">Inactividad</th>
-                <th class="px-6 py-3.5">Vencimiento / Plazo MeLi</th>
-                <th class="px-6 py-3.5">Tipo de Incidencia</th>
-                <th class="px-6 py-3.5 text-right">Acción</th>
+                <th class="px-6 py-3.5">Estado / Inactividad</th>
+                <th class="px-6 py-3.5">Plazo MeLi</th>
+                <th class="px-6 py-3.5">Incidencia</th>
+                <th class="px-6 py-3.5 text-right">Dossier</th>
               </tr>
             </thead>
             <tbody id="discrepanciesTable" class="divide-y divide-slate-100">
@@ -161,32 +212,41 @@
 
     </section>
 
-    <!-- Modal / Drawer para ver el Dossier Completo -->
-    <div id="dossierModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-      <div class="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
-        <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+    <!-- Dialog Nativo para ver el Dossier Completo -->
+    <dialog id="dossierModal" closedby="any" aria-labelledby="modalTitle" class="rounded-2xl shadow-2xl max-w-2xl w-[calc(100%-1.5rem)] sm:w-full max-h-[90vh] overflow-y-auto p-0 bg-white text-slate-800 border border-slate-200 m-auto">
+      <div class="p-5 sm:p-6 relative">
+        <button 
+          type="button"
+          onclick="closeModal()" 
+          aria-label="Cerrar ventana"
+          class="min-w-[44px] min-h-[44px] absolute top-3 right-3 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl flex items-center justify-center text-2xl font-bold transition"
+        >&times;</button>
         
-        <div class="mb-4">
-          <span id="modalDiscrepancyType" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800"></span>
+        <div class="mb-4 pr-10">
+          <span id="modalDiscrepancyType" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 inline-block"></span>
           <h3 id="modalTitle" class="text-xl font-bold text-slate-900 mt-2">Dossier de Reclamo Fáctico</h3>
-          <p id="modalSubtitle" class="text-xs text-slate-500 font-mono mt-0.5"></p>
+          <p id="modalSubtitle" class="text-xs text-slate-500 font-mono mt-0.5 break-all"></p>
         </div>
 
         <!-- Recomendación Operativa de Contacto -->
         <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4 text-xs text-blue-900 flex items-start gap-3">
-          <span class="text-lg">💡</span>
+          <span class="text-lg shrink-0">💡</span>
           <div>
-            <span class="font-bold">Recomendación operativa para contactar soporte:</span>
-            <p class="mt-1">Si el bot responde que el paquete continúa en viaje y pregunta <em>"¿Te sirvió esta información?"</em>, probá pulsar <strong class="underline font-bold text-blue-950">"NO"</strong> para intentar habilitar la atención con un operador humano o solicitar llamada telefónica.</p>
+            <span class="font-bold">Tip operativo para superar el bot de soporte:</span>
+            <p class="mt-1 leading-relaxed">Si el asistente automático responde que el paquete continúa en viaje y pregunta <em>"¿Te sirvió esta información?"</em>, pulsá <strong class="underline font-bold text-blue-950">"NO"</strong> para habilitar el contacto con un representante humano o pedir llamado telefónico.</p>
           </div>
         </div>
 
         <!-- Texto Copiable del Dossier -->
         <div class="mb-4">
-          <div class="flex items-center justify-between mb-1.5">
-            <label class="text-xs font-semibold text-slate-700 uppercase">Texto listo para pegar en el reclamo:</label>
-            <button id="btnCopyDossier" class="text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 font-semibold px-3 py-1 rounded-lg transition flex items-center gap-1">
-              📋 Copiar Texto
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+            <label for="modalDossierText" class="text-xs font-semibold text-slate-700 uppercase">Argumento técnico para pegar en el chat de soporte:</label>
+            <button 
+              type="button"
+              id="btnCopyDossier" 
+              class="min-h-[44px] sm:min-h-[36px] text-xs bg-blue-600 text-white hover:bg-blue-700 font-semibold px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-sm"
+            >
+              📋 Copiar Argumento
             </button>
           </div>
           <textarea id="modalDossierText" readonly rows="5" class="w-full text-xs font-mono bg-slate-50 border border-slate-200 rounded-xl p-3 text-slate-700 focus:outline-none"></textarea>
@@ -194,20 +254,24 @@
 
         <!-- Ruta Paso a Paso -->
         <div class="mb-5">
-          <label class="text-xs font-semibold text-slate-700 uppercase block mb-1.5">Ruta de navegación exacta en MeLi:</label>
-          <div id="modalGuide" class="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-xl p-3 whitespace-pre-line leading-relaxed font-mono"></div>
+          <span class="text-xs font-semibold text-slate-700 uppercase block mb-1.5">Ruta paso a paso en Mercado Libre:</span>
+          <div id="modalGuide" class="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-xl p-3.5 whitespace-pre-line leading-relaxed font-mono"></div>
         </div>
 
-        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
-          <a id="modalClaimLink" href="#" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1">
-            Abrir orden en Mercado Libre &nearr;
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-slate-100">
+          <a id="modalClaimLink" href="#" target="_blank" rel="noopener noreferrer" class="min-h-[44px] px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5">
+            Abrir detalle de la venta en Mercado Libre &nearr;
           </a>
-          <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+          <button 
+            type="button"
+            onclick="closeModal()" 
+            class="min-h-[44px] px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition"
+          >
             Cerrar
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
 
   </div>
 
@@ -223,21 +287,106 @@
       refundAmount: ["anulaciones y reembolsos (ars)"],
       openClaim: ["reclamo abierto"],
       closedClaim: ["reclamo cerrado"],
-      returnStatus: ["estado del envío de la devolución", "estado de devolución", "return_status", "subestado"],
-      returnDate: ["fecha en camino", "fecha de despacho de devolución", "fecha de devolución", "fecha envio", "return_date", "fecha de admisión", "fecha"],
+      returnStatus: ["estado del envío de la devolución", "estado de devolución", "return_status"],
+      returnDate: ["fecha en camino", "fecha de despacho de devolución", "fecha de devolución", "fecha envio", "return_date", "fecha de admisión", "fecha de venta", "fecha"],
       returnDeliveredDate: ["fecha entregado", "fecha de entrega de devolución", "fecha entregada", "fecha recibido"],
       dueDate: ["fecha prometida", "fecha límite", "fecha limite", "fecha estimada de entrega", "fecha estimada", "due_date", "vencimiento", "fecha compromiso", "plazo de reclamo"],
       isFull: ["tipo de logística", "logística", "full", "es_full", "canal de envío", "forma de entrega"]
     };
 
+    const SPANISH_MONTHS = {
+      enero: 0, ene: 0,
+      febrero: 1, feb: 1,
+      marzo: 2, mar: 2,
+      abril: 3, abr: 3,
+      mayo: 4, may: 4,
+      junio: 5, jun: 5,
+      julio: 6, jul: 6,
+      agosto: 7, ago: 7,
+      septiembre: 8, setiembre: 8, sep: 8, set: 8,
+      octubre: 9, oct: 9,
+      noviembre: 10, nov: 10,
+      diciembre: 11, dic: 11
+    };
+
+    let currentAuditSummary = null;
     let currentAuditRecords = [];
+    let currentFileName = "Reporte_MeLi";
+
+    // Parser universal de fechas de Mercado Libre Argentina (Español, DD/MM/YYYY, Serial Excel e ISO)
+    function parseMeliDate(rawVal) {
+      if (rawVal === null || rawVal === undefined || rawVal === '') return null;
+
+      // 1. Si ya es objeto Date
+      if (rawVal instanceof Date && !isNaN(rawVal.getTime())) return rawVal;
+
+      // 2. Si es un número serial de Excel (ej: 45910)
+      if (typeof rawVal === 'number' && rawVal > 25569 && rawVal < 70000) {
+        const utcDays = Math.floor(rawVal - 25569);
+        return new Date(utcDays * 86400 * 1000);
+      }
+
+      const str = String(rawVal).trim().toLowerCase();
+      if (!str) return null;
+
+      // 3. Formato Español de MeLi: "14 de septiembre de 2026 15:20 hs." o "5 de oct de 2026"
+      const esMatch = str.match(/(\d{1,2})\s+de\s+([a-záéíóú]+)(?:\s+de|\s+del?)?\s+(\d{4})/);
+      if (esMatch) {
+        const day = parseInt(esMatch[1], 10);
+        const monthName = esMatch[2].normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const year = parseInt(esMatch[3], 10);
+        if (SPANISH_MONTHS[monthName] !== undefined) {
+          return new Date(year, SPANISH_MONTHS[monthName], day);
+        }
+      }
+
+      // 4. Formato DD/MM/YYYY o DD-MM-YYYY (con o sin hora)
+      const dmyMatch = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+      if (dmyMatch) {
+        const day = parseInt(dmyMatch[1], 10);
+        const month = parseInt(dmyMatch[2], 10) - 1;
+        let year = parseInt(dmyMatch[3], 10);
+        if (year < 100) year += 2000;
+        const d = new Date(year, month, day);
+        if (!isNaN(d.getTime())) return d;
+      }
+
+      // 5. Formato ISO YYYY-MM-DD
+      const isoMatch = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+      if (isoMatch) {
+        const d = new Date(parseInt(isoMatch[1], 10), parseInt(isoMatch[2], 10) - 1, parseInt(isoMatch[3], 10));
+        if (!isNaN(d.getTime())) return d;
+      }
+
+      // 6. Fallback nativo
+      const parsed = new Date(rawVal);
+      return !isNaN(parsed.getTime()) ? parsed : null;
+    }
+
+    // Parseo seguro de moneda argentina ($ 115.000,50 o 115000.50)
+    function parseMeliAmount(rawVal) {
+      if (typeof rawVal === 'number') return Math.abs(rawVal);
+      if (!rawVal) return 0;
+      let str = String(rawVal).replace(/\$/g, '').replace(/ars/gi, '').trim();
+      // Si tiene puntos de miles y coma decimal (ej. 115.000,50 o 115.000)
+      if (str.includes('.') && str.includes(',')) {
+        str = str.replace(/\./g, '').replace(',', '.');
+      } else if (str.includes('.') && /\.\d{3}$/.test(str)) {
+        str = str.replace(/\./g, '');
+      } else if (str.includes(',')) {
+        str = str.replace(',', '.');
+      }
+      return Math.abs(parseFloat(str) || 0);
+    }
 
     // Helper para buscar columnas flexibles
     function findKey(row, aliases) {
       const keys = Object.keys(row);
       for (const alias of aliases) {
         const found = keys.find(k => k.trim().toLowerCase() === alias.toLowerCase());
-        if (found) return row[found];
+        if (found && row[found] !== '' && row[found] !== null && row[found] !== undefined) {
+          return row[found];
+        }
       }
       return null;
     }
@@ -286,81 +435,84 @@
       ].join('\n');
     }
 
-    // Motor de Auditoría
+    // Motor de Auditoría Determinístico
     function auditRecords(records) {
       const discrepancies = [];
       const refDate = new Date();
 
       for (const row of records) {
-        const orderId = String(findKey(row, COLUMN_ALIASES.orderId) || 'S/D');
-        const tracking = String(findKey(row, COLUMN_ALIASES.tracking) || 'S/D');
-        const itemTitle = String(findKey(row, COLUMN_ALIASES.itemTitle) || 'Producto sin título');
+        const orderId = String(findKey(row, COLUMN_ALIASES.orderId) || 'S/D').trim();
+        if (!orderId || orderId === 'S/D') continue;
 
-        let amount = 0;
+        const tracking = String(findKey(row, COLUMN_ALIASES.tracking) || 'S/D').trim();
+        const itemTitle = String(findKey(row, COLUMN_ALIASES.itemTitle) || 'Producto sin título').trim();
+
         const rawAmount = findKey(row, COLUMN_ALIASES.amount);
-        if (rawAmount) {
-          const cleaned = String(rawAmount).replace(/\$/g, '').replace(/\./g, '').replace(/,/g, '.').trim();
-          amount = parseFloat(cleaned) || 0;
+        const rawRefund = findKey(row, COLUMN_ALIASES.refundAmount);
+        let amount = parseMeliAmount(rawAmount);
+        if (amount === 0 && rawRefund) {
+          amount = parseMeliAmount(rawRefund);
         }
 
-        const returnStatus = String(findKey(row, COLUMN_ALIASES.returnStatus) || findKey(row, COLUMN_ALIASES.statusDesc) || '').trim().toLowerCase();
+        const returnStatus = String(findKey(row, COLUMN_ALIASES.returnStatus) || '').trim().toLowerCase();
+        const statusDesc = String(findKey(row, COLUMN_ALIASES.statusDesc) || '').trim().toLowerCase();
         const saleStatus = String(findKey(row, COLUMN_ALIASES.status) || '').trim().toLowerCase();
+        const combinedStatus = `${saleStatus} ${statusDesc} ${returnStatus}`.trim();
+
         const rawFull = findKey(row, COLUMN_ALIASES.isFull);
         const isFull = rawFull ? String(rawFull).toLowerCase().includes('full') : false;
 
-        const rawRefund = findKey(row, COLUMN_ALIASES.refundAmount);
         const hasRefund = rawRefund && parseFloat(String(rawRefund).replace(/\$/g, '').replace(/\./g, '').replace(/,/g, '.').trim()) < 0;
-
         const rawClaim = String(findKey(row, COLUMN_ALIASES.openClaim) || '').toLowerCase();
-        const hasOpenClaim = rawClaim === 'sí' || rawClaim === 'si' || rawClaim === 'true';
+        const hasOpenClaim = rawClaim === 'sí' || rawClaim === 'si' || rawClaim === 'true' || rawClaim === '1';
+
+        // Identificar si la fila corresponde a una devolución, cancelación, reclamo o siniestro
+        const isReturnOrCancelContext = 
+          returnStatus.length > 0 ||
+          hasRefund ||
+          hasOpenClaim ||
+          ['devoluc', 'devuelto', 'cancelad', 'reclamo', 'mediaci', 'reembols', 'siniestr', 'extraviad'].some(k => combinedStatus.includes(k));
 
         // Parseo de fecha de despacho de devolución
         const rawDate = findKey(row, COLUMN_ALIASES.returnDate);
-        let returnDate = null;
+        const returnDate = parseMeliDate(rawDate);
         let daysStalled = 0;
 
-        if (rawDate) {
-          const parsed = new Date(rawDate);
-          if (!isNaN(parsed.getTime())) {
-            returnDate = parsed;
-            const diffMs = refDate.getTime() - parsed.getTime();
-            daysStalled = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
-          }
+        if (returnDate) {
+          const diffMs = refDate.getTime() - returnDate.getTime();
+          daysStalled = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
         }
 
         // Prioridad 1: Si el archivo trae 'due_date' o 'fecha prometida' por fila, usar ESE dato exacto
         const rawDueDate = findKey(row, COLUMN_ALIASES.dueDate);
+        const parsedDue = parseMeliDate(rawDueDate);
         let daysToExpire = Math.max(0, 60 - daysStalled);
         let hasExplicitDueDate = false;
 
-        if (rawDueDate) {
-          const parsedDue = new Date(rawDueDate);
-          if (!isNaN(parsedDue.getTime())) {
-            hasExplicitDueDate = true;
-            const diffMs = parsedDue.getTime() - refDate.getTime();
-            daysToExpire = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
-          }
+        if (parsedDue) {
+          hasExplicitDueDate = true;
+          const diffMs = parsedDue.getTime() - refDate.getTime();
+          daysToExpire = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
         }
 
         // Parseo de fecha de entrega de devolución
         const rawDeliveredDate = findKey(row, COLUMN_ALIASES.returnDeliveredDate);
-        let returnDeliveredDate = null;
-        if (rawDeliveredDate) {
-          const p = new Date(rawDeliveredDate);
-          if (!isNaN(p.getTime())) returnDeliveredDate = p;
-        }
+        let returnDeliveredDate = parseMeliDate(rawDeliveredDate);
 
-        const isDelivered = ['entregado', 'devuelto al vendedor', 'ingresado a stock', 'llegó'].some(t => returnStatus.includes(t) || saleStatus.includes(t)) || !!returnDeliveredDate;
+        // Solo considerar "devolución entregada al vendedor" si estamos en contexto de devolución/cancelación
+        const isReturnDelivered = isReturnOrCancelContext && (
+          ['entregado al vendedor', 'devuelto al vendedor', 'devolución entregada', 'ingresado a stock', 'te devolvimos', 'entregado'].some(t => returnStatus.includes(t) || statusDesc.includes(t)) ||
+          !!returnDeliveredDate
+        );
 
-        // Si figura entregado y no tiene columna específica de entrega, tomar fecha de devolución si está presente
-        if (isDelivered && !returnDeliveredDate && returnDate) {
+        if (isReturnDelivered && !returnDeliveredDate && returnDate) {
           returnDeliveredDate = returnDate;
         }
 
         const dateStr = returnDate ? returnDate.toISOString().slice(0, 10) : 'S/F';
 
-        // Regla 0: Plazo crítico de 3 días corridos tras entrega de la devolución
-        if (isDelivered && returnDeliveredDate) {
+        // Regla 0: Plazo crítico de 3 días corridos tras entrega de la devolución al vendedor
+        if (isReturnDelivered && returnDeliveredDate) {
           const diffMs = refDate.getTime() - returnDeliveredDate.getTime();
           const daysSinceDelivered = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
           const dateDeliveredStr = returnDeliveredDate.toISOString().slice(0, 10);
@@ -384,14 +536,14 @@
         }
 
         // Regla 1: Siniestro o extravío
-        const isSiniestro = ['siniestrado', 'extraviado', 'perdido'].some(t => returnStatus.includes(t) || saleStatus.includes(t));
+        const isSiniestro = ['siniestrado', 'extraviado', 'perdido', 'robo', 'hurto'].some(t => combinedStatus.includes(t));
         if (isSiniestro) {
           discrepancies.push({
             orderId, tracking, itemTitle, amount, daysStalled, daysToExpire,
             isThreeDayWindow: false,
             hasExplicitDueDate,
             discrepancyType: "Siniestro / Extravío No Indemnizado",
-            carrierStatus: returnStatus || saleStatus,
+            carrierStatus: returnStatus || statusDesc || saleStatus,
             claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
             navigationGuide: generateNavigationGuide(orderId, 'stalled'),
             dossierText: generateClaimDossier({ orderId, tracking, itemTitle, dateStr, daysStalled, isFull, type: 'stalled' })
@@ -400,16 +552,16 @@
         }
 
         // Regla 2: Devolución congelada en camino > 15 días
-        const isInTransit = ['en camino', 'en tránsito', 'demorado', 'revisión', 'en distribucion', 'retirando'].some(t => returnStatus.includes(t));
+        const isInTransit = isReturnOrCancelContext && ['en camino', 'en tránsito', 'en transito', 'demorado', 'revisión', 'en distribucion', 'retirando', 'correo'].some(t => returnStatus.includes(t) || statusDesc.includes(t));
 
-        if (isInTransit && !isDelivered && daysStalled >= 15) {
+        if (isInTransit && !isReturnDelivered && daysStalled >= 15) {
           const discType = isFull ? "Faltante Interno en Depósito Full" : "Devolución Congelada en Camino";
           discrepancies.push({
             orderId, tracking, itemTitle, amount, daysStalled, daysToExpire,
             isThreeDayWindow: false,
             hasExplicitDueDate,
             discrepancyType: discType,
-            carrierStatus: returnStatus,
+            carrierStatus: returnStatus || statusDesc,
             claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
             navigationGuide: generateNavigationGuide(orderId, 'stalled'),
             dossierText: generateClaimDossier({ orderId, tracking, itemTitle, dateStr, daysStalled, isFull, type: 'stalled' })
@@ -426,9 +578,31 @@
       };
     }
 
-    // Renderizar resultados en pantalla
+    // Helper para generar el badge de plazo
+    function getExpirationBadgeHTML(item) {
+      if (item.isThreeDayWindow) {
+        return `<span class="inline-flex items-center gap-1 text-xs font-bold text-rose-700 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200 animate-pulse">🚨 ¡REVISIÓN URGENTE! Quedan ${item.daysToExpire}d (Plazo 72hs)</span>`;
+      }
+      if (item.hasExplicitDueDate) {
+        const alertClass = item.daysToExpire <= 5 ? 'text-rose-700 bg-rose-50 border-rose-200 animate-pulse' : 'text-blue-700 bg-blue-50 border-blue-200';
+        return `<span class="inline-flex items-center gap-1 text-xs font-bold ${alertClass} px-2.5 py-1 rounded-full border">⏱️ Vence en ${item.daysToExpire}d (Fecha Prometida)</span>`;
+      }
+      if (item.daysToExpire <= 10) {
+        return `<span class="inline-flex items-center gap-1 text-xs font-bold text-rose-700 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200 animate-pulse">🚨 Vence en ${item.daysToExpire}d (Límite 60d)</span>`;
+      }
+      if (item.daysToExpire <= 25) {
+        return `<span class="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">⚠️ Vence en ${item.daysToExpire}d (Límite 60d)</span>`;
+      }
+      return `<span class="text-xs text-slate-600 font-medium">En plazo (${item.daysToExpire}d restantes)</span>`;
+    }
+
+    // Renderizar resultados en pantalla (Mobile Cards + Desktop Table)
     function renderResults(auditSummary) {
-      document.getElementById('resultsSection').classList.remove('hidden');
+      currentAuditSummary = auditSummary;
+      currentAuditRecords = auditSummary.records;
+
+      const resultsSec = document.getElementById('resultsSection');
+      resultsSec.classList.remove('hidden');
 
       const formatARS = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
       document.getElementById('kpiAmount').textContent = formatARS.format(auditSummary.totalAmountRecoverable);
@@ -438,47 +612,68 @@
       document.getElementById('badgeCounter').textContent = `${auditSummary.totalDiscrepancies} casos detectados`;
 
       const tbody = document.getElementById('discrepanciesTable');
+      const mobileCards = document.getElementById('discrepanciesMobileCards');
       tbody.innerHTML = '';
-      currentAuditRecords = auditSummary.records;
+      mobileCards.innerHTML = '';
 
       if (auditSummary.records.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7" class="text-center py-12 px-4">
-              <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mb-3 border border-emerald-100">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <h4 class="text-base font-bold text-slate-900">Operación 100% al día</h4>
-              <p class="text-sm text-slate-500 mt-1 max-w-lg mx-auto">
-                Se auditaron con éxito <strong class="text-slate-800">${auditSummary.totalSalesAudited} ventas reales</strong>. Todas llegaron a destino o se encuentran cerradas conforme. No se detectaron devoluciones congeladas ni fondos retenidos en este lote.
-              </p>
-            </td>
-          </tr>
+        const emptyHTML = `
+          <div class="text-center py-12 px-4">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 mb-3 border border-emerald-100">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">Operación 100% conciliada y al día</h4>
+            <p class="text-sm text-slate-500 mt-1 max-w-lg mx-auto">
+              Se auditaron con éxito <strong class="text-slate-800">${auditSummary.totalSalesAudited} ventas reales</strong>. No se detectaron devoluciones congeladas en tránsito ni siniestros pendientes de indemnización en este período.
+            </p>
+          </div>
         `;
+        mobileCards.innerHTML = emptyHTML;
+        tbody.innerHTML = `<tr><td colspan="7">${emptyHTML}</td></tr>`;
         return;
       }
 
       auditSummary.records.forEach((item, index) => {
+        const badgeCaducidad = getExpirationBadgeHTML(item);
+
+        // 1. Card Mobile
+        const card = document.createElement('div');
+        card.className = "p-4 space-y-3 hover:bg-slate-50/70 transition";
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono font-bold text-slate-900 text-xs block">#${item.orderId}</span>
+              <span class="font-mono text-slate-400 text-[11px]">Trk: ${item.tracking}</span>
+            </div>
+            <div class="text-right font-extrabold text-slate-900 text-sm">
+              ${formatARS.format(item.amount)}
+            </div>
+          </div>
+          <div class="text-sm font-semibold text-slate-800 line-clamp-2">${item.itemTitle}</div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100">
+              ${item.discrepancyType}
+            </span>
+            ${badgeCaducidad}
+          </div>
+          <div class="pt-1 flex items-center justify-between gap-2">
+            <span class="text-xs text-slate-500">Inactividad: <strong class="text-slate-700">${item.daysStalled} días</strong></span>
+            <button 
+              type="button"
+              onclick="openModal(${index})" 
+              class="min-h-[44px] px-4 py-2 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white rounded-xl transition shadow-sm"
+            >
+              Ver Dossier y Reclamar
+            </button>
+          </div>
+        `;
+        mobileCards.appendChild(card);
+
+        // 2. Fila Desktop
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50/70 transition";
-
-        // Badge de caducidad
-        let badgeCaducidad = '';
-        if (item.isThreeDayWindow) {
-          badgeCaducidad = `<span class="inline-flex items-center gap-1 text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200 animate-pulse">🚨 ¡REVISIÓN URGENTE! Quedan ${item.daysToExpire}d (Plazo 3d)</span>`;
-        } else if (item.hasExplicitDueDate) {
-          const alertClass = item.daysToExpire <= 5 ? 'text-rose-700 bg-rose-50 border-rose-200 animate-pulse' : 'text-blue-700 bg-blue-50 border-blue-200';
-          badgeCaducidad = `<span class="inline-flex items-center gap-1 text-xs font-bold ${alertClass} px-2 py-0.5 rounded-full border">⏱️ Vence en ${item.daysToExpire}d (Fecha Prometida)</span>`;
-        } else if (item.daysToExpire <= 10) {
-          badgeCaducidad = `<span class="inline-flex items-center gap-1 text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200 animate-pulse">🚨 Vence en ${item.daysToExpire}d (Límite 60d)</span>`;
-        } else if (item.daysToExpire <= 25) {
-          badgeCaducidad = `<span class="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">⚠️ Vence en ${item.daysToExpire}d (Límite 60d)</span>`;
-        } else {
-          badgeCaducidad = `<span class="text-xs text-slate-500 font-medium">En plazo (${item.daysToExpire}d restantes)</span>`;
-        }
-
         tr.innerHTML = `
           <td class="px-6 py-4">
             <div class="font-mono font-bold text-slate-900 text-xs">${item.orderId}</div>
@@ -487,24 +682,25 @@
           <td class="px-6 py-4 max-w-xs truncate font-medium text-slate-800" title="${item.itemTitle}">
             ${item.itemTitle}
           </td>
-          <td class="px-6 py-4 font-bold text-slate-900">
+          <td class="px-6 py-4 font-bold text-slate-900 whitespace-nowrap">
             ${formatARS.format(item.amount)}
           </td>
-          <td class="px-6 py-4 text-xs text-slate-600">
+          <td class="px-6 py-4 text-xs text-slate-600 whitespace-nowrap">
             <span class="font-semibold text-slate-800">${item.daysStalled} días</span> inmóvil
           </td>
           <td class="px-6 py-4">
             ${badgeCaducidad}
           </td>
           <td class="px-6 py-4">
-            <span class="text-xs font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100">
+            <span class="text-xs font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100 inline-block">
               ${item.discrepancyType}
             </span>
           </td>
           <td class="px-6 py-4 text-right">
             <button 
+              type="button"
               onclick="openModal(${index})" 
-              class="px-3 py-1.5 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white rounded-lg transition shadow-sm"
+              class="min-h-[40px] px-3.5 py-2 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white rounded-xl transition shadow-sm whitespace-nowrap"
             >
               Ver Dossier
             </button>
@@ -514,7 +710,84 @@
       });
     }
 
-    // Manejo de Modal
+    // Copiar Resumen Ejecutivo para WhatsApp / LinkedIn
+    document.getElementById('btnCopySummary').addEventListener('click', () => {
+      if (!currentAuditSummary) return;
+      const formatARS = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+
+      let summaryText = `📊 *Diagnóstico de Auditoría — SaldoAudit*\n`;
+      summaryText += `• Operaciones analizadas: ${currentAuditSummary.totalSalesAudited}\n`;
+      summaryText += `• Casos detectados para reclamar: *${currentAuditSummary.totalDiscrepancies} órdenes*\n`;
+      summaryText += `• Monto total en riesgo / recuperable: *${formatARS.format(currentAuditSummary.totalAmountRecoverable)}*\n`;
+      if (currentAuditSummary.criticalExpiringSoon > 0) {
+        summaryText += `• 🚨 Casos urgentes (próximos a vencer): *${currentAuditSummary.criticalExpiringSoon} casos*\n`;
+      }
+
+      if (currentAuditRecords.length > 0) {
+        summaryText += `\n📋 *Detalle de órdenes detectadas:*\n`;
+        currentAuditRecords.slice(0, 8).forEach((r, idx) => {
+          summaryText += `${idx + 1}) Orden #${r.orderId} — ${formatARS.format(r.amount)} (${r.discrepancyType})\n`;
+        });
+        if (currentAuditRecords.length > 8) {
+          summaryText += `...y ${currentAuditRecords.length - 8} casos adicionales en el dossier completo.\n`;
+        }
+      } else {
+        summaryText += `\n✅ No se detectaron devoluciones demoradas ni siniestros sin liquidar en este período.`;
+      }
+
+      navigator.clipboard.writeText(summaryText).then(() => {
+        const btn = document.getElementById('btnCopySummary');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = `<span>✅</span> ¡Resumen copiado al portapapeles!`;
+        setTimeout(() => { btn.innerHTML = originalHTML; }, 2500);
+      });
+    });
+
+    // Exportar Dossier Completo en Excel (.xlsx)
+    document.getElementById('btnExportExcel').addEventListener('click', () => {
+      if (!currentAuditRecords || currentAuditRecords.length === 0) {
+        alert("No hay casos con anomalías para exportar en este lote.");
+        return;
+      }
+
+      const exportRows = currentAuditRecords.map(r => ({
+        "Orden MeLi": r.orderId,
+        "Tracking / Envío": r.tracking,
+        "Producto": r.itemTitle,
+        "Monto a Reclamar (ARS)": r.amount,
+        "Tipo de Incidencia": r.discrepancyType,
+        "Estado Correo": r.carrierStatus,
+        "Días de Inactividad": r.daysStalled,
+        "Días Restantes antes de Caducar": r.daysToExpire,
+        "Link Directo para Reclamar": r.claimUrl,
+        "Argumento Técnico (Copiar y Pegar en Soporte)": r.dossierText
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(exportRows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Reclamos Detectados");
+      XLSX.writeFile(wb, `SaldoAudit_Reclamos_${currentFileName.replace(/\.[^/.]+$/, "")}.xlsx`);
+    });
+
+    // Manejo de Dialog Modal Nativo
+    const dossierDialog = document.getElementById('dossierModal');
+
+    // Fallback para navegadores sin soporte declarativo de closedby="any"
+    if (dossierDialog && !('closedBy' in HTMLDialogElement.prototype)) {
+      dossierDialog.addEventListener('click', (event) => {
+        if (event.target !== dossierDialog) return;
+        const rect = dossierDialog.getBoundingClientRect();
+        const isDialogContent = (
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width
+        );
+        if (isDialogContent) return;
+        dossierDialog.close();
+      });
+    }
+
     function openModal(index) {
       const item = currentAuditRecords[index];
       if (!item) return;
@@ -530,25 +803,26 @@
         navigator.clipboard.writeText(item.dossierText).then(() => {
           const btn = document.getElementById('btnCopyDossier');
           btn.textContent = "✅ ¡Copiado!";
-          btn.classList.add('bg-emerald-100', 'text-emerald-700');
+          btn.classList.replace('bg-blue-600', 'bg-emerald-600');
           setTimeout(() => {
-            btn.textContent = "📋 Copiar Texto";
-            btn.classList.remove('bg-emerald-100', 'text-emerald-700');
+            btn.textContent = "📋 Copiar Argumento";
+            btn.classList.replace('bg-emerald-600', 'bg-blue-600');
           }, 2000);
         });
       };
 
-      document.getElementById('dossierModal').classList.remove('hidden');
+      dossierDialog.showModal();
     }
 
     function closeModal() {
-      document.getElementById('dossierModal').classList.add('hidden');
+      dossierDialog.close();
     }
 
     // Procesamiento de archivos (CSV o XLSX)
     function processFile(file) {
+      currentFileName = file.name;
       const fileInfo = document.getElementById('fileInfo');
-      fileInfo.textContent = `Analizando: ${file.name} (${(file.size / 1024).toFixed(1)} KB)...`;
+      fileInfo.textContent = `✅ Archivo cargado: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
       fileInfo.classList.remove('hidden');
 
       const reader = new FileReader();
@@ -569,13 +843,13 @@
           const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
           const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: '' });
 
-          // Detector de encabezados: saltea banners de Mercado Libre
+          // Detector de encabezados: saltea banners institucionales de Mercado Libre
           let headerRowIndex = 0;
-          for (let i = 0; i < Math.min(20, rows.length); i++) {
+          for (let i = 0; i < Math.min(25, rows.length); i++) {
             const row = rows[i];
             if (Array.isArray(row)) {
               const rowText = row.map(c => String(c).toLowerCase()).join(' ');
-              if ((rowText.includes('# de venta') || rowText.includes('número de venta') || rowText.includes('orden de compra')) && row.filter(c => c !== '').length > 5) {
+              if ((rowText.includes('# de venta') || rowText.includes('id de la venta') || rowText.includes('número de venta') || rowText.includes('orden de compra')) && row.filter(c => c !== '').length > 4) {
                 headerRowIndex = i;
                 break;
               }
@@ -606,11 +880,8 @@
       const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
       if (lines.length === 0) return [];
       
-      const sep = lines[0].includes(';') ? ';' : ',';
-      
-      // Encontrar fila de encabezados
       let headerIdx = 0;
-      for (let i = 0; i < Math.min(10, lines.length); i++) {
+      for (let i = 0; i < Math.min(15, lines.length); i++) {
         const lower = lines[i].toLowerCase();
         if (lower.includes('# de venta') || lower.includes('id de la venta') || lower.includes('order_id')) {
           headerIdx = i;
@@ -618,6 +889,7 @@
         }
       }
 
+      const sep = lines[headerIdx].includes(';') ? ';' : ',';
       const headers = lines[headerIdx].split(sep).map(h => h.trim().replace(/^["']|["']$/g, ''));
       const records = [];
 
@@ -664,6 +936,7 @@
 
     // Cargar muestra sintética con casos representativos de las 3 reglas
     document.getElementById('btnSample').addEventListener('click', () => {
+      currentFileName = "Demo_Muestra_MeLi";
       const now = new Date();
       const formatDate = (d) => d.toISOString().slice(0, 10);
       
@@ -682,6 +955,7 @@
           "Total (ARS)": "$ 34.500",
           "Estado de la venta": "Entregado",
           "Estado del envío de la devolución": "",
+          "Fecha de devolución": formatDate(yesterday),
           "Tipo de logística": "Mercado Envíos"
         },
         {
@@ -696,7 +970,7 @@
         {
           "ID de la venta": "2000008912345679",
           "Número de envío": "43920192839",
-          "Título de la publicación": "Campera Térmica Impermeable Talle XL",
+          "Título de la publicación": "Juego de 6 Copas Cristal Importadas 450ml",
           "Total (ARS)": "$ 115.000",
           "Estado de la venta": "Cancelada",
           "Estado del envío de la devolución": "Entregado al vendedor",
@@ -707,7 +981,7 @@
         {
           "ID de la venta": "2000008912345680",
           "Número de envío": "43920192840",
-          "Título de la publicación": "Zapatillas Running Talle 42",
+          "Título de la publicación": "Botas Cuero Mujer Taco Medio Talle 38",
           "Total (ARS)": "$ 86.400",
           "Estado de la venta": "Cancelada",
           "Estado del envío de la devolución": "En camino a sucursal",
@@ -728,7 +1002,7 @@
         {
           "ID de la venta": "2000008912345682",
           "Número de envío": "43920192842",
-          "Título de la publicación": "Taladro Percutor 20V + Maletín",
+          "Título de la publicación": "Lámpara Colgante Moderna 3 Luces Vidrio",
           "Total (ARS)": "$ 142.000",
           "Estado de la venta": "Cancelada",
           "Estado del envío de la devolución": "Extraviado por el transportista",
@@ -748,7 +1022,7 @@
       ];
 
       const fileInfo = document.getElementById('fileInfo');
-      fileInfo.textContent = "Analizando: Muestra interactiva de prueba (simulando casos de 72hs, fecha prometida y límite 60d)...";
+      fileInfo.textContent = "🧪 Demo interactiva cargada: 7 operaciones (5 reclamos detectados / 2 ventas normales ignoradas)";
       fileInfo.classList.remove('hidden');
       const results = auditRecords(sampleRecords);
       renderResults(results);
