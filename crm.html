@@ -417,27 +417,45 @@ Fecha: ____ / ____ / 2026</textarea>
     // Inicializar Lucide Icons
     lucide.createIcons();
 
-    // Base de datos de Sellers inicial (con los contactos reales del proyecto)
-    let sellersData = [
-      {
-        id: '1',
-        empresa: 'Hudson Kitchenware (Hudson Cocina)',
-        rubro: 'Bazar, Cocina & Cristal',
-        tienda_oficial: 'HUDSON COCINA',
-        contacto_nombre: 'Tomás Blousson',
-        contacto_cargo: 'Jefe de E-commerce',
-        contacto_telefono: '+54 9 11 3560-2902',
-        contacto_linkedin: 'https://www.linkedin.com/in/tomasblousson',
-        facturacion_mensual: 145000000,
-        estado_pipeline: 'auditado_enviado',
-        total_recuperable: 599518.74,
-        total_ventas: 8016,
-        prioridad: 'A',
-        proxima_accion: 'Seguimiento por WhatsApp de reclamos abiertos en MeLi',
-        fecha_proxima_accion: '2026-10-26',
-        notas: 'Derivado directo de Nahuel Beneitez (Director de Marketing). Auditoría entregada el 21/10 con 15 órdenes críticas ($599.518,74 ARS).'
-      },
-      },
+    // Configuración Oficial de Supabase Client
+    const SUPABASE_URL = 'https://wbcfmanuhotyevquiaht.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiY2ZtYW51aG90eWV2cXVpYWh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MjcyNzcsImV4cCI6MjEwNjIwMzI3N30.9Lx4mXOP3WIfmqJ5AGbqEOYTA2nZ_KeSnD54OFrR__g';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let sellersData = [];
+    let currentFilter = 'todos';
+
+    // Cargar sellers desde Supabase en tiempo real
+    async function loadSellersFromSupabase() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('saldoaudit_sellers')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        if (data && data.length > 0) {
+          sellersData = data;
+          updateKpis();
+          renderSellers();
+        }
+      } catch (err) {
+        console.warn('Usando fallback local:', err);
+      }
+    }
+
+    function updateKpis() {
+      const totalRecuperable = sellersData.reduce((acc, s) => acc + (Number(s.total_recuperable) || 0), 0);
+      const totalSellers = sellersData.length;
+      const comision = totalRecuperable * 0.10;
+
+      document.getElementById('kpiTotalRecuperable').textContent = `$${Math.round(totalRecuperable).toLocaleString('es-AR')}`;
+      document.getElementById('kpiSellersCount').textContent = `${totalSellers} cuentas`;
+      document.getElementById('kpiComisionProyectada').textContent = `$${Math.round(comision).toLocaleString('es-AR')}`;
+    }
+
+    // Base de datos de Sellers inicial (Fallback local)
+    sellersData = [
       {
         id: '2',
         empresa: 'Pettish Bazar (Pettish Online)',
@@ -684,8 +702,9 @@ Fecha: ____ / ____ / 2026</textarea>
       });
     }
 
-    // Render inicial
+    // Render inicial y sincronización con Supabase Cloud
     renderSellers();
+    loadSellersFromSupabase();
   </script>
 </body>
 </html>
