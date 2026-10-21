@@ -57,7 +57,58 @@
     }
   </style>
 </head>
-<body class="h-full flex flex-col font-sans antialiased text-slate-800 bg-slate-100 overflow-x-hidden">
+<body class="h-full font-sans antialiased text-slate-800 bg-slate-100 overflow-x-hidden">
+
+  <!-- ================= OVERLAY DE AUTENTICACIÓN OFICIAL ================= -->
+  <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A] p-4 sm:p-6 overflow-y-auto">
+    <div class="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6">
+      
+      <div class="flex flex-col items-center text-center space-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-700 to-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-700/30">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Saldo<span class="text-blue-600">Audit</span></h1>
+        <p class="text-xs text-slate-500 font-medium">Suite Operativa & CRM &bull; Acceso Restringido</p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleAuthLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Usuario / Correo Oficial</label>
+          <div class="relative">
+            <input type="email" id="loginEmail" required class="touch-target w-full px-4 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition bg-slate-50 text-slate-900" placeholder="saldoaudit.oficial@gmail.com" value="saldoaudit.oficial@gmail.com">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Contraseña Maestra</label>
+          <div class="relative">
+            <input type="password" id="loginPass" required class="touch-target w-full px-4 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition bg-slate-50 text-slate-900" placeholder="••••••••••••">
+          </div>
+        </div>
+
+        <div id="loginError" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+          <span>Credenciales inválidas. Acceso restringido al personal autorizado.</span>
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="touch-target w-full py-3 px-4 bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm rounded-xl shadow-md shadow-blue-700/20 transition flex items-center justify-center gap-2">
+          <i data-lucide="lock" class="w-4 h-4"></i>
+          <span>Ingresar a la Suite</span>
+        </button>
+      </form>
+
+      <div class="text-center pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+        <span>Seguridad Forense</span>
+        <span>SaldoAudit &bull; 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CONTENEDOR PRINCIPAL DE LA SUITE (PROTEGIDO) ================= -->
+  <div id="appContainer" class="hidden h-full flex flex-col">
 
   <!-- ================= BARRA DE NAVEGACIÓN SUPERIOR ================= -->
   <header class="bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between gap-3 shrink-0 z-30 shadow-xs">
@@ -102,15 +153,18 @@
       </button>
     </nav>
 
-    <!-- Botón directo al Auditor Forense Web -->
+    <!-- Botón directo al Auditor Forense Web & Logout -->
     <div class="flex items-center gap-2">
-      <a href="index.html" target="_blank" class="touch-target inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition shadow-2xs">
+      <a href="index.html" target="_blank" class="touch-target inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition shadow-2xs">
         <i data-lucide="scan" class="w-4 h-4"></i>
-        <span class="hidden sm:inline">Abrir Motor Auditor</span>
+        <span class="hidden sm:inline">Motor Web</span>
       </a>
-      <button type="button" onclick="openNewSellerModal()" class="touch-target inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition shadow-2xs">
+      <button type="button" onclick="openNewSellerModal()" class="touch-target inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition shadow-2xs">
         <i data-lucide="plus" class="w-4 h-4"></i>
         <span>Nuevo Seller</span>
+      </button>
+      <button type="button" onclick="handleAuthLogout()" title="Cerrar sesión segura" class="touch-target inline-flex items-center justify-center p-2 text-xs font-semibold text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 rounded-xl transition">
+        <i data-lucide="log-out" class="w-4 h-4"></i>
       </button>
     </div>
   </header>
@@ -411,6 +465,7 @@ Fecha: ____ / ____ / 2026</textarea>
       </div>
     </form>
   </dialog>
+  </div> <!-- /#appContainer (Protegido por login) -->
 
   <!-- ================= SCRIPTS DEL CRM & DATOS ================= -->
   <script>
@@ -702,9 +757,53 @@ Fecha: ____ / ____ / 2026</textarea>
       });
     }
 
-    // Render inicial y sincronización con Supabase Cloud
-    renderSellers();
-    loadSellersFromSupabase();
+    // ================= AUTENTICACIÓN OFICIAL DE LA SUITE =================
+    const AUTH_USER = "saldoaudit.oficial@gmail.com";
+    const AUTH_PASS = "S@ldoAudit#2026.Ar";
+
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('saldoaudit_auth') === 'true' || localStorage.getItem('saldoaudit_auth') === 'true';
+      const overlay = document.getElementById('loginOverlay');
+      const app = document.getElementById('appContainer');
+
+      if (isAuth) {
+        if (overlay) overlay.classList.add('hidden');
+        if (app) app.classList.remove('hidden');
+        lucide.createIcons();
+        renderSellers();
+        loadSellersFromSupabase();
+      } else {
+        if (overlay) overlay.classList.remove('hidden');
+        if (app) app.classList.add('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function handleAuthLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value;
+      const errBox = document.getElementById('loginError');
+
+      if (email.toLowerCase() === AUTH_USER.toLowerCase() && pass === AUTH_PASS) {
+        sessionStorage.setItem('saldoaudit_auth', 'true');
+        localStorage.setItem('saldoaudit_auth', 'true');
+        errBox.classList.add('hidden');
+        checkAuth();
+      } else {
+        errBox.classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function handleAuthLogout() {
+      sessionStorage.removeItem('saldoaudit_auth');
+      localStorage.removeItem('saldoaudit_auth');
+      location.reload();
+    }
+
+    // Inicializar chequeo de seguridad
+    checkAuth();
   </script>
 </body>
 </html>
