@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-100 text-slate-800">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaldoAudit — Suite Operativa Integral</title>
+  
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-saldoaudit-icon.svg">
+
+  <!-- Google Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.48.1/dist/umd/supabase.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#1d4ed8',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .touch-target { min-height: 44px; min-width: 44px; }
+    .checkerboard {
+      background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+                        linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+                        linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+    dialog:modal { overscroll-behavior: contain; }
+    dialog::backdrop {
+      background-color: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="h-full font-sans antialiased text-slate-800 bg-slate-100 overflow-x-hidden">
+
+  <!-- ================= OVERLAY DE AUTENTICACIÓN OFICIAL ================= -->
+  <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A] p-4 sm:p-6 overflow-y-auto">
+    <div class="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6">
+      
+      <div class="flex flex-col items-center text-center space-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-700 to-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-700/30">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Saldo<span class="text-blue-600">Audit</span></h1>
+        <p class="text-xs text-slate-500 font-medium">Suite Operativa Integral &bull; Acceso Restringido</p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleAuthLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Usuario / Correo Oficial</label>
+          <div class="relative">
+            <input type="email" id="loginEmail" required autofocus class="touch-target w-full px-4 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition bg-slate-50 text-slate-900" placeholder="saldoaudit.oficial@gmail.com" value="">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Contraseña Maestra</label>
+          <div class="relative">
+            <input type="password" id="loginPass" required class="touch-target w-full px-4 py-3 pr-12 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition bg-slate-50 text-slate-900" placeholder="••••••••••••">
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1" title="Ver / Ocultar contraseña">
+              <i data-lucide="eye" id="passToggleIcon" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="loginError" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+          <span>Credenciales inválidas. Acceso restringido al personal autorizado.</span>
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="touch-target w-full py-3 px-4 bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm rounded-xl shadow-md shadow-blue-700/20 transition flex items-center justify-center gap-2">
+          <i data-lucide="lock" class="w-4 h-4"></i>
+          <span>Ingresar a la Suite</span>
+        </button>
+      </form>
+
+      <div class="text-center pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+        <span>Seguridad Forense</span>
+        <span>SaldoAudit &bull; 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CONTENEDOR PRINCIPAL DE LA SUITE (PROTEGIDO) ================= -->
+  <div id="appContainer" class="hidden h-full flex flex-col">
+
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR (DESKTOP) -->
+    <header class="bg-white border-b border-slate-200 px-4 py-2.5 flex items-center justify-between gap-3 shrink-0 z-30 shadow-xs">
+      
+      <!-- Logo Oficial -->
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-700 text-white flex items-center justify-center shadow-xs shrink-0">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-heading font-extrabold text-base text-slate-900 tracking-tight leading-none">
+              Saldo<span class="text-blue-600">Audit</span>
+            </span>
+            <span class="text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+              Suite Operativa
+            </span>
+          </div>
+          <span class="text-[11px] text-slate-500 leading-tight block">Centro de Operaciones Forenses</span>
+        </div>
+      </div>
+
+      <!-- Las 5 Pestañas Maestras de Navegación -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold">
+        <button type="button" onclick="switchView('pipeline')" id="tabBtn-pipeline" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-xs border border-slate-200/80 transition">
+          <i data-lucide="kanban" class="w-3.5 h-3.5 text-blue-600"></i>
+          <span>1. Pipeline Clientes</span>
+        </button>
+        <button type="button" onclick="switchView('sops')" id="tabBtn-sops" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
+          <i data-lucide="book-open" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>2. Procedimientos SOPs</span>
+        </button>
+        <button type="button" onclick="switchView('brand')" id="tabBtn-brand" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
+          <i data-lucide="palette" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>3. Brand Kit</span>
+        </button>
+        <button type="button" onclick="switchView('firmas')" id="tabBtn-firmas" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
+          <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>4. Firmas Oficiales</span>
+        </button>
+        <button type="button" onclick="switchView('acuerdo')" id="tabBtn-acuerdo" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
+          <i data-lucide="file-check" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>5. Tarifas & Legal</span>
+        </button>
+      </nav>
+
+      <!-- Botones de Acción y Salida -->
+      <div class="flex items-center gap-2">
+        <a href="index.html" target="_blank" class="touch-target inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition shadow-2xs">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Ver Landing</span>
+        </a>
+        <button type="button" onclick="openNewSellerModal()" class="touch-target inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition shadow-2xs">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+          <span>Nuevo Seller</span>
+        </button>
+        <button type="button" onclick="handleAuthLogout()" title="Cerrar sesión segura" class="touch-target inline-flex items-center justify-center p-2 text-xs font-semibold text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 rounded-xl transition">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- NAVEGACIÓN MÓVIL (BOTTOM-SAFE BAR CON LOS 5 MÓDULOS) -->
+    <div class="md:hidden bg-white border-b border-slate-200 px-2 py-2 flex items-center justify-around text-[11px] font-semibold shrink-0">
+      <button type="button" onclick="switchView('pipeline')" id="mobTabBtn-pipeline" class="mob-tab-btn flex items-center gap-1 py-1.5 px-2 rounded-lg bg-blue-50 text-blue-700">
+        <i data-lucide="kanban" class="w-3.5 h-3.5"></i>
+        <span>Pipeline</span>
+      </button>
+      <button type="button" onclick="switchView('sops')" id="mobTabBtn-sops" class="mob-tab-btn flex items-center gap-1 py-1.5 px-2 rounded-lg text-slate-600">
+        <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+        <span>SOPs</span>
+      </button>
+      <button type="button" onclick="switchView('brand')" id="mobTabBtn-brand" class="mob-tab-btn flex items-center gap-1 py-1.5 px-2 rounded-lg text-slate-600">
+        <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+        <span>Brand</span>
+      </button>
+      <button type="button" onclick="switchView('firmas')" id="mobTabBtn-firmas" class="mob-tab-btn flex items-center gap-1 py-1.5 px-2 rounded-lg text-slate-600">
+        <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+        <span>Firmas</span>
+      </button>
+      <button type="button" onclick="switchView('acuerdo')" id="mobTabBtn-acuerdo" class="mob-tab-btn flex items-center gap-1 py-1.5 px-2 rounded-lg text-slate-600">
+        <i data-lucide="file-check" class="w-3.5 h-3.5"></i>
+        <span>Tarifas</span>
+      </button>
+    </div>
+
+    <!-- ================= CUERPO PRINCIPAL DINÁMICO DE LA SUITE ================= -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+
+      <!-- ================= MÓDULO 1: PIPELINE & GESTIÓN DE SELLERS (CRM) ================= -->
+      <section id="view-pipeline" class="space-y-6">
+        
+        <!-- KPI Header Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider">Recuperable en Cartera</span>
+              <i data-lucide="banknote" class="w-4 h-4 text-emerald-600"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-heading font-extrabold text-slate-900" id="kpiTotalRecuperable">$599.518</div>
+            <span class="text-[11px] text-emerald-700 font-medium">15 órdenes en riesgo auditadas</span>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider">Sellers en Seguimiento</span>
+              <i data-lucide="store" class="w-4 h-4 text-blue-600"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-heading font-extrabold text-slate-900" id="kpiSellersCount">5 cuentas</div>
+            <span class="text-[11px] text-slate-500 font-medium">1 caso testigo caliente (Hudson)</span>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider">Comisión Proyectada (10%)</span>
+              <i data-lucide="percent" class="w-4 h-4 text-blue-600"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-heading font-extrabold text-blue-700" id="kpiComisionProyectada">$59.951</div>
+            <span class="text-[11px] text-slate-500 font-medium">Si VIP (20%): $119.903</span>
+          </div>
+
+          <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider">Próximo Hito</span>
+              <i data-lucide="calendar" class="w-4 h-4 text-amber-600"></i>
+            </div>
+            <div class="text-base sm:text-lg font-heading font-extrabold text-amber-900">Lunes 26 Oct 11h</div>
+            <span class="text-[11px] text-amber-800 font-medium">Seguimiento con Tomás (Hudson)</span>
+          </div>
+        </div>
+
+        <!-- Filtros y Buscador -->
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row gap-3 items-center justify-between">
+          <div class="relative w-full sm:w-80">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+            <input 
+              type="text" 
+              id="searchSeller" 
+              placeholder="Buscar por empresa, contacto o rubro..." 
+              oninput="filterSellers()"
+              class="touch-target w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 transition"
+            >
+          </div>
+
+          <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+            <button type="button" onclick="setPipelineFilter('todos')" class="filter-pill touch-target px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-white transition shrink-0" data-filter="todos">Todos</button>
+            <button type="button" onclick="setPipelineFilter('informe_entregado')" class="filter-pill touch-target px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition shrink-0" data-filter="informe_entregado">Informe Entregado</button>
+            <button type="button" onclick="setPipelineFilter('lead_contactado')" class="filter-pill touch-target px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition shrink-0" data-filter="lead_contactado">Prospectos</button>
+          </div>
+        </div>
+
+        <!-- Lista de Sellers Dinámica -->
+        <div id="sellersListContainer" class="space-y-4">
+          <!-- Renderizado con JS -->
+        </div>
+      </section>
+
+      <!-- ================= MÓDULO 2: PROCEDIMIENTOS & SOPS ================= -->
+      <section id="view-sops" class="hidden space-y-6">
+        
+        <!-- Cabecera SOPs -->
+        <div class="bg-gradient-to-r from-[#0F172A] to-[#1D4ED8] p-6 rounded-3xl text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/20 px-2.5 py-1 rounded-full border border-blue-400/30">
+              Manual Operativo & Matriz de Reclamos MeLi
+            </span>
+            <h2 class="text-xl sm:text-2xl font-extrabold mt-2">Protocolos Forenses Estandarizados</h2>
+            <p class="text-slate-200 text-xs mt-1">Guías de ejecución, plazos fatales y modelos de reclamo para mediaciones.</p>
+          </div>
+          <a href="procedimientos.html" target="_blank" class="px-3 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl text-xs font-semibold flex items-center gap-1.5 self-start sm:self-center transition">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Abrir en Pestaña Completa
+          </a>
+        </div>
+
+        <!-- SLAs Críticos -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div class="bg-white p-4 rounded-2xl border border-rose-200 shadow-2xs space-y-1">
+            <span class="font-bold text-rose-800 uppercase flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-rose-600"></i> Ventana Fatal 72h</span>
+            <p class="text-slate-600 leading-relaxed">Plazo improrrogable para desconocer una devolución entregada al seller con mercadería rota o faltante.</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-blue-200 shadow-2xs space-y-1">
+            <span class="font-bold text-blue-800 uppercase flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-blue-600"></i> Límite 60 Días</span>
+            <p class="text-slate-600 leading-relaxed">Ventana máxima histórica para reclamar siniestros de correo y paquetes perdidos sin indemnización.</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-emerald-200 shadow-2xs space-y-1">
+            <span class="font-bold text-emerald-800 uppercase flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i> Resolución 48-72h</span>
+            <p class="text-slate-600 leading-relaxed">Tiempo estimado de análisis de soporte de MeLi para acreditar la nota de crédito en Mercado Pago.</p>
+          </div>
+        </div>
+
+        <!-- Matriz de 15 Estados -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+          <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+            <i data-lucide="table" class="w-4 h-4 text-blue-600"></i> Matriz de Clasificación & Acción Forense
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-900 text-white">
+                <tr>
+                  <th class="p-2.5">Tipología</th>
+                  <th class="p-2.5">Estados Detectados en MeLi</th>
+                  <th class="p-2.5">Acción Forense</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-2.5 font-bold text-rose-700 bg-rose-50/50">Siniestros Correo</td>
+                  <td class="p-2.5 mono text-slate-700">"El paquete se perdió", "Extraviado por el correo", "Dañado en camino"</td>
+                  <td class="p-2.5 text-slate-900 font-semibold">Exigir indemnización completa bajo Programa de Protección al Vendedor.</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold text-amber-700 bg-amber-50/50">Ventana 72h</td>
+                  <td class="p-2.5 mono text-slate-700">"Entregado al vendedor", "Devolución finalizada" (&lt;3 días)</td>
+                  <td class="p-2.5 text-slate-900 font-semibold">Abrir caja física en depósito y desconocer devolución si vino vacía o rota.</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold text-blue-700 bg-blue-50/50">Devolución Trancada</td>
+                  <td class="p-2.5 mono text-slate-700">"El comprador despachó", "En camino a tu domicilio" (+20 días)</td>
+                  <td class="p-2.5 text-slate-900 font-semibold">Reclamar declaración de siniestro por pérdida en logística inversa.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Scripts de Reclamo Copiables -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-4">
+          <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+            <i data-lucide="copy" class="w-4 h-4 text-emerald-600"></i> Scripts de Reclamo Listos para Copiar y Pegar en MeLi
+          </h3>
+
+          <div class="space-y-3">
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-900">Script 1: Siniestro de Correo / Pérdida en Tránsito</span>
+                <button type="button" onclick="copySnippet('txt-script1', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                </button>
+              </div>
+              <textarea id="txt-script1" readonly class="w-full h-24 p-2.5 text-xs bg-white border border-slate-200 rounded-lg text-slate-700 font-mono leading-relaxed select-all">
+Estimado soporte de Mercado Libre, respecto a la venta #{{NUMERO_DE_VENTA}}, despachada en término mediante la etiqueta provista por la plataforma: según el seguimiento logístico, el paquete fue reportado con siniestro / extravío en poder del correo transportista y nunca fue entregado al comprador. Solicitamos la acreditación íntegra de los fondos correspondientes bajo el Programa de Protección al Vendedor. Quedamos a la espera de la confirmación en nuestra cuenta de Mercado Pago. Saludos cordiales.
+              </textarea>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-900">Script 2: Desconocimiento de Devolución (&lt;72h de recibida)</span>
+                <button type="button" onclick="copySnippet('txt-script2', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                </button>
+              </div>
+              <textarea id="txt-script2" readonly class="w-full h-24 p-2.5 text-xs bg-white border border-slate-200 rounded-lg text-slate-700 font-mono leading-relaxed select-all">
+Estimado equipo de mediaciones de Mercado Libre, en el marco de la venta #{{NUMERO_DE_VENTA}}, desconocemos formalmente la devolución recibida el día {{FECHA}}. Al proceder a la apertura de la caja dentro del plazo reglamentario de 72 horas, constatamos que el producto se encuentra destruido / la caja fue entregada vacía por el comprador. Adjuntamos fotos del embalaje y del remito. Solicitamos el reintegro inmediato del dinero retenido a nuestro favor. Atentamente.
+              </textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audio de WhatsApp -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <i data-lucide="mic" class="w-4 h-4 text-blue-600"></i> Guión de Audio de WhatsApp para Entrega (25 seg)
+            </span>
+            <button type="button" onclick="copySnippet('txt-script-audio', this)" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+              <i data-lucide="copy" class="w-3 h-3"></i> Copiar Guión
+            </button>
+          </div>
+          <p class="text-xs text-slate-600 italic bg-slate-50 p-3 rounded-xl border border-slate-200 leading-relaxed" id="txt-script-audio">
+            "Hola [Nombre], ¿cómo estás? Te habla Juan Oviedo de SaldoAudit. Te grabo este audio cortito para contarte que terminamos de procesar la planilla de ventas de los últimos 60 días. Sobre los más de $[Monto Total] auditados, detectamos exactamente [Cantidad] casos críticos con dinero retenido por correo y devoluciones sin liquidar por un total de $[Monto Recuperable]. Te adjunto acá abajo el resumen en texto y el Excel con los links directos para que lo revises con tu equipo. ¡Un abrazo!"
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= MÓDULO 3: BRAND KIT OFICIAL ================= -->
+      <section id="view-brand" class="hidden space-y-6">
+        
+        <!-- Cabecera Brand Kit -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2">
+              Identidad Visual & Recursos Oficiales (SSOT)
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Brand Kit Oficial</h2>
+            <p class="text-xs text-slate-500 mt-1">Logotipos vectoriales SVG descargables, paleta de colores y componentes de marca.</p>
+          </div>
+          <a href="brand.html" target="_blank" class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 self-start sm:self-center transition">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Abrir en Pestaña Completa
+          </a>
+        </div>
+
+        <!-- Paleta Cromática con Copia Rápida -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Paleta Cromática (Clic en cualquier color para copiar HEX)</span>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-blue-300 transition" onclick="copyColorHex('#1D4ED8', this)">
+              <div class="w-full h-12 rounded-lg bg-[#1D4ED8] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#1D4ED8</div>
+              <span class="block text-xs font-bold text-slate-900">Cobalto Forense</span>
+              <span class="block text-[10px] text-blue-600 font-semibold">Copiar HEX</span>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-slate-400 transition" onclick="copyColorHex('#0F172A', this)">
+              <div class="w-full h-12 rounded-lg bg-[#0F172A] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#0F172A</div>
+              <span class="block text-xs font-bold text-slate-900">Pizarra Oscuro</span>
+              <span class="block text-[10px] text-blue-600 font-semibold">Copiar HEX</span>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-emerald-300 transition" onclick="copyColorHex('#10B981', this)">
+              <div class="w-full h-12 rounded-lg bg-[#10B981] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#10B981</div>
+              <span class="block text-xs font-bold text-slate-900">Verde Recupero</span>
+              <span class="block text-[10px] text-blue-600 font-semibold">Copiar HEX</span>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-sky-300 transition" onclick="copyColorHex('#38BDF8', this)">
+              <div class="w-full h-12 rounded-lg bg-[#38BDF8] flex items-center justify-center text-slate-900 font-mono text-xs font-bold mb-2">#38BDF8</div>
+              <span class="block text-xs font-bold text-slate-900">Celeste Análisis</span>
+              <span class="block text-[10px] text-blue-600 font-semibold">Copiar HEX</span>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-slate-300 transition" onclick="copyColorHex('#F8FAFC', this)">
+              <div class="w-full h-12 rounded-lg bg-[#F8FAFC] border border-slate-200 flex items-center justify-center text-slate-700 font-mono text-xs font-bold mb-2">#F8FAFC</div>
+              <span class="block text-xs font-bold text-slate-900">Gris Lienzo</span>
+              <span class="block text-[10px] text-blue-600 font-semibold">Copiar HEX</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Galería de Logos con Descarga Directa -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Logo Claro -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded">Logo Principal (Fondo Claro)</span>
+                <span class="text-[10px] font-mono text-blue-600 font-bold">SVG</span>
+              </div>
+              <div class="h-32 checkerboard rounded-xl p-4 flex items-center justify-center border border-slate-200/60 my-3">
+                <img src="assets/logo-saldoaudit.svg" alt="SaldoAudit Claro" class="max-h-16 w-auto object-contain">
+              </div>
+              <p class="text-xs text-slate-500">Para facturas, membretes, reportes en PDF y fondos blancos.</p>
+            </div>
+            <a href="assets/logo-saldoaudit.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar SVG Claro
+            </a>
+          </div>
+
+          <!-- Logo Oscuro -->
+          <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 shadow-md text-white flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Logo Invertido (Fondo Oscuro)</span>
+                <span class="text-[10px] font-mono text-blue-300 font-bold">SVG</span>
+              </div>
+              <div class="h-32 bg-slate-950 rounded-xl p-4 flex items-center justify-center border border-slate-800 my-3">
+                <img src="assets/logo-saldoaudit-dark.svg" alt="SaldoAudit Oscuro" class="max-h-16 w-auto object-contain">
+              </div>
+              <p class="text-xs text-slate-400">Para cabeceras oscuras, presentaciones y modo nocturno.</p>
+            </div>
+            <a href="assets/logo-saldoaudit-dark.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2 px-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar SVG Oscuro
+            </a>
+          </div>
+
+          <!-- Isotipo Cuadrado -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Isotipo Escudo Cuadrado</span>
+                <span class="text-[10px] font-mono text-emerald-600 font-bold">SVG</span>
+              </div>
+              <div class="h-32 checkerboard rounded-xl p-4 flex items-center justify-center border border-slate-200/60 my-3">
+                <img src="assets/logo-saldoaudit-icon.svg" alt="SaldoAudit Isotipo" class="max-h-20 w-auto object-contain">
+              </div>
+              <p class="text-xs text-slate-500">Para avatar de WhatsApp Business, perfil de Gmail y Favicon.</p>
+            </div>
+            <a href="assets/logo-saldoaudit-icon.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar Isotipo
+            </a>
+          </div>
+
+          <!-- Monocromo -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-800 bg-slate-100 px-2 py-0.5 rounded">Monocromo / Sellos</span>
+                <span class="text-[10px] font-mono text-slate-600 font-bold">SVG</span>
+              </div>
+              <div class="h-32 checkerboard rounded-xl p-4 flex items-center justify-center border border-slate-200/60 my-3">
+                <img src="assets/logo-saldoaudit-mono.svg" alt="SaldoAudit Mono" class="max-h-16 w-auto object-contain">
+              </div>
+              <p class="text-xs text-slate-500">Para impresión en blanco y negro, sellos de agua y remitos.</p>
+            </div>
+            <a href="assets/logo-saldoaudit-mono.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar Monocromo
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= MÓDULO 4: FIRMAS CORPORATIVAS DE CORREO ================= -->
+      <section id="view-firmas" class="hidden space-y-6">
+        
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Compatible con Gmail & Celulares
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Firmas de Correo Oficiales</h2>
+            <p class="text-xs text-slate-500 mt-1">Copiá la firma visual en un clic y pegala en la configuración de tu Gmail.</p>
+          </div>
+          <button type="button" onclick="copyVisualSignature('sig-juan-app', this)" class="touch-target px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs transition">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>Copiar Firma Visual</span>
+          </button>
+        </div>
+
+        <!-- Render de la Firma Oficial -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs overflow-x-auto">
+          <div id="sig-juan-app">
+            <table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.4; color: #334155; max-width: 580px;">
+              <tr>
+                <td style="vertical-align: middle; padding-right: 18px;">
+                  <a href="https://saldoaudit.com.ar" target="_blank" style="text-decoration: none;">
+                    <div style="background-color: #1D4ED8; width: 56px; height: 56px; border-radius: 12px; text-align: center; line-height: 54px; display: inline-block;">
+                      <span style="color: #ffffff; font-size: 26px; font-weight: bold; font-family: Arial, sans-serif;">🛡️</span>
+                    </div>
+                  </a>
+                </td>
+                <td style="border-left: 2px solid #1D4ED8; padding-left: 18px; vertical-align: top;">
+                  <div style="font-size: 16px; font-weight: bold; color: #0F172A; margin-bottom: 2px;">Juan Oviedo</div>
+                  <div style="font-size: 12px; font-weight: bold; color: #1D4ED8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Director & Auditor Principal | SaldoAudit</div>
+                  <div style="font-size: 12px; color: #475569; margin-bottom: 3px;">
+                    <span style="color: #1D4ED8; font-weight: bold;">WhatsApp:</span> <a href="https://wa.me/5491172376197" style="color: #0F172A; text-decoration: none; font-weight: 500;">+54 9 11 7237-6197</a>
+                  </div>
+                  <div style="font-size: 12px; color: #475569; margin-bottom: 3px;">
+                    <span style="color: #1D4ED8; font-weight: bold;">Email:</span> <a href="mailto:contacto@saldoaudit.com.ar" style="color: #0F172A; text-decoration: none;">contacto@saldoaudit.com.ar</a>
+                  </div>
+                  <div style="font-size: 12px; color: #475569;">
+                    <span style="color: #1D4ED8; font-weight: bold;">Web:</span> <a href="https://saldoaudit.com.ar" target="_blank" style="color: #1D4ED8; text-decoration: underline; font-weight: 600;">saldoaudit.com.ar</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding-top: 12px;">
+                  <div style="border-top: 1px solid #E2E8F0; padding-top: 6px; font-size: 10px; color: #94A3B8; font-style: italic;">
+                    SaldoAudit &bull; Auditoría Forense de Ventas, Envíos y Recupero de Fondos en Mercado Libre &bull; Buenos Aires, Argentina
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Instrucciones Rápidas -->
+        <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-2 text-xs">
+          <div class="font-bold text-blue-400 flex items-center gap-2">
+            <i data-lucide="info" class="w-4 h-4"></i> ¿Cómo pegarla en tu nuevo Gmail en 1 minuto?
+          </div>
+          <ol class="text-slate-300 space-y-1 list-decimal list-inside leading-relaxed">
+            <li>Hacé clic arriba en <strong>"Copiar Firma Visual"</strong>.</li>
+            <li>En tu Gmail (<code>saldoaudit.oficial@gmail.com</code>), tocá la ruedita de configuración &rarr; <strong>Ver todos los ajustes</strong>.</li>
+            <li>En la pestaña <strong>General</strong>, bajá hasta <strong>Firma</strong> &rarr; <strong>Crear nueva</strong>.</li>
+            <li>Pegá con <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-blue-300 font-mono">Ctrl + V</kbd>, asignala para nuevos correos y respuestas, y tocá <strong>Guardar cambios</strong>.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ================= MÓDULO 5: TARIFAS & ACUERDO LEGAL (NDA) ================= -->
+      <section id="view-acuerdo" class="hidden space-y-6">
+        
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2">
+              Tarifario Oficial & Marco Jurídico
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Tarifas & Acuerdo Legal (NDA)</h2>
+            <p class="text-xs text-slate-500 mt-1">Modelos contractuales y política de garantía para cerrar con sellers grandes.</p>
+          </div>
+          <button type="button" onclick="copyAcuerdoText()" id="btnCopyAcuerdo" class="touch-target px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs transition">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>Copiar Acuerdo Completo</span>
+          </button>
+        </div>
+
+        <!-- Las 2 Opciones Comerciales -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div class="p-5 rounded-2xl border-2 border-blue-500/30 bg-blue-50/20 space-y-3 relative">
+            <span class="text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-blue-600 text-white inline-block">Opción 1: Reporte en Mano</span>
+            <div class="text-2xl font-heading font-extrabold text-slate-900">10% <span class="text-xs font-medium text-slate-500 font-sans">sobre lo detectado</span></div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              La empresa abona el 10% del monto detectado contra entrega de la planilla completa con las órdenes y links directos a soporte de MeLi para que su propio equipo lo abra.
+            </p>
+            <ul class="text-xs text-slate-600 space-y-1.5 pt-1">
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i> Si no se detecta plata, costo = <strong>$0</strong>.</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i> <strong>Garantía:</strong> Si MeLi rechaza +50%, se bonifica la siguiente auditoría.</li>
+            </ul>
+          </div>
+
+          <div class="p-5 rounded-2xl border-2 border-slate-900 bg-slate-900 text-white space-y-3 relative shadow-md">
+            <span class="text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-emerald-500 text-slate-950 inline-block">Opción 2: Gestión Integral (VIP)</span>
+            <div class="text-2xl font-heading font-extrabold text-white">20% <span class="text-xs font-medium text-slate-300 font-sans">sobre lo efectivamente acreditado</span></div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              La empresa da de alta a SaldoAudit como <strong>Colaborador oficial de Mercado Libre</strong> (rol exclusivo Reclamos/Posventa, con cero acceso a fondos o cuentas bancarias).
+            </p>
+            <ul class="text-xs text-slate-300 space-y-1.5 pt-1">
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> SaldoAudit abre los reclamos y responde las mediaciones.</li>
+              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Liquidación mes vencido únicamente sobre dinero cobrado.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Texto del Acuerdo Legal Copiable -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+          <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">Modelo Contractual & Acuerdo de Confidencialidad (NDA)</span>
+          <textarea id="acuerdoTexto" readonly class="w-full h-44 p-3.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">
+ACUERDO DE PRESTACIÓN DE SERVICIOS FORENSES DE AUDITORÍA Y CONFIDENCIALIDAD
+
+Entre SALDOAUDIT (en adelante "El Auditor"), y [EMPRESA / RAZÓN SOCIAL DEL SELLER] (en adelante "El Cliente"), se conviene lo siguiente:
+
+PRIMERA (OBJETO): El Auditor realizará el relevamiento y análisis de reportes de ventas de la cuenta de Mercado Libre de El Cliente correspondientes a los últimos 60 días, con el fin de detectar reclamos pendientes, devoluciones sin liquidar y siniestros de envíos pasibles de indemnización.
+
+SEGUNDA (CONFIDENCIALIDAD - LEY 25.326): Toda información provista por El Cliente será tratada como estrictamente confidencial. El Auditor se compromete a procesar los datos exclusivamente en memoria local, sin divulgación a terceros ni uso con fines comerciales ajenos a esta auditoría.
+
+TERCERA (HONORARIOS): 
+- Modalidad Reporte: 10% sobre el monto total identificado en el informe de auditoría.
+- Modalidad VIP (Colaborador): 20% sobre los fondos efectivamente recuperados y acreditados en Mercado Pago.
+
+CUARTA (GARANTÍA): En caso de que Mercado Libre desestime formalmente más del 50% de los casos reclamados en término, El Auditor otorgará un crédito equivalente al 100% de los honorarios cobrados aplicable a la auditoría del mes subsiguiente.
+
+En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes de _________ de 2026.
+          </textarea>
+        </div>
+      </section>
+
+    </main>
+
+  </div> <!-- /#appContainer -->
+
+  <!-- ================= MODAL: NUEVO SELLER ================= -->
+  <dialog id="newSellerModal" class="rounded-3xl p-6 bg-white max-w-lg w-full shadow-2xl border border-slate-200">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <h3 class="text-base font-bold text-slate-900">Agregar Nuevo Seller al Pipeline</h3>
+      <button type="button" onclick="closeNewSellerModal()" class="text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <form id="newSellerForm" onsubmit="saveSeller(event)" class="space-y-3 pt-4 text-xs">
+      <div>
+        <label class="font-semibold text-slate-700 block mb-1">Nombre Comercial / Empresa *</label>
+        <input type="text" id="inputEmpresa" required placeholder="Ej: Hudson Kitchenware" class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Rubro</label>
+          <input type="text" id="inputRubro" placeholder="Ej: Bazar / Cocina" class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+        </div>
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Tienda Oficial MeLi</label>
+          <input type="text" id="inputTienda" placeholder="HUDSON COCINA" class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Nombre de Contacto</label>
+          <input type="text" id="inputContacto" placeholder="Tomás Blousson" class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+        </div>
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Cargo</label>
+          <input type="text" id="inputCargo" placeholder="E-commerce Lead" class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Teléfono / WhatsApp</label>
+          <input type="tel" id="inputTelefono" placeholder="+54 9 11 3560-2902" class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+        </div>
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Perfil LinkedIn</label>
+          <input type="url" id="inputLinkedin" placeholder="https://linkedin.com/in/..." class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl">
+        </div>
+      </div>
+      <div>
+        <label class="font-semibold text-slate-700 block mb-1">Notas / Estado</label>
+        <textarea id="inputNotas" rows="2" placeholder="Detalles de la conversación..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl"></textarea>
+      </div>
+      <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
+        <button type="button" onclick="closeNewSellerModal()" class="touch-target px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl font-semibold">Cancelar</button>
+        <button type="submit" class="touch-target px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-xs">Guardar Seller</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ================= SCRIPTS DE LA SUITE ================= -->
+  <script>
+    lucide.createIcons();
+
+    // Supabase Client
+    const SUPABASE_URL = 'https://wbcfmanuhotyevquiaht.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiY2ZtYW51aG90eWV2cXVpYWh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MjcyNzcsImV4cCI6MjEwNjIwMzI3N30.9Lx4mXOP3WIfmqJ5AGbqEOYTA2nZ_KeSnD54OFrR__g';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let sellersData = [];
+    let currentFilter = 'todos';
+
+    // Cargar sellers desde Supabase en tiempo real
+    async function loadSellersFromSupabase() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('saldoaudit_sellers')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        if (data && data.length > 0) {
+          sellersData = data;
+          updateKpis();
+          renderSellers();
+        }
+      } catch (err) {
+        console.warn('Usando fallback local:', err);
+      }
+    }
+
+    function updateKpis() {
+      const totalRecuperable = sellersData.reduce((acc, s) => acc + (Number(s.total_recuperable) || 0), 0);
+      const totalSellers = sellersData.length;
+      const comision = totalRecuperable * 0.10;
+
+      document.getElementById('kpiTotalRecuperable').textContent = `$${Math.round(totalRecuperable).toLocaleString('es-AR')}`;
+      document.getElementById('kpiSellersCount').textContent = `${totalSellers} cuentas`;
+      document.getElementById('kpiComisionProyectada').textContent = `$${Math.round(comision).toLocaleString('es-AR')}`;
+    }
+
+    // Fallback local
+    sellersData = [
+      {
+        id: '1',
+        empresa: 'Hudson Kitchenware (Hudson Cocina)',
+        rubro: 'Bazar, Ollas & Artículos de Cocina',
+        tienda_oficial: 'HUDSON COCINA',
+        contacto_nombre: 'Tomás Blousson (E-commerce Lead) / Nahuel Beneitez (Marketing)',
+        contacto_cargo: 'E-commerce Lead',
+        contacto_telefono: '+54 9 11 3560-2902',
+        contacto_linkedin: 'https://www.linkedin.com/in/tomasblousson',
+        facturacion_mensual: 148445872,
+        estado_pipeline: 'informe_entregado',
+        total_recuperable: 599518.74,
+        total_ventas: 296891745.33,
+        prioridad: 'A',
+        proxima_accion: 'Seguimiento por WhatsApp post-revisión de reclamos',
+        fecha_proxima_accion: '2026-10-26',
+        notas: 'Auditoría real de 60 días enviada el 21/10. Detectadas 15 discrepancias críticas (siniestros, 72h y fletes Full).'
+      },
+      {
+        id: '2',
+        empresa: 'Pettish Bazar (Pettish Online)',
+        rubro: 'Bazar, Vajilla & Hogar',
+        tienda_oficial: 'PETTISH ONLINE',
+        contacto_nombre: 'Verónica Iñiges / Claudio Dapelo',
+        contacto_cargo: 'Responsable Tienda Online / Director',
+        contacto_telefono: '+54 9 11 3647-7000',
+        contacto_linkedin: 'https://www.linkedin.com/in/ver%C3%B3nica-i%C3%B1iges-b089b9364/',
+        facturacion_mensual: 90000000,
+        estado_pipeline: 'lead_contactado',
+        total_recuperable: 0,
+        total_ventas: 0,
+        prioridad: 'A',
+        proxima_accion: 'Enviar mensaje de prospección con caso testigo',
+        fecha_proxima_accion: '2026-10-23',
+        notas: 'Top seller en envíos por Correo / Full. Alto volumen de vajilla con riesgo de roturas en devoluciones.'
+      },
+      {
+        id: '3',
+        empresa: 'Suprabond (Adhesivos y Herramientas)',
+        rubro: 'Ferretería, Construcción e Industria',
+        tienda_oficial: 'SUPRABOND',
+        contacto_nombre: 'Martín Paolucci',
+        contacto_cargo: 'Head of E-Commerce',
+        contacto_telefono: '',
+        contacto_linkedin: 'https://www.linkedin.com/in/martin-paolucci-43899516',
+        facturacion_mensual: 75000000,
+        estado_pipeline: 'lead_contactado',
+        total_recuperable: 0,
+        total_ventas: 0,
+        prioridad: 'B',
+        proxima_accion: 'Contactar vía LinkedIn',
+        fecha_proxima_accion: '2026-10-24',
+        notas: 'Volumen alto en Full. Productos pesados y solventes con fletes caros.'
+      },
+      {
+        id: '4',
+        empresa: 'Carestino Bebés',
+        rubro: 'Bebés, Cochecitos y Rodados',
+        tienda_oficial: 'CARESTINO',
+        contacto_nombre: 'Nicolás Pardo',
+        contacto_cargo: 'Technical Leader',
+        contacto_telefono: '',
+        contacto_linkedin: 'https://www.linkedin.com/in/ACoAAAIcYQEBwrwTKg1Yz64ARyovcJmNZGOW5-4',
+        facturacion_mensual: 200000000,
+        estado_pipeline: 'lead_contactado',
+        total_recuperable: 0,
+        total_ventas: 0,
+        prioridad: 'B',
+        proxima_accion: 'Contacto futuro para canal administrativo',
+        fecha_proxima_accion: '2026-11-01',
+        notas: 'Validó el problema: confirmó que MeLi sacó las alertas y los vendedores pierden fondos en silencio.'
+      },
+      {
+        id: '5',
+        empresa: 'TuGenesis3D',
+        rubro: 'Electrónica e Impresión 3D',
+        tienda_oficial: 'TUGENESIS3D',
+        contacto_nombre: 'Agustín Vignau',
+        contacto_cargo: 'Responsable de Automatización & Stock',
+        contacto_telefono: '',
+        contacto_linkedin: 'https://www.linkedin.com/in/agustinvignau',
+        facturacion_mensual: 45000000,
+        estado_pipeline: 'lead_contactado',
+        total_recuperable: 0,
+        total_ventas: 0,
+        prioridad: 'B',
+        proxima_accion: 'Monitorear respuesta InMail',
+        fecha_proxima_accion: '2026-10-23',
+        notas: 'Manejo de 900 SKUs y cruces SQL con planillas.'
+      }
+    ];
+
+    function renderSellers() {
+      const container = document.getElementById('sellersListContainer');
+      container.innerHTML = '';
+
+      const query = (document.getElementById('searchSeller').value || '').toLowerCase();
+
+      const filtered = sellersData.filter(s => {
+        const matchesFilter = (currentFilter === 'todos') || (s.estado_pipeline === currentFilter);
+        const matchesQuery = s.empresa.toLowerCase().includes(query) || 
+                             s.contacto_nombre.toLowerCase().includes(query) || 
+                             s.rubro.toLowerCase().includes(query);
+        return matchesFilter && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 bg-white rounded-2xl border border-slate-200">
+            <i data-lucide="store" class="w-8 h-8 text-slate-300 mx-auto mb-2"></i>
+            <p class="text-sm font-semibold text-slate-700">No se encontraron sellers con ese criterio</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      filtered.forEach(s => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs space-y-4";
+        
+        let badgeHtml = '';
+        if (s.estado_pipeline === 'informe_entregado') {
+          badgeHtml = '<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">Informe Entregado ($599k)</span>';
+        } else {
+          badgeHtml = '<span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 text-xs font-semibold">Lead Contactado</span>';
+        }
+
+        let recuperableHtml = '';
+        if (s.total_recuperable > 0) {
+          recuperableHtml = `
+            <div class="mt-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between">
+              <div>
+                <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider block">Recuperable Confirmado</span>
+                <span class="text-lg font-heading font-extrabold text-emerald-950">$${Number(s.total_recuperable).toLocaleString('es-AR')} ARS</span>
+              </div>
+              <a href="https://wa.me/${s.contacto_telefono ? s.contacto_telefono.replace(/[^0-9]/g, '') : ''}" target="_blank" class="touch-target px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 transition">
+                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                <span>Abrir WhatsApp</span>
+              </a>
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="font-heading font-bold text-base text-slate-900">${s.empresa}</h3>
+                <span class="text-[10px] font-mono font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">${s.tienda_oficial}</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">${s.rubro}</p>
+            </div>
+            <div>${badgeHtml}</div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <span class="text-slate-400 block text-[11px]">Contacto Clave:</span>
+              <span class="font-semibold text-slate-800">${s.contacto_nombre}</span>
+              ${s.contacto_cargo ? `<span class="text-slate-500">(${s.contacto_cargo})</span>` : ''}
+              ${s.contacto_telefono ? `<div class="text-blue-600 font-medium mt-0.5"><i data-lucide="phone" class="w-3 h-3 inline"></i> ${s.contacto_telefono}</div>` : ''}
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Próximo Paso:</span>
+              <span class="font-medium text-slate-800">${s.proxima_accion}</span>
+              ${s.fecha_proxima_accion ? `<div class="text-amber-700 font-bold mt-0.5"><i data-lucide="calendar" class="w-3 h-3 inline"></i> ${s.fecha_proxima_accion}</div>` : ''}
+            </div>
+          </div>
+
+          ${recuperableHtml}
+
+          ${s.notas ? `
+            <div class="text-xs bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-600">
+              <strong class="text-slate-700">Notas:</strong> ${s.notas}
+            </div>
+          ` : ''}
+        `;
+
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // Selector de Vistas de la Suite
+    function switchView(viewName) {
+      const views = ['pipeline', 'sops', 'brand', 'firmas', 'acuerdo'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.className = "tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition";
+      });
+      document.querySelectorAll('.mob-tab-btn').forEach(b => {
+        b.className = "mob-tab-btn flex items-center gap-1 py-1.5 px-2 rounded-lg text-slate-600";
+      });
+
+      const activeSection = document.getElementById(`view-${viewName}`);
+      if (activeSection) activeSection.classList.remove('hidden');
+
+      const activeBtn = document.getElementById(`tabBtn-${viewName}`);
+      if (activeBtn) activeBtn.className = "tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-xs border border-slate-200/80 transition";
+
+      const mobActiveBtn = document.getElementById(`mobTabBtn-${viewName}`);
+      if (mobActiveBtn) mobActiveBtn.className = "mob-tab-btn flex items-center gap-1 py-1.5 px-2 rounded-lg bg-blue-50 text-blue-700";
+
+      lucide.createIcons();
+    }
+
+    function setPipelineFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        if (btn.getAttribute('data-filter') === filter) {
+          btn.className = "filter-pill touch-target px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-white transition shrink-0";
+        } else {
+          btn.className = "filter-pill touch-target px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition shrink-0";
+        }
+      });
+      renderSellers();
+    }
+
+    function filterSellers() {
+      renderSellers();
+    }
+
+    // Modal
+    const modal = document.getElementById('newSellerModal');
+    function openNewSellerModal() { modal.showModal(); }
+    function closeNewSellerModal() { modal.close(); }
+
+    function saveSeller(e) {
+      e.preventDefault();
+      const newS = {
+        id: String(Date.now()),
+        empresa: document.getElementById('inputEmpresa').value,
+        rubro: document.getElementById('inputRubro').value || 'General',
+        tienda_oficial: document.getElementById('inputTienda').value || '-',
+        contacto_nombre: document.getElementById('inputContacto').value || 'Sin Asignar',
+        contacto_cargo: document.getElementById('inputCargo').value || '',
+        contacto_telefono: document.getElementById('inputTelefono').value || '',
+        contacto_linkedin: document.getElementById('inputLinkedin').value || '',
+        facturacion_mensual: 0,
+        estado_pipeline: 'lead_contactado',
+        total_recuperable: 0,
+        total_ventas: 0,
+        prioridad: 'A',
+        proxima_accion: 'Primer contacto / Propuesta de auditoría',
+        fecha_proxima_accion: '',
+        notas: document.getElementById('inputNotas').value || ''
+      };
+
+      sellersData.unshift(newS);
+      renderSellers();
+      closeNewSellerModal();
+      document.getElementById('newSellerForm').reset();
+    }
+
+    // Helpers de Copiado
+    function copySnippet(elementId, btn) {
+      const el = document.getElementById(elementId);
+      const text = el.value || el.innerText;
+      navigator.clipboard.writeText(text.trim()).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-300"></i><span>¡Copiado!</span>`;
+        lucide.createIcons();
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          lucide.createIcons();
+        }, 2200);
+      });
+    }
+
+    function copyColorHex(hex, card) {
+      navigator.clipboard.writeText(hex).then(() => {
+        const span = card.querySelector('span:last-child');
+        const prev = span.innerText;
+        span.innerText = '¡Copiado!';
+        span.classList.add('text-emerald-600');
+        setTimeout(() => {
+          span.innerText = prev;
+          span.classList.remove('text-emerald-600');
+        }, 2000);
+      });
+    }
+
+    function copyVisualSignature(elementId, btn) {
+      const el = document.getElementById(elementId);
+      const range = document.createRange();
+      range.selectNode(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+
+      try {
+        document.execCommand('copy');
+        sel.removeAllRanges();
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> ¡Copiado!`;
+        btn.classList.replace('bg-emerald-600', 'bg-emerald-800');
+        lucide.createIcons();
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.replace('bg-emerald-800', 'bg-emerald-600');
+          lucide.createIcons();
+        }, 2500);
+      } catch (err) {
+        alert('Presioná Ctrl+C para copiar la firma');
+      }
+    }
+
+    function copyAcuerdoText() {
+      const textarea = document.getElementById('acuerdoTexto');
+      navigator.clipboard.writeText(textarea.value.trim()).then(() => {
+        const btn = document.getElementById('btnCopyAcuerdo');
+        btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>¡Copiado!</span>`;
+        lucide.createIcons();
+        setTimeout(() => {
+          btn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i><span>Copiar Acuerdo Completo</span>`;
+          lucide.createIcons();
+        }, 2000);
+      });
+    }
+
+    // ================= AUTENTICACIÓN OFICIAL DE LA SUITE =================
+    const AUTH_USER = "saldoaudit.oficial@gmail.com";
+    const AUTH_PASS = "S@ldoAudit#2026.Ar";
+
+    function togglePasswordVisibility() {
+      const passInput = document.getElementById('loginPass');
+      const passIcon = document.getElementById('passToggleIcon');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        passIcon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        passInput.type = 'password';
+        passIcon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    }
+
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('saldoaudit_auth') === 'true' || localStorage.getItem('saldoaudit_auth') === 'true';
+      const overlay = document.getElementById('loginOverlay');
+      const app = document.getElementById('appContainer');
+
+      if (isAuth) {
+        if (overlay) {
+          overlay.style.display = 'none';
+          overlay.classList.add('hidden');
+        }
+        if (app) {
+          app.style.display = 'flex';
+          app.classList.remove('hidden');
+        }
+        lucide.createIcons();
+        renderSellers();
+        loadSellersFromSupabase();
+      } else {
+        if (overlay) {
+          overlay.style.display = 'flex';
+          overlay.classList.remove('hidden');
+        }
+        if (app) {
+          app.style.display = 'none';
+          app.classList.add('hidden');
+        }
+        lucide.createIcons();
+      }
+    }
+
+    function handleAuthLogin(e) {
+      e.preventDefault();
+      const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
+      const pass = (document.getElementById('loginPass').value || '').trim();
+      const errBox = document.getElementById('loginError');
+
+      if (email === AUTH_USER.toLowerCase() && pass === AUTH_PASS) {
+        sessionStorage.setItem('saldoaudit_auth', 'true');
+        localStorage.setItem('saldoaudit_auth', 'true');
+        if (errBox) {
+          errBox.classList.add('hidden');
+          errBox.style.display = 'none';
+        }
+        checkAuth();
+      } else {
+        if (errBox) {
+          errBox.classList.remove('hidden');
+          errBox.style.display = 'flex';
+          lucide.createIcons();
+        }
+      }
+    }
+
+    function handleAuthLogout() {
+      sessionStorage.removeItem('saldoaudit_auth');
+      localStorage.removeItem('saldoaudit_auth');
+      location.reload();
+    }
+
+    // Inicializar chequeo de seguridad
+    checkAuth();
+  </script>
+</body>
+</html>
