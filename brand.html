@@ -3,20 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brand Kit Oficial — SaldoAudit</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D4ED8' stroke-width='2.5'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><path d='m9 12 2 2 4-4'/></svg>">
+  <title>Brand Kit & Manual de Identidad Oficial — SaldoAudit</title>
+  
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-saldoaudit-icon.svg">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
     body { font-family: 'Inter', sans-serif; }
-    h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
     .mono { font-family: 'JetBrains Mono', monospace; }
+    .checkerboard {
+      background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+                        linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+                        linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+    .touch-target { min-height: 44px; min-width: 44px; }
   </style>
 </head>
-<body class="bg-slate-100 min-h-screen text-slate-800 antialiased selection:bg-blue-600 selection:text-white pb-20">
+<body class="bg-slate-100 min-h-screen text-slate-800 antialiased selection:bg-blue-600 selection:text-white pb-24">
 
   <!-- CABECERA -->
   <header class="bg-[#0F172A] text-white py-10 px-6 shadow-xl border-b border-slate-800">
@@ -30,15 +43,15 @@
         </div>
         <div>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-1.5">
-            Manual de Marca & Identidad Visual
+            Manual de Marca & Identidad Visual (SSOT)
           </div>
           <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">SaldoAudit</h1>
-          <p class="text-slate-400 text-xs sm:text-sm mt-0.5">Auditoría Forense & Recupero de Fondos en Mercado Libre (SSOT)</p>
+          <p class="text-slate-400 text-xs sm:text-sm mt-0.5">Auditoría Forense & Recupero de Fondos en Mercado Libre Argentina</p>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <a href="index.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition flex items-center gap-2">
-          <i data-lucide="globe" class="w-4 h-4"></i> Ir a la Landing
+          <i data-lucide="globe" class="w-4 h-4"></i> Ver Sitio Web
         </a>
         <a href="procedimientos.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm transition flex items-center gap-2">
           <i data-lucide="file-text" class="w-4 h-4"></i> Procedimientos (SOPs)
@@ -47,178 +60,298 @@
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-6 mt-10 space-y-10">
+  <main class="max-w-6xl mx-auto px-6 mt-10 space-y-12">
 
     <!-- 1. CONCEPTO Y POSICIONAMIENTO -->
-    <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
-      <h2 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-        <i data-lucide="target" class="w-5 h-5 text-blue-600"></i> Filosofía & Posicionamiento de Marca
+    <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+      <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+        <i data-lucide="target" class="w-5 h-5 text-blue-600"></i> Concepto & Arquitectura de Marca
       </h2>
-      <p class="text-slate-600 text-sm leading-relaxed max-w-3xl">
-        <strong>SaldoAudit</strong> no es una gestoría informal ni un bot genérico. Es una <strong>firma de auditoría forense especializada en Mercado Libre</strong> que ayuda a marcas líderes y PyMEs a recuperar capital atrapado por siniestros de correo, plazos vencidos de devolución y cargos indebidos. La identidad visual combina la <strong>solidez de una firma contable</strong> con la <strong>velocidad analítica de un software fintech</strong>.
+      <p class="text-slate-600 text-sm leading-relaxed max-w-4xl">
+        <strong>SaldoAudit</strong> se posiciona en el cruce entre una <strong>firma de auditoría contable rigurosa</strong> y un <strong>software fintech de alta velocidad</strong>. El isotipo integra un <strong>escudo de protección</strong> (defensa contra los cobros indebidos del marketplace) con un <strong>tilde de verificación contable</strong> (fondos auditados y acreditados en cuenta). La marca nunca apela al amarillismo ni a promesas mágicas: su reputación descansa en la trazabilidad algorítmica y el cumplimiento normativo.
       </p>
 
       <!-- PALETA DE COLORES OFICIAL -->
-      <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mt-8 mb-4">Paleta Cromática Primaria & Semántica</h3>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 pt-4 mb-3">Paleta Cromática Oficial (Hacé clic en cualquier tarjeta para copiar el HEX)</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
         
         <!-- Azul Cobalto -->
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-3 cursor-pointer group" onclick="copyColor('#1D4ED8', this)">
-          <div class="w-full h-16 rounded-xl bg-[#1D4ED8] shadow-inner flex items-center justify-center text-white font-mono text-xs opacity-90 group-hover:opacity-100 transition">
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-2 cursor-pointer group hover:border-blue-300 transition" onclick="copyColor('#1D4ED8', this)">
+          <div class="w-full h-14 rounded-xl bg-[#1D4ED8] shadow-inner flex items-center justify-center text-white font-mono text-xs opacity-90 group-hover:opacity-100 transition">
             #1D4ED8
           </div>
           <div>
             <span class="block text-xs font-bold text-slate-900">Cobalto Forense</span>
-            <span class="block text-[11px] text-slate-500">Tecnología, Algoritmos, Precisión</span>
+            <span class="block text-[10px] text-slate-500">Primario / Acción</span>
           </div>
-          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Click para copiar</span>
+          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Copiar</span>
         </div>
 
         <!-- Azul Pizarra -->
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-3 cursor-pointer group" onclick="copyColor('#0F172A', this)">
-          <div class="w-full h-16 rounded-xl bg-[#0F172A] shadow-inner flex items-center justify-center text-white font-mono text-xs opacity-90 group-hover:opacity-100 transition">
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-2 cursor-pointer group hover:border-slate-400 transition" onclick="copyColor('#0F172A', this)">
+          <div class="w-full h-14 rounded-xl bg-[#0F172A] shadow-inner flex items-center justify-center text-white font-mono text-xs opacity-90 group-hover:opacity-100 transition">
             #0F172A
           </div>
           <div>
             <span class="block text-xs font-bold text-slate-900">Pizarra Oscuro</span>
-            <span class="block text-[11px] text-slate-500">Solidez corporativa, Contraste</span>
+            <span class="block text-[10px] text-slate-500">Cabeceras / Fondo</span>
           </div>
-          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Click para copiar</span>
+          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Copiar</span>
         </div>
 
         <!-- Verde Esmeralda -->
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-3 cursor-pointer group" onclick="copyColor('#10B981', this)">
-          <div class="w-full h-16 rounded-xl bg-[#10B981] shadow-inner flex items-center justify-center text-white font-mono text-xs opacity-90 group-hover:opacity-100 transition">
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-2 cursor-pointer group hover:border-emerald-300 transition" onclick="copyColor('#10B981', this)">
+          <div class="w-full h-14 rounded-xl bg-[#10B981] shadow-inner flex items-center justify-center text-white font-mono text-xs opacity-90 group-hover:opacity-100 transition">
             #10B981
           </div>
           <div>
             <span class="block text-xs font-bold text-slate-900">Verde Recupero</span>
-            <span class="block text-[11px] text-slate-500">Fondos acreditados, Éxito</span>
+            <span class="block text-[10px] text-slate-500">Éxito / Acreditado</span>
           </div>
-          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Click para copiar</span>
+          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Copiar</span>
+        </div>
+
+        <!-- Celeste Auditoría -->
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-2 cursor-pointer group hover:border-sky-300 transition" onclick="copyColor('#38BDF8', this)">
+          <div class="w-full h-14 rounded-xl bg-[#38BDF8] shadow-inner flex items-center justify-center text-slate-900 font-mono text-xs opacity-90 group-hover:opacity-100 transition">
+            #38BDF8
+          </div>
+          <div>
+            <span class="block text-xs font-bold text-slate-900">Celeste Análisis</span>
+            <span class="block text-[10px] text-slate-500">Radares / Acentos</span>
+          </div>
+          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Copiar</span>
         </div>
 
         <!-- Fondo Hielo -->
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-3 cursor-pointer group" onclick="copyColor('#F8FAFC', this)">
-          <div class="w-full h-16 rounded-xl bg-[#F8FAFC] border border-slate-300 shadow-inner flex items-center justify-center text-slate-700 font-mono text-xs opacity-90 group-hover:opacity-100 transition">
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-2 cursor-pointer group hover:border-slate-300 transition" onclick="copyColor('#F8FAFC', this)">
+          <div class="w-full h-14 rounded-xl bg-[#F8FAFC] border border-slate-200 shadow-inner flex items-center justify-center text-slate-700 font-mono text-xs opacity-90 group-hover:opacity-100 transition">
             #F8FAFC
           </div>
           <div>
             <span class="block text-xs font-bold text-slate-900">Gris Lienzo</span>
-            <span class="block text-[11px] text-slate-500">Superficies limpias, Fondos</span>
+            <span class="block text-[10px] text-slate-500">Fondo General</span>
           </div>
-          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Click para copiar</span>
+          <span class="text-[10px] text-blue-600 font-semibold group-hover:underline">Copiar</span>
         </div>
 
       </div>
     </section>
 
-    <!-- 2. KIT DE LOGOS E ISOTIPOS VECTORIALES -->
-    <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+    <!-- 2. GALERÍA DE LOGOS VECTORIALES OFICIALES -->
+    <section class="space-y-6">
       <div>
         <h2 class="text-xl font-bold text-slate-900 mb-1 flex items-center gap-2">
-          <i data-lucide="shield-check" class="w-5 h-5 text-blue-600"></i> Logos Oficiales & Descarga Vectorial
+          <i data-lucide="layers" class="w-5 h-5 text-blue-600"></i> Galería de Logos Oficiales
         </h2>
-        <p class="text-slate-500 text-xs sm:text-sm">Recursos listos para usar en presentaciones, firmas de email, documentos PDF y plataformas.</p>
+        <p class="text-slate-500 text-xs sm:text-sm">Archivos vectoriales SVG descargables para membretes, firmas de correo, redes y presentaciones.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <!-- LOGO 1: ISOTIPO ESCUDO FORENSE -->
-        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-between gap-6 text-center">
-          <div class="w-24 h-24 rounded-3xl bg-blue-700 text-white flex items-center justify-center shadow-md shadow-blue-700/20">
-            <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="m9 12 2 2 4-4"/>
-            </svg>
-          </div>
+        <!-- LOGO 1: HORIZONTAL FONDO CLARO -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
           <div>
-            <h3 class="font-bold text-slate-900 text-base">Isotipo Escudo Forense</h3>
-            <p class="text-xs text-slate-500 mt-1 max-w-xs">Ideal para avatares de perfil (WhatsApp Business, Gmail, Favicon 32x32 y apps móviles).</p>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 bg-blue-50 text-blue-800 rounded-full text-xs font-bold uppercase tracking-wider">
+                Logo Principal (Fondo Claro)
+              </span>
+              <span class="text-xs font-mono font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded">SVG</span>
+            </div>
+            <div class="h-44 checkerboard rounded-2xl p-6 flex items-center justify-center border border-slate-200/60">
+              <img src="assets/logo-saldoaudit.svg" alt="SaldoAudit Claro" class="max-h-20 w-auto object-contain">
+            </div>
+            <div class="mt-4">
+              <h3 class="font-bold text-slate-900 text-sm">logo-saldoaudit.svg</h3>
+              <p class="text-xs text-slate-500 mt-1">Uso: Facturas, membretes, presupuestos, reportes de auditoría y fondos blancos.</p>
+            </div>
           </div>
-          <div class="flex items-center gap-2 w-full max-w-xs">
-            <button onclick="downloadSVG('svg-escudo', 'SaldoAudit-Isotipo-Escudo.svg')" class="flex-1 py-2 px-3 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar SVG
-            </button>
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <a href="assets/logo-saldoaudit.svg" download class="touch-target w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition shadow-xs">
+              <i data-lucide="download" class="w-4 h-4"></i> Descargar SVG Claro
+            </a>
           </div>
         </div>
 
-        <!-- LOGO 2: LOGOTIPO COMPLETO HORIZONTAL -->
-        <div class="p-6 bg-slate-900 rounded-2xl border border-slate-800 flex flex-col items-center justify-between gap-6 text-center">
-          <div class="flex items-center gap-3 py-6">
-            <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md">
-              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <path d="m9 12 2 2 4-4"/>
-              </svg>
-            </div>
-            <div class="text-left">
-              <div class="text-2xl font-extrabold text-white tracking-tight leading-none">Saldo<span class="text-blue-400">Audit</span></div>
-              <div class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mt-1">Auditoría MeLi</div>
-            </div>
-          </div>
+        <!-- LOGO 2: HORIZONTAL FONDO OSCURO -->
+        <div class="bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-800 flex flex-col justify-between text-white">
           <div>
-            <h3 class="font-bold text-white text-base">Logotipo Corporativo (Dark)</h3>
-            <p class="text-xs text-slate-400 mt-1 max-w-xs">Versión principal para cabeceras, contratos y reportes ejecutivos.</p>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 bg-slate-800 text-blue-400 rounded-full text-xs font-bold uppercase tracking-wider border border-slate-700">
+                Logo Invertido (Fondo Oscuro)
+              </span>
+              <span class="text-xs font-mono font-bold text-blue-300 bg-slate-800 px-2 py-0.5 rounded">SVG</span>
+            </div>
+            <div class="h-44 bg-slate-950 rounded-2xl p-6 flex items-center justify-center border border-slate-800">
+              <img src="assets/logo-saldoaudit-dark.svg" alt="SaldoAudit Oscuro" class="max-h-20 w-auto object-contain">
+            </div>
+            <div class="mt-4">
+              <h3 class="font-bold text-white text-sm">logo-saldoaudit-dark.svg</h3>
+              <p class="text-xs text-slate-400 mt-1">Uso: Barra superior oscura (Navbar), banners nocturnos y diapositivas ejecutivas.</p>
+            </div>
           </div>
-          <div class="flex items-center gap-2 w-full max-w-xs">
-            <button onclick="downloadSVG('svg-completo', 'SaldoAudit-Logo-Horizontal.svg')" class="flex-1 py-2 px-3 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar SVG
-            </button>
+          <div class="mt-6 pt-4 border-t border-slate-800">
+            <a href="assets/logo-saldoaudit-dark.svg" download class="touch-target w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition shadow-xs">
+              <i data-lucide="download" class="w-4 h-4"></i> Descargar SVG Oscuro
+            </a>
+          </div>
+        </div>
+
+        <!-- LOGO 3: ISOTIPO ESCUDO CUADRADO -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 bg-emerald-50 text-emerald-800 rounded-full text-xs font-bold uppercase tracking-wider">
+                Isotipo / Símbolo Cuadrado
+              </span>
+              <span class="text-xs font-mono font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">SVG</span>
+            </div>
+            <div class="h-44 checkerboard rounded-2xl p-6 flex items-center justify-center border border-slate-200/60">
+              <img src="assets/logo-saldoaudit-icon.svg" alt="SaldoAudit Isotipo" class="max-h-24 w-auto object-contain">
+            </div>
+            <div class="mt-4">
+              <h3 class="font-bold text-slate-900 text-sm">logo-saldoaudit-icon.svg</h3>
+              <p class="text-xs text-slate-500 mt-1">Uso: Foto de perfil de WhatsApp Business, avatar de Gmail, icono de app móvil y Favicon web.</p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <a href="assets/logo-saldoaudit-icon.svg" download class="touch-target w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition shadow-xs">
+              <i data-lucide="download" class="w-4 h-4"></i> Descargar Isotipo Cuadrado
+            </a>
+          </div>
+        </div>
+
+        <!-- LOGO 4: MONOCROMO OFICIAL -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-800 rounded-full text-xs font-bold uppercase tracking-wider">
+                Versión Monocromo / Sello
+              </span>
+              <span class="text-xs font-mono font-bold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">SVG</span>
+            </div>
+            <div class="h-44 checkerboard rounded-2xl p-6 flex items-center justify-center border border-slate-200/60">
+              <img src="assets/logo-saldoaudit-mono.svg" alt="SaldoAudit Mono" class="max-h-20 w-auto object-contain">
+            </div>
+            <div class="mt-4">
+              <h3 class="font-bold text-slate-900 text-sm">logo-saldoaudit-mono.svg</h3>
+              <p class="text-xs text-slate-500 mt-1">Uso: Documentos blanco y negro, remitos impresos, grabados láser y sellos de agua.</p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <a href="assets/logo-saldoaudit-mono.svg" download class="touch-target w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition shadow-xs">
+              <i data-lucide="download" class="w-4 h-4"></i> Descargar Monocromo
+            </a>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- 3. TIPOGRAFÍAS DEL SISTEMA -->
+    <!-- 3. ZONA DE EXCLUSIÓN Y REGLAS DE CO-BRANDING -->
     <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
       <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-        <i data-lucide="type" class="w-5 h-5 text-blue-600"></i> Sistema Tipográfico
+        <i data-lucide="shield-alert" class="w-5 h-5 text-blue-600"></i> Zona de Exclusión & Reglas de Co-Branding
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-600 leading-relaxed">
+        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <span class="font-bold text-slate-900 text-sm block">Zona de Exclusión (Clear Space)</span>
+          <p>
+            El isotipo del escudo debe conservar un margen perimetral libre equivalente a la mitad de su altura (<kbd class="px-1.5 py-0.5 bg-slate-200 rounded font-mono text-[10px]">0.5X</kbd>). Nunca colocar texto, líneas divisorias o bordes pegados al símbolo.
+          </p>
+        </div>
+        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+          <span class="font-bold text-slate-900 text-sm block">Convivencia con Mercado Libre & Marcas</span>
+          <p>
+            Al mostrar reportes conjuntos (ej. SaldoAudit + Hudson o SaldoAudit en Mercado Libre), se separan mediante una línea vertical divisoria en gris tenue (<kbd class="px-1.5 py-0.5 bg-slate-200 rounded font-mono text-[10px]">#E2E8F0</kbd>) manteniendo idéntica altura visual sin distorsionar proporciones.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TONO DE VOZ & PERSONALIDAD -->
+    <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+      <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+        <i data-lucide="message-square-quote" class="w-5 h-5 text-blue-600"></i> Tono de Voz & Personalidad de la Firma
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 space-y-1.5">
+          <span class="font-bold text-blue-900 uppercase">1. Forense & Cuantitativo</span>
+          <p class="text-blue-950 leading-relaxed">
+            Hablamos con números exactos: nunca "detectamos varios reclamos", sino "detectamos 15 órdenes críticas por $599.518 ARS". La precisión matemática genera confianza inmediata.
+          </p>
+        </div>
+        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-1.5">
+          <span class="font-bold text-emerald-900 uppercase">2. Alineados al Éxito</span>
+          <p class="text-emerald-950 leading-relaxed">
+            Cero honorarios fijos que castiguen al vendedor si MeLi opera bien. Cobramos el 10% del reporte entregado o el 20% solo sobre el dinero que efectivamente entra a Mercado Pago.
+          </p>
+        </div>
+        <div class="p-4 bg-slate-900 text-white rounded-2xl space-y-1.5">
+          <span class="font-bold text-blue-400 uppercase">3. Firme ante Mercado Libre</span>
+          <p class="text-slate-300 leading-relaxed">
+            Invocamos los propios términos y condiciones del marketplace (Programa de Protección al Vendedor) sin confrontaciones agresivas, pero con contundencia probatoria.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. UI KIT & COMPONENTES OFICIALES -->
+    <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+      <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+        <i data-lucide="layout" class="w-5 h-5 text-blue-600"></i> UI Kit Oficial (Componentes Web & Mobile)
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-          <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Titulares & Marca</span>
-          <h4 class="text-xl font-extrabold text-slate-900" style="font-family: 'Plus Jakarta Sans', sans-serif;">Plus Jakarta Sans</h4>
-          <p class="text-xs text-slate-500 leading-relaxed">Geométrica, moderna y contundente. Usada en títulos (H1, H2, H3) y cifras monetarias destacadas.</p>
+        
+        <!-- Botones -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+          <span class="text-xs font-bold text-slate-700 uppercase">Estilo de Botones</span>
+          <button class="touch-target w-full py-2.5 px-4 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs rounded-xl shadow-xs transition">
+            Botón Primario Forense
+          </button>
+          <button class="touch-target w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-xs transition">
+            Botón Ejecutivo Dark
+          </button>
+          <button class="touch-target w-full py-2.5 px-4 bg-white border border-slate-200 text-slate-700 font-semibold text-xs rounded-xl hover:bg-slate-100 transition">
+            Botón Secundario Outline
+          </button>
         </div>
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-          <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Cuerpo de Texto</span>
-          <h4 class="text-xl font-medium text-slate-900" style="font-family: 'Inter', sans-serif;">Inter</h4>
-          <p class="text-xs text-slate-500 leading-relaxed">Máxima legibilidad en pantallas móviles y párrafos densos. Neutral y libre de distracciones.</p>
+
+        <!-- Badges de Estado -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+          <span class="text-xs font-bold text-slate-700 uppercase">Badges de Prioridad</span>
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold rounded-full">
+              Crítica (&lt;72h)
+            </span>
+            <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold rounded-full">
+              Alta (Siniestro)
+            </span>
+            <span class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold rounded-full">
+              Media (Trancada)
+            </span>
+            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-full">
+              Acreditado en MP
+            </span>
+          </div>
         </div>
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-          <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Datos Forenses</span>
-          <h4 class="text-xl font-medium text-slate-900 font-mono">JetBrains Mono</h4>
-          <p class="text-xs text-slate-500 leading-relaxed">Tipografía monoespaciada para IDs de paquetes, números de orden de MeLi y montos en tablas.</p>
+
+        <!-- Tarjeta de Métrica Forense -->
+        <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-2">
+          <div class="flex items-center justify-between text-slate-400">
+            <span class="text-[10px] font-bold uppercase tracking-wider">Recuperable Auditado</span>
+            <i data-lucide="banknote" class="w-4 h-4 text-emerald-600"></i>
+          </div>
+          <div class="text-xl font-extrabold text-slate-900 font-heading">$599.518</div>
+          <span class="text-[10px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+            +15 órdenes en riesgo
+          </span>
         </div>
+
       </div>
     </section>
 
   </main>
-
-  <!-- CONTENEDORES OCULTOS SVG PARA DESCARGA -->
-  <div class="hidden">
-    <div id="svg-escudo">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-        <rect width="200" height="200" rx="40" fill="#1D4ED8"/>
-        <path d="M100 170s60-30 60-75V45l-60-22.5L40 45v50c0 45 60 75 60 75z" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="m80 97.5 15 15 30-30" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div id="svg-completo">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="500" height="120">
-        <rect width="500" height="120" fill="#0F172A"/>
-        <g transform="translate(30, 20)">
-          <rect width="80" height="80" rx="18" fill="#1D4ED8"/>
-          <path d="M40 68s24-12 24-30V18L40 9 16 18v20c0 18 24 30 24 30z" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="m32 39 6 6 12-12" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        </g>
-        <text x="135" y="70" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="44" fill="#FFFFFF">Saldo<tspan fill="#60A5FA">Audit</tspan></text>
-        <text x="135" y="94" font-family="'Inter', Arial, sans-serif" font-weight="600" font-size="12" fill="#94A3B8" letter-spacing="3">AUDITORÍA FORENSE MERCADO LIBRE</text>
-      </svg>
-    </div>
-  </div>
 
   <script>
     lucide.createIcons();
@@ -234,19 +367,6 @@
           span.classList.remove('text-emerald-600');
         }, 2000);
       });
-    }
-
-    function downloadSVG(containerId, filename) {
-      const svg = document.getElementById(containerId).innerHTML.trim();
-      const blob = new Blob([svg], { type: 'image/svg+xml' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
     }
   </script>
 </body>
