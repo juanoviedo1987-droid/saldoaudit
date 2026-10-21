@@ -28,13 +28,14 @@
           },
           colors: {
             brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#1d4ed8',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              800: '#1e40af',
-              900: '#0f172a'
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+              dark: '#090d16'
             }
           }
         }
@@ -69,23 +70,23 @@
 <body class="h-full font-sans antialiased text-slate-800 bg-slate-100 overflow-x-hidden">
 
   <!-- ================= 1. OVERLAY DE AUTENTICACIÓN OFICIAL ================= -->
-  <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A] p-4 sm:p-6 overflow-y-auto">
+  <div id="loginOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-[#090D16] p-4 sm:p-6 overflow-y-auto">
     <div class="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6 animate-modal">
       
       <div class="flex flex-col items-center text-center space-y-2">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-700/30" style="background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-900/30" style="background: linear-gradient(135deg, #059669 0%, #064E3B 100%);">
           <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none">
             <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
-            <path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
-            <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/>
+            <path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+            <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/>
             <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
-            <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/>
+            <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/>
           </svg>
         </div>
-        <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Acceso Exclusivo Fundador
+        <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i> Acceso Exclusivo Fundador
         </span>
-        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Saldo<span class="text-blue-600">Audit</span></h1>
+        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Saldo<span class="text-emerald-600">Audit</span></h1>
         <p class="text-xs text-slate-500 font-medium">Suite Operativa Integral &bull; CRM, SOPs & Brand Kit</p>
       </div>
 
@@ -94,7 +95,7 @@
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Usuario / Correo Oficial</label>
           <div class="relative">
             <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-            <input type="email" id="loginEmail" required autofocus class="touch-target w-full pl-10 pr-4 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition bg-slate-50 text-slate-900" placeholder="saldoaudit.oficial@gmail.com" value="">
+            <input type="email" id="loginEmail" required autofocus class="touch-target w-full pl-10 pr-4 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition bg-slate-50 text-slate-900" placeholder="saldoaudit.oficial@gmail.com" value="">
           </div>
         </div>
 
@@ -102,7 +103,7 @@
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Contraseña Maestra</label>
           <div class="relative">
             <i data-lucide="key" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-            <input type="password" id="loginPass" required class="touch-target w-full pl-10 pr-12 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition bg-slate-50 text-slate-900" placeholder="••••••••••••">
+            <input type="password" id="loginPass" required class="touch-target w-full pl-10 pr-12 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition bg-slate-50 text-slate-900" placeholder="••••••••••••">
             <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1" title="Ver / Ocultar contraseña">
               <i data-lucide="eye" id="passToggleIcon" class="w-4 h-4"></i>
             </button>
@@ -114,7 +115,7 @@
           <span>Credenciales inválidas. Acceso restringido al personal autorizado.</span>
         </div>
 
-        <button type="submit" id="loginSubmitBtn" class="touch-target w-full py-3 px-4 bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm rounded-xl shadow-md shadow-blue-700/20 transition flex items-center justify-center gap-2">
+        <button type="submit" id="loginSubmitBtn" class="touch-target w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md shadow-emerald-700/20 transition flex items-center justify-center gap-2">
           <i data-lucide="lock" class="w-4 h-4"></i>
           <span>Ingresar a la Suite</span>
         </button>
@@ -135,21 +136,21 @@
       
       <!-- Logo Oficial -->
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center shadow-xs shrink-0" style="background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center shadow-xs shrink-0" style="background: linear-gradient(135deg, #059669 0%, #064E3B 100%);">
           <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none">
             <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
-            <path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
-            <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/>
+            <path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+            <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/>
             <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
-            <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/>
+            <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/>
           </svg>
         </div>
         <div>
           <div class="flex items-center gap-2">
             <span class="font-heading font-extrabold text-base text-slate-900 tracking-tight leading-none">
-              Saldo<span class="text-blue-600">Audit</span>
+              Saldo<span class="text-emerald-600">Audit</span>
             </span>
-            <span class="text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+            <span class="text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
               Suite 2.0
             </span>
           </div>
@@ -159,8 +160,8 @@
 
       <!-- Las 6 Pestañas Maestras de Navegación -->
       <nav class="hidden lg:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold">
-        <button type="button" onclick="switchView('pipeline')" id="tabBtn-pipeline" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-xs border border-slate-200/80 transition">
-          <i data-lucide="kanban" class="w-3.5 h-3.5 text-blue-600"></i>
+        <button type="button" onclick="switchView('pipeline')" id="tabBtn-pipeline" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-emerald-800 shadow-xs border border-slate-200/80 transition">
+          <i data-lucide="kanban" class="w-3.5 h-3.5 text-emerald-600"></i>
           <span>1. CRM & Pipeline</span>
         </button>
         <button type="button" onclick="switchView('sops')" id="tabBtn-sops" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
@@ -187,11 +188,11 @@
 
       <!-- Botones de Acción y Salida -->
       <div class="flex items-center gap-2">
-        <a href="index.html" target="_blank" class="touch-target inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition shadow-2xs" title="Abrir Landing y Motor Auditor Web">
+        <a href="index.html" target="_blank" class="touch-target inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl transition shadow-2xs" title="Abrir Landing y Motor Auditor Web">
           <i data-lucide="scan" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Motor Web</span>
         </a>
-        <button type="button" onclick="openNewSellerModal()" class="touch-target inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 rounded-xl transition shadow-xs">
+        <button type="button" onclick="openNewSellerModal()" class="touch-target inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition shadow-xs">
           <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">+ Nuevo Seller</span>
         </button>
@@ -203,7 +204,7 @@
 
     <!-- NAVEGACIÓN MÓVIL / TABLET (SCROLL HORIZONTAL CÓMODO) -->
     <div class="lg:hidden bg-white border-b border-slate-200 px-3 py-2 flex items-center gap-1.5 overflow-x-auto text-xs font-semibold shrink-0">
-      <button type="button" onclick="switchView('pipeline')" id="mobTabBtn-pipeline" class="mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg bg-blue-50 text-blue-700 shrink-0">
+      <button type="button" onclick="switchView('pipeline')" id="mobTabBtn-pipeline" class="mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-50 text-emerald-800 shrink-0">
         <i data-lucide="kanban" class="w-3.5 h-3.5"></i>
         <span>1. CRM</span>
       </button>
@@ -1129,39 +1130,39 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
           </span>
         </div>
 
-        <!-- Paleta Cromática con Copia Rápida -->
+        <!-- Paleta Cromática con Copia Rápida (Fintech Emerald & Graphite) -->
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Paleta Cromática Oficial (Hacé clic en cualquier tarjeta para copiar el código HEX)</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Paleta Cromática Oficial Fintech (Hacé clic en cualquier tarjeta para copiar el código HEX)</span>
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
             
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-blue-400 transition" onclick="copyColorHex('#1D4ED8', this)">
-              <div class="w-full h-14 rounded-lg bg-[#1D4ED8] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#1D4ED8</div>
-              <span class="block text-xs font-bold text-slate-900">Cobalto Forense</span>
-              <span class="block text-[10px] text-blue-600 font-semibold">Click para copiar</span>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-emerald-400 transition" onclick="copyColorHex('#059669', this)">
+              <div class="w-full h-14 rounded-lg bg-[#059669] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#059669</div>
+              <span class="block text-xs font-bold text-slate-900">Fintech Emerald</span>
+              <span class="block text-[10px] text-emerald-600 font-semibold">Primario Forense</span>
             </div>
 
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-slate-400 transition" onclick="copyColorHex('#0F172A', this)">
-              <div class="w-full h-14 rounded-lg bg-[#0F172A] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#0F172A</div>
-              <span class="block text-xs font-bold text-slate-900">Pizarra Oscuro</span>
-              <span class="block text-[10px] text-blue-600 font-semibold">Click para copiar</span>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-slate-500 transition" onclick="copyColorHex('#090D16', this)">
+              <div class="w-full h-14 rounded-lg bg-[#090D16] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#090D16</div>
+              <span class="block text-xs font-bold text-slate-900">Grafito Carbón</span>
+              <span class="block text-[10px] text-emerald-600 font-semibold">Cabeceras / Dark</span>
             </div>
 
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-emerald-400 transition" onclick="copyColorHex('#10B981', this)">
-              <div class="w-full h-14 rounded-lg bg-[#10B981] flex items-center justify-center text-white font-mono text-xs font-bold mb-2">#10B981</div>
-              <span class="block text-xs font-bold text-slate-900">Verde Recupero</span>
-              <span class="block text-[10px] text-blue-600 font-semibold">Click para copiar</span>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-emerald-300 transition" onclick="copyColorHex('#34D399', this)">
+              <div class="w-full h-14 rounded-lg bg-[#34D399] flex items-center justify-center text-slate-900 font-mono text-xs font-bold mb-2">#34D399</div>
+              <span class="block text-xs font-bold text-slate-900">Menta Análisis</span>
+              <span class="block text-[10px] text-emerald-600 font-semibold">Acento Lupa</span>
             </div>
 
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-sky-400 transition" onclick="copyColorHex('#38BDF8', this)">
-              <div class="w-full h-14 rounded-lg bg-[#38BDF8] flex items-center justify-center text-slate-900 font-mono text-xs font-bold mb-2">#38BDF8</div>
-              <span class="block text-xs font-bold text-slate-900">Celeste Análisis</span>
-              <span class="block text-[10px] text-blue-600 font-semibold">Click para copiar</span>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-amber-400 transition" onclick="copyColorHex('#FBBF24', this)">
+              <div class="w-full h-14 rounded-lg bg-[#FBBF24] flex items-center justify-center text-slate-950 font-mono text-xs font-bold mb-2">#FBBF24</div>
+              <span class="block text-xs font-bold text-slate-900">Oro Recupero</span>
+              <span class="block text-[10px] text-emerald-600 font-semibold">Barra Métrica MeLi</span>
             </div>
 
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:border-slate-300 transition" onclick="copyColorHex('#F8FAFC', this)">
               <div class="w-full h-14 rounded-lg bg-[#F8FAFC] border border-slate-200 flex items-center justify-center text-slate-700 font-mono text-xs font-bold mb-2">#F8FAFC</div>
               <span class="block text-xs font-bold text-slate-900">Gris Lienzo</span>
-              <span class="block text-[10px] text-blue-600 font-semibold">Click para copiar</span>
+              <span class="block text-[10px] text-emerald-600 font-semibold">Fondo General</span>
             </div>
 
           </div>
@@ -1353,17 +1354,17 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
                     <img src="https://juanoviedo1987-droid.github.io/saldoaudit/assets/logo-saldoaudit-icon.svg" alt="SaldoAudit" width="54" height="54" style="display: block; width: 54px; height: 54px; border-radius: 12px; border: 0;">
                   </a>
                 </td>
-                <td style="border-left: 2px solid #1D4ED8; padding-left: 18px; vertical-align: top;">
-                  <div style="font-size: 16px; font-weight: bold; color: #0F172A; margin-bottom: 2px;">Juan Oviedo</div>
-                  <div style="font-size: 12px; font-weight: bold; color: #1D4ED8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Director & Auditor Principal | SaldoAudit</div>
+                <td style="border-left: 2px solid #059669; padding-left: 18px; vertical-align: top;">
+                  <div style="font-size: 16px; font-weight: bold; color: #090D16; margin-bottom: 2px;">Juan Oviedo</div>
+                  <div style="font-size: 12px; font-weight: bold; color: #059669; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Director & Auditor Principal | SaldoAudit</div>
                   <div style="font-size: 12px; color: #475569; margin-bottom: 3px;">
-                    <span style="color: #1D4ED8; font-weight: bold;">WhatsApp:</span> <a href="https://wa.me/5491172376197" style="color: #0F172A; text-decoration: none; font-weight: 500;">+54 9 11 7237-6197</a>
+                    <span style="color: #059669; font-weight: bold;">WhatsApp:</span> <a href="https://wa.me/5491172376197" style="color: #090D16; text-decoration: none; font-weight: 500;">+54 9 11 7237-6197</a>
                   </div>
                   <div style="font-size: 12px; color: #475569; margin-bottom: 3px;">
-                    <span style="color: #1D4ED8; font-weight: bold;">Email:</span> <a href="mailto:contacto@saldoaudit.com.ar" style="color: #0F172A; text-decoration: none;">contacto@saldoaudit.com.ar</a>
+                    <span style="color: #059669; font-weight: bold;">Email:</span> <a href="mailto:contacto@saldoaudit.com.ar" style="color: #090D16; text-decoration: none;">contacto@saldoaudit.com.ar</a>
                   </div>
                   <div style="font-size: 12px; color: #475569;">
-                    <span style="color: #1D4ED8; font-weight: bold;">Web:</span> <a href="https://saldoaudit.com.ar" target="_blank" style="color: #1D4ED8; text-decoration: underline; font-weight: 600;">saldoaudit.com.ar</a>
+                    <span style="color: #059669; font-weight: bold;">Web:</span> <a href="https://saldoaudit.com.ar" target="_blank" style="color: #059669; text-decoration: underline; font-weight: 600;">saldoaudit.com.ar</a>
                   </div>
                 </td>
               </tr>
@@ -2277,12 +2278,12 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       });
     }
 
-    // Motor de Exportación Instantánea en PNG (Transparente) y JPG (Fondo Sólido) en Alta Definición
+    // Motor de Exportación Instantánea en PNG (Transparente) y JPG (Fondo Sólido) en Alta Definición (Fintech Emerald)
     const LOGO_SVGS = {
-      light: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><defs><linearGradient id="radarGradLight" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#1E40AF"/></linearGradient></defs><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="url(#radarGradLight)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#0F172A" letter-spacing="-1">Saldo<tspan fill="#1D4ED8">Audit</tspan></text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#64748B" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`,
-      dark: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><defs><linearGradient id="radarGradDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#1D4ED8"/></linearGradient></defs><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="url(#radarGradDark)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#FFFFFF" letter-spacing="-1">Saldo<tspan fill="#60A5FA">Audit</tspan></text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#94A3B8" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`,
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1024" height="1024"><defs><linearGradient id="radarIconGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#1E40AF"/></linearGradient></defs><g transform="scale(6.25)"><rect width="32" height="32" rx="7.5" fill="url(#radarIconGrad)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/></g></svg>`,
-      mono: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="#0F172A"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#94A3B8"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#CBD5E1"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#ffffff"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#0F172A" letter-spacing="-1">SaldoAudit</text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#475569" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`
+      light: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><defs><linearGradient id="emeraldGradLight" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#064E3B"/></linearGradient></defs><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="url(#emeraldGradLight)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#090D16" letter-spacing="-1">Saldo<tspan fill="#059669">Audit</tspan></text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#4B5563" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`,
+      dark: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><defs><linearGradient id="emeraldGradDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="url(#emeraldGradDark)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#FFFFFF" letter-spacing="-1">Saldo<tspan fill="#34D399">Audit</tspan></text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#9CA3AF" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`,
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1024" height="1024"><defs><linearGradient id="emeraldIconGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#064E3B"/></linearGradient></defs><g transform="scale(6.25)"><rect width="32" height="32" rx="7.5" fill="url(#emeraldIconGrad)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/></g></svg>`,
+      mono: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="#090D16"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#9CA3AF"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#D1D5DB"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#ffffff"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#090D16" letter-spacing="-1">SaldoAudit</text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#4B5563" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`
     };
 
     function downloadLogoRaster(variant, format, btn) {
@@ -2299,7 +2300,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       const ctx = canvas.getContext('2d');
 
       if (format === 'jpg') {
-        ctx.fillStyle = (variant === 'dark') ? '#0F172A' : '#FFFFFF';
+        ctx.fillStyle = (variant === 'dark') ? '#090D16' : '#FFFFFF';
         ctx.fillRect(0, 0, width, height);
       }
 
