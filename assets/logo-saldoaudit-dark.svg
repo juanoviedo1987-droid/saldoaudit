@@ -1,15 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="480" height="100">
   <defs>
-    <linearGradient id="shieldGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6"/>
+    <linearGradient id="radarGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
       <stop offset="100%" stop-color="#1D4ED8"/>
     </linearGradient>
   </defs>
-  <!-- Icono Escudo -->
-  <g transform="translate(10, 10)">
-    <rect width="80" height="80" rx="20" fill="url(#shieldGradDark)"/>
-    <path d="M40 68s24-12 24-30V18L40 9 16 18v20c0 18 24 30 24 30z" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="m32 39 6 6 12-12" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Isotipo Radar Forense (Lupa + Métricas en Alza) -->
+  <g transform="translate(10, 10) scale(2.5)">
+    <rect width="32" height="32" rx="8" fill="url(#radarGradDark)"/>
+    <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/>
+    <path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
+    <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/>
+    <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
+    <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/>
   </g>
   <!-- Tipografía -->
   <text x="110" y="58" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="800" font-size="38" fill="#FFFFFF" letter-spacing="-1">Saldo<tspan fill="#60A5FA">Audit</tspan></text>
