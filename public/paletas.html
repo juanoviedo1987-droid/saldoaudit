@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Previsualizador de Identidad & Paletas — SaldoAudit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, .font-heading { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 p-4 sm:p-8 min-h-screen">
+  <div class="max-w-6xl mx-auto space-y-8">
+    
+    <!-- Encabezado -->
+    <div class="border-b border-slate-800 pb-5">
+      <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest block mb-1">Ecosistema Juan Oviedo &bull; Identidad Visual</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Previsualizador de Paletas para SaldoAudit</h1>
+      <p class="text-xs sm:text-sm text-slate-400 mt-1">Comparativa en vivo contra AGN, Nazaria y Nexum, y 3 propuestas para despegar la marca con identidad propia.</p>
+    </div>
+
+    <!-- 1. MAPA REAL DEL ECOSISTEMA (Los colores verdaderos) -->
+    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Tus Marcas Actuales (Inspección en Código Fuente Real)</h2>
+        <span class="text-[11px] font-mono text-slate-500">4 marcas distintas</span>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+        
+        <!-- AGN -->
+        <div class="p-3.5 bg-slate-900/80 rounded-xl border border-purple-900/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-md" style="background:#4A208E"></span>
+            <span class="font-bold text-white">Grupo AGN</span>
+          </div>
+          <span class="text-[11px] text-purple-300 font-mono block">Púrpura Profundo (#4A208E)</span>
+          <p class="text-[11px] text-slate-400">Cotizador express de aberturas y perfilería.</p>
+        </div>
+
+        <!-- Nazaria -->
+        <div class="p-3.5 bg-slate-900/80 rounded-xl border border-amber-900/30 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-md" style="background:#E6D5C3"></span>
+            <span class="font-bold text-white">Nazaria</span>
+          </div>
+          <span class="text-[11px] text-amber-200 font-mono block">Arena & Monocromo (#E6D5C3 / #1A1A1A)</span>
+          <p class="text-[11px] text-slate-400">Editorial sobrio, retail calzado y RRHH.</p>
+        </div>
+
+        <!-- Nexum -->
+        <div class="p-3.5 bg-slate-900/80 rounded-xl border border-cyan-900/40 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-md" style="background:#0074A1"></span>
+            <span class="font-bold text-white">Nexum Trade</span>
+          </div>
+          <span class="text-[11px] text-cyan-300 font-mono block">Azul Océano & Petróleo (#0074A1 / #002529)</span>
+          <p class="text-[11px] text-slate-400">Consultoría B2B en comercio exterior.</p>
+        </div>
+
+        <!-- SaldoAudit (Hoy) -->
+        <div class="p-3.5 bg-blue-950/40 rounded-xl border border-blue-500/50 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-md" style="background:#1D4ED8"></span>
+            <span class="font-bold text-white">SaldoAudit (Hoy)</span>
+          </div>
+          <span class="text-[11px] text-blue-300 font-mono block">Azul Royal (#1D4ED8 / #0F172A)</span>
+          <p class="text-[11px] text-rose-300 font-medium">⚠️ Muy cercano al azul institucional de Nexum.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. LAS 3 PROPUESTAS PARA SALDOAUDIT (CON EL LOGO OFICIAL DE LA LUPA) -->
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">
+          Elegí la Paleta que más te convenza para SaldoAudit (Tocá para probar)
+        </h2>
+        <span class="text-xs text-slate-400">Todas mantienen la Lupa + Métricas en Alza</span>
+      </div>
+
+      <!-- Tarjetas de Selección -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- PROPUESTA 1: FINTECH EMERALD & GRAPHITE -->
+        <button onclick="previewTheme(0)" id="themeCard-0" class="theme-card text-left p-5 rounded-2xl border-2 transition bg-slate-950 border-emerald-500 shadow-lg shadow-emerald-500/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Opción 1: Fintech Emerald</span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <!-- Logo Lupa Verde -->
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-md" style="background: linear-gradient(135deg, #059669 0%, #064E3B 100%);">
+              <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+                <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
+                <path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+                <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/>
+                <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
+                <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/>
+              </svg>
+            </div>
+            <div>
+              <span class="font-heading font-extrabold text-lg text-white">Saldo<span class="text-emerald-400">Audit</span></span>
+              <span class="text-[10px] text-slate-400 block">Esmeralda Dinero + Grafito Carbón</span>
+            </div>
+          </div>
+
+          <div class="flex gap-1.5 pt-1">
+            <span class="w-5 h-5 rounded-md" style="background:#059669" title="Verde Esmeralda"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#090D16" title="Negro Grafito"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#34D399" title="Menta Análisis"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#FBBF24" title="Oro Recupero"></span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            <strong>Concepto:</strong> El color del dinero recuperado y la auditoría contable. Despega 100% de Nexum (cero azul) y transmite liquidez directa.
+          </p>
+        </button>
+
+        <!-- PROPUESTA 2: MELI GOLD & DARK SLATE -->
+        <button onclick="previewTheme(1)" id="themeCard-1" class="theme-card text-left p-5 rounded-2xl border-2 transition bg-slate-950 border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Opción 2: MeLi Gold & Dark</span>
+            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <!-- Logo Lupa Ámbar / MeLi -->
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-md" style="background: linear-gradient(135deg, #D97706 0%, #B45309 100%);">
+              <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+                <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
+                <path d="M21 21L27 27" stroke="#FDE68A" stroke-width="3" stroke-linecap="round"/>
+                <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#FEF3C7"/>
+                <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
+                <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#10B981"/>
+              </svg>
+            </div>
+            <div>
+              <span class="font-heading font-extrabold text-lg text-white">Saldo<span class="text-amber-400">Audit</span></span>
+              <span class="text-[10px] text-slate-400 block">Dorado E-commerce + Pizarra</span>
+            </div>
+          </div>
+
+          <div class="flex gap-1.5 pt-1">
+            <span class="w-5 h-5 rounded-md" style="background:#D97706" title="Oro MeLi"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#0F172A" title="Pizarra"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#10B981" title="Verde Reclamo Aprobado"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#FDE68A" title="Amarillo Claro"></span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            <strong>Concepto:</strong> Guiño visual directo al ecosistema de Mercado Libre (amarillo corporativo) pero con el contraste sobrio de la auditoría y el verde de dinero devuelto.
+          </p>
+        </button>
+
+        <!-- PROPUESTA 3: TEAL CYBER FORENSE -->
+        <button onclick="previewTheme(2)" id="themeCard-2" class="theme-card text-left p-5 rounded-2xl border-2 transition bg-slate-950 border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-400 uppercase tracking-wider">Opción 3: Teal Radar Forense</span>
+            <span class="w-3 h-3 rounded-full bg-teal-500"></span>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <!-- Logo Lupa Teal / Petróleo Claro -->
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-md" style="background: linear-gradient(135deg, #0D9488 0%, #115E59 100%);">
+              <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+                <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
+                <path d="M21 21L27 27" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round"/>
+                <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#99F6E4"/>
+                <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
+                <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#22C55E"/>
+              </svg>
+            </div>
+            <div>
+              <span class="font-heading font-extrabold text-lg text-white">Saldo<span class="text-teal-400">Audit</span></span>
+              <span class="text-[10px] text-slate-400 block">Verde Azulado / Radar Quirúrgico</span>
+            </div>
+          </div>
+
+          <div class="flex gap-1.5 pt-1">
+            <span class="w-5 h-5 rounded-md" style="background:#0D9488" title="Teal Quirúrgico"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#042F2E" title="Petróleo Nocturno"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#5EEAD4" title="Cian Lupa"></span>
+            <span class="w-5 h-5 rounded-md" style="background:#22C55E" title="Verde Éxito"></span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            <strong>Concepto:</strong> Estilo radar médico / forense. Está a mitad de camino entre la tecnología y el dinero, muy moderno y elegante sin caer en el azul tradicional de Nexum.
+          </p>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- 3. SIMULADOR EN VIVO DEL HEADER DE LA APP -->
+    <div class="space-y-2">
+      <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Previsualización de la Cabecera de la Suite en Vivo:</span>
+      <div id="liveHeader" class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 text-slate-900 transition-all flex flex-col sm:flex-row items-center justify-between gap-4">
+        
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <div id="liveLogoBox" class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-heading font-extrabold text-lg tracking-tight leading-none text-slate-900">
+                Saldo<span id="liveTitleBrand">Audit</span>
+              </span>
+              <span id="liveBadge" class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border">
+                Suite 2.0
+              </span>
+            </div>
+            <span class="text-xs text-slate-500 mt-0.5 block">Centro de Operaciones Forenses</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <div class="text-right">
+            <span class="text-[10px] font-bold text-slate-400 uppercase block">Recuperable Detectado</span>
+            <span id="liveAmount" class="font-mono font-extrabold text-base">$599.518,74 ARS</span>
+          </div>
+          <button id="liveBtn" class="px-4 py-2 text-white font-bold text-xs rounded-xl shadow-xs transition">
+            + Nuevo Seller
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const themes = [
+      {
+        brandColor: '#059669',
+        brandTextClass: 'text-[#059669]',
+        badgeBg: '#ECFDF5',
+        badgeText: '#065F46',
+        badgeBorder: '#A7F3D0',
+        amountColor: '#059669',
+        btnBg: '#059669',
+        logoBg: 'linear-gradient(135deg, #059669 0%, #064E3B 100%)',
+        svg: `<svg class="w-6 h-6" viewBox="0 0 32 32" fill="none"><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/><path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/></svg>`
+      },
+      {
+        brandColor: '#D97706',
+        brandTextClass: 'text-[#D97706]',
+        badgeBg: '#FFFBEB',
+        badgeText: '#92400E',
+        badgeBorder: '#FDE68A',
+        amountColor: '#10B981',
+        btnBg: '#D97706',
+        logoBg: 'linear-gradient(135deg, #D97706 0%, #B45309 100%)',
+        svg: `<svg class="w-6 h-6" viewBox="0 0 32 32" fill="none"><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/><path d="M21 21L27 27" stroke="#FDE68A" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#FEF3C7"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#10B981"/></svg>`
+      },
+      {
+        brandColor: '#0D9488',
+        brandTextClass: 'text-[#0D9488]',
+        badgeBg: '#F0FDFA',
+        badgeText: '#115E59',
+        badgeBorder: '#99F6E4',
+        amountColor: '#0D9488',
+        btnBg: '#0D9488',
+        logoBg: 'linear-gradient(135deg, #0D9488 0%, #115E59 100%)',
+        svg: `<svg class="w-6 h-6" viewBox="0 0 32 32" fill="none"><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/><path d="M21 21L27 27" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#99F6E4"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#22C55E"/></svg>`
+      }
+    ];
+
+    function previewTheme(idx) {
+      document.querySelectorAll('.theme-card').forEach((c, i) => {
+        if (i === idx) {
+          c.classList.remove('border-slate-800');
+          c.classList.add('border-emerald-500');
+        } else {
+          c.classList.remove('border-emerald-500');
+          c.classList.add('border-slate-800');
+        }
+      });
+
+      const t = themes[idx];
+      const box = document.getElementById('liveLogoBox');
+      box.style.background = t.logoBg;
+      box.innerHTML = t.svg;
+
+      const titleSpan = document.getElementById('liveTitleBrand');
+      titleSpan.style.color = t.brandColor;
+
+      const badge = document.getElementById('liveBadge');
+      badge.style.backgroundColor = t.badgeBg;
+      badge.style.color = t.badgeText;
+      badge.style.borderColor = t.badgeBorder;
+
+      document.getElementById('liveAmount').style.color = t.amountColor;
+      document.getElementById('liveBtn').style.backgroundColor = t.btnBg;
+    }
+
+    previewTheme(0);
+  </script>
+</body>
+</html>
