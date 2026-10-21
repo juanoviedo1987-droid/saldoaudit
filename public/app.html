@@ -404,257 +404,571 @@
       </section>
 
       <!-- ========================================================================= -->
-      <!-- MÓDULO 2: PROCEDIMIENTOS & SOPS COMPLETOS (SOP-01 A SOP-04 + 4 SCRIPTS)   -->
+      <!-- MÓDULO 2: PROCEDIMIENTOS & SOPS COMPLETOS (PANEL INTERACTIVO MAESTRO)     -->
       <!-- ========================================================================= -->
-      <section id="view-sops" class="hidden space-y-6">
+      <section id="view-sops" class="hidden space-y-5">
         
-        <!-- Cabecera SOPs con Buscador -->
-        <div class="bg-gradient-to-r from-[#0F172A] to-[#1D4ED8] p-6 rounded-3xl text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Cabecera SOPs con Buscador y Selector "Ver Todo" -->
+        <div class="bg-gradient-to-r from-[#0F172A] to-[#1D4ED8] p-5 sm:p-6 rounded-3xl text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/20 px-2.5 py-1 rounded-full border border-blue-400/30">
-              Código: SOP-SALDOAUDIT-2026 &bull; Operaciones & Reconciliación
+              Código: SOP-SALDOAUDIT-2026 &bull; Manual Maestro de Operaciones
             </span>
-            <h2 class="text-xl sm:text-2xl font-extrabold mt-2">Manual Operativo de Auditoría Forense</h2>
-            <p class="text-slate-200 text-xs mt-1">Procedimientos estandarizados desde la ingesta del Excel hasta la acreditación en Mercado Pago.</p>
+            <h2 class="text-xl sm:text-2xl font-extrabold mt-2">Centro de Procedimientos Forenses (SOPs)</h2>
+            <p class="text-slate-200 text-xs mt-1">Seleccioná cada procedimiento en el panel izquierdo para ver el paso a paso detallado, matrices, scripts y checklists.</p>
           </div>
-          <div class="relative w-full md:w-72">
-            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
-            <input type="text" id="sopSearchInput" oninput="filterSopBlocks()" placeholder="Filtrar SOP, 72h, Full, script..." class="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none">
-          </div>
-        </div>
-
-        <!-- 00. Matriz de SLAs & Plazos Fatales -->
-        <div class="sop-block bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-amber-600 text-white font-bold text-sm flex items-center justify-center">00</span>
-              <div>
-                <h3 class="text-base font-bold text-slate-900">Matriz de Tiempos Críticos & SLAs de Mercado Libre</h3>
-                <span class="text-xs text-slate-500">Ventanas reglamentarias antes de que prescriba el derecho a reclamo</span>
-              </div>
+          <div class="flex items-center gap-2 w-full md:w-auto">
+            <div class="relative flex-1 md:w-64">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="sopSearchInput" oninput="filterSopBlocks()" placeholder="Buscar 72h, Full, script, Excel..." class="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none">
             </div>
-            <span class="px-2.5 py-1 bg-amber-50 text-amber-800 text-[10px] font-bold rounded-full border border-amber-200">Control de Plazos</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-            <div class="p-4 bg-rose-50 rounded-2xl border border-rose-200 space-y-1">
-              <span class="font-bold text-rose-800 uppercase flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-rose-600"></i> 72 Horas (Fatal)</span>
-              <p class="text-rose-950 leading-relaxed">Plazo para abrir la caja devuelta en depósito y desconocer ante MeLi si vino vacía, rota o cambiada.</p>
-            </div>
-            <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 space-y-1">
-              <span class="font-bold text-blue-800 uppercase flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4 text-blue-600"></i> 15 a 20 Días</span>
-              <p class="text-blue-950 leading-relaxed">Devolución congelada en tránsito sin movimientos. Se reclama estatus de extravío presunto en retorno.</p>
-            </div>
-            <div class="p-4 bg-purple-50 rounded-2xl border border-purple-200 space-y-1">
-              <span class="font-bold text-purple-800 uppercase flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-purple-600"></i> 60 Días Corridos</span>
-              <p class="text-purple-950 leading-relaxed">Ventana máxima para reclamar siniestros de correo, paquetes no entregados y cargos de flete en Full.</p>
-            </div>
-            <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-1">
-              <span class="font-bold text-emerald-800 uppercase flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i> 48 a 72h Hábiles</span>
-              <p class="text-emerald-950 leading-relaxed">Tiempo promedio de resolución del soporte de MeLi para liquidar el dinero en Mercado Pago.</p>
-            </div>
+            <button type="button" onclick="selectSopPanel('all')" class="touch-target px-3 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl text-xs font-bold shrink-0 transition">
+              Ver Todos
+            </button>
           </div>
         </div>
 
-        <!-- SOP-01: Ingesta, Anonimización y Procesamiento -->
-        <div class="sop-block bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">01</span>
-              <div>
-                <h3 class="text-base font-bold text-slate-900">SOP-01: Ingesta, Anonimización & Desambiguación</h3>
-                <span class="text-xs text-slate-500">Cumplimiento Ley 25.326 y procesamiento local en navegador</span>
-              </div>
-            </div>
-            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Privacidad 100%</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
-              <span class="font-bold text-slate-900 block">1. Exportación en Mercado Libre</span>
-              <p class="text-slate-600 leading-relaxed">El cliente ingresa a <strong>Ventas &gt; Ventas &gt; Exportar</strong> y descarga los últimos <strong>60 días corridos</strong> en formato <code>.xlsx</code> o <code>.csv</code>.</p>
-            </div>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
-              <span class="font-bold text-slate-900 block">2. Limpieza Opcional de PII</span>
-              <p class="text-slate-600 leading-relaxed">Para tranquilidad corporativa, el seller puede eliminar columnas de datos personales (Nombre del comprador, DNI, Teléfono y Dirección). Solo requerimos ID de venta, fechas, estados y montos.</p>
-            </div>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
-              <span class="font-bold text-slate-900 block">3. Desambiguador de Encabezados</span>
-              <p class="text-slate-600 leading-relaxed">MeLi exporta 67 columnas con cabeceras repetidas (ej. <em>"Estado"</em> en col 2 y col 41). Nuestro motor las desambigua automáticamente en memoria local sin subir nada a servidores externos.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOP-02: Matriz Forense de las 4 Categorías y 15 Estados -->
-        <div class="sop-block bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">02</span>
-              <div>
-                <h3 class="text-base font-bold text-slate-900">SOP-02: Matriz Forense de Clasificación de Reclamos</h3>
-                <span class="text-xs text-slate-500">Las 4 tipologías operativas calibradas con el caso real Hudson ($599.518 ARS)</span>
-              </div>
-            </div>
-            <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-full border border-blue-200">15 Estados MeLi</span>
-          </div>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
-              <thead class="bg-slate-900 text-white">
-                <tr>
-                  <th class="p-3">Categoría Forense</th>
-                  <th class="p-3">Estados Narrativos en Excel de MeLi</th>
-                  <th class="p-3">Fuga / Perjuicio al Seller</th>
-                  <th class="p-3">Acción Operativa</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-100">
-                <tr class="hover:bg-slate-50">
-                  <td class="p-3 font-bold text-rose-700 bg-rose-50/50">1. Urgente 72 Horas</td>
-                  <td class="p-3 mono text-slate-700">"Devolución entregada", "Te entregamos el paquete" (&lt; 3 días corridos)</td>
-                  <td class="p-3 text-slate-600">El comprador devuelve un producto roto, usado o una caja vacía y MeLi le reembolsa igual.</td>
-                  <td class="p-3 font-semibold text-slate-900">Exigir a depósito abrir caja de inmediato y desconocer devolución antes de las 72h.</td>
-                </tr>
-                <tr class="hover:bg-slate-50">
-                  <td class="p-3 font-bold text-amber-700 bg-amber-50/50">2. Siniestro / Extravío Correo</td>
-                  <td class="p-3 mono text-slate-700">"No entregado", "Inconveniente con el correo", "Cancelada por demora en envío"</td>
-                  <td class="p-3 text-slate-600">El transportista pierde o rompe el paquete y MeLi no paga la indemnización automática.</td>
-                  <td class="p-3 font-semibold text-slate-900">Abrir ticket bajo tipología Siniestro de Envío exigiendo indemnización íntegra.</td>
-                </tr>
-                <tr class="hover:bg-slate-50">
-                  <td class="p-3 font-bold text-purple-700 bg-purple-50/50">3. Depósito Full Flete Indebido</td>
-                  <td class="p-3 mono text-slate-700">"Revisado en Full", "Enviado a tu depósito con marcas de uso"</td>
-                  <td class="p-3 text-slate-600">El comprador miente en el motivo de devolución y MeLi le cobra el costo del flete inverso al seller.</td>
-                  <td class="p-3 font-semibold text-slate-900">Solicitar bonificación del costo de logística inversa bajo Protección al Vendedor.</td>
-                </tr>
-                <tr class="hover:bg-slate-50">
-                  <td class="p-3 font-bold text-blue-700 bg-blue-50/50">4. Devolución Congelada</td>
-                  <td class="p-3 mono text-slate-700">"El comprador despachó el paquete", "En camino a tu domicilio" (+15/20 días)</td>
-                  <td class="p-3 text-slate-600">El retorno queda estancado en el limbo logístico y el vendedor pierde mercadería y dinero.</td>
-                  <td class="p-3 font-semibold text-slate-900">Reclamar estatus de extravío presunto por fecha comprometida vencida.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- LOS 4 SCRIPTS DE RECLAMO COPIABLES EN 1 CLIC -->
-        <div class="sop-block bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center">📜</span>
-              <div>
-                <h3 class="text-base font-bold text-slate-900">Banco de Scripts Oficiales para Soporte de Mercado Libre</h3>
-                <span class="text-xs text-slate-500">4 plantillas jurídicas listas para copiar y pegar en mediaciones</span>
-              </div>
-            </div>
-            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Copiado en 1 Clic</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Script 1 -->
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-900">1. Siniestro / Extravío de Correo</span>
-                <button type="button" onclick="copySnippet('txt-script1', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
-                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
-                </button>
-              </div>
-              <textarea id="txt-script1" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Estimado soporte de Mercado Libre, respecto a la venta #{{NUMERO_DE_VENTA}}, despachada en término mediante la etiqueta provista por la plataforma: según el seguimiento logístico, el paquete sufrió un siniestro / extravío en poder del correo transportista y nunca fue entregado. Solicitamos la acreditación íntegra de los fondos correspondientes bajo el Programa de Protección al Vendedor en nuestra cuenta de Mercado Pago. Saludos cordiales.</textarea>
-            </div>
-
-            <!-- Script 2 -->
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-900">2. Desconocimiento en Ventana 72h</span>
-                <button type="button" onclick="copySnippet('txt-script2', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
-                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
-                </button>
-              </div>
-              <textarea id="txt-script2" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Estimado equipo de mediaciones de Mercado Libre, en el marco de la venta #{{NUMERO_DE_VENTA}}, desconocemos formalmente la devolución recibida el día {{FECHA}}. Al abrir la caja dentro del plazo reglamentario de 72 horas, constatamos que el producto fue devuelto dañado / usado / incompleto por el comprador. Adjuntamos fotos probatorias del embalaje, etiqueta y artículo. Solicitamos el reintegro inmediato del dinero retenido. Atentamente.</textarea>
-            </div>
-
-            <!-- Script 3 -->
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-900">3. Devolución Congelada en Tránsito (+15/20 días)</span>
-                <button type="button" onclick="copySnippet('txt-script3', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
-                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
-                </button>
-              </div>
-              <textarea id="txt-script3" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Hola equipo de Mercado Libre, consultamos por el retorno de la venta #{{NUMERO_DE_VENTA}}. El comprador despachó la devolución pero el seguimiento logístico lleva más de 15 días sin actualización y con la fecha comprometida de entrega vencida. Solicitamos se declare el extravío presunto en tránsito inverso y se nos indemnice el valor total del producto. Muchas gracias.</textarea>
-            </div>
-
-            <!-- Script 4 -->
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-900">4. Bonificación de Flete Indebido en Full</span>
-                <button type="button" onclick="copySnippet('txt-script4', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
-                  <i data-lucide="copy" class="w-3 h-3"></i> Copiar
-                </button>
-              </div>
-              <textarea id="txt-script4" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Estimado soporte de Mercado Envíos Full, en la operación #{{NUMERO_DE_VENTA}} se nos debitó indebidamente el cargo de envío por devolución. El producto fue despachado nuevo y en perfecto estado desde el centro de almacenamiento Full, por lo que solicitamos la bonificación y reintegro del costo de logística inversa invocando el Programa de Protección al Vendedor. Saludos.</textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- SOP-03 y SOP-04 en Grid -->
-        <div class="sop-block grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Layout Maestro: Panel Selector Izquierdo + Visor Detallado Derecho -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           
-          <!-- SOP-03: Entrega del Informe -->
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div class="flex items-center gap-2.5">
-                <span class="w-7 h-7 rounded-lg bg-blue-700 text-white font-bold text-xs flex items-center justify-center">03</span>
-                <h3 class="text-sm font-bold text-slate-900">SOP-03: Protocolo de Entrega Comercial (WhatsApp)</h3>
+          <!-- PANEL LATERAL DE SELECCIÓN DE PROCEDIMIENTOS (Col 4) -->
+          <aside class="lg:col-span-4 xl:col-span-3 bg-white p-3.5 rounded-3xl border border-slate-200 shadow-2xs lg:sticky lg:top-4 space-y-1.5">
+            <div class="px-2 py-1.5 border-b border-slate-100 flex items-center justify-between">
+              <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Índice de Protocolos (7)</span>
+              <span class="text-[10px] font-semibold text-blue-600">Interactivo</span>
+            </div>
+
+            <button type="button" onclick="selectSopPanel('sop-00')" id="sopNav-sop-00" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl bg-blue-50 text-blue-800 border border-blue-200 flex items-center gap-3 transition">
+              <span class="w-7 h-7 rounded-xl bg-amber-600 text-white font-bold text-xs flex items-center justify-center shrink-0">00</span>
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold block truncate">SLAs & Plazos Fatales</span>
+                <span class="text-[10px] text-slate-500 block truncate">Ventanas de 72h, 15d y 60d</span>
               </div>
-              <button type="button" onclick="copySnippet('txt-whatsapp-resumen', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
-                <i data-lucide="copy" class="w-3 h-3"></i> Copiar Mensaje
+            </button>
+
+            <button type="button" onclick="selectSopPanel('sop-01')" id="sopNav-sop-01" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
+              <span class="w-7 h-7 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0">01</span>
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold block truncate">Ingesta & Anonimización</span>
+                <span class="text-[10px] text-slate-500 block truncate">Exportación MeLi y 67 columnas</span>
+              </div>
+            </button>
+
+            <button type="button" onclick="selectSopPanel('sop-02')" id="sopNav-sop-02" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
+              <span class="w-7 h-7 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0">02</span>
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold block truncate">Matriz Forense (15 Estados)</span>
+                <span class="text-[10px] text-slate-500 block truncate">Las 4 categorías + Ruta en MeLi</span>
+              </div>
+            </button>
+
+            <button type="button" onclick="selectSopPanel('sop-scripts')" id="sopNav-sop-scripts" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
+              <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">📜</span>
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold block truncate">Banco de Scripts (5)</span>
+                <span class="text-[10px] text-slate-500 block truncate">4 Reclamos + 1 Apelación Nivel 2</span>
+              </div>
+            </button>
+
+            <button type="button" onclick="selectSopPanel('sop-03')" id="sopNav-sop-03" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
+              <span class="w-7 h-7 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0">03</span>
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold block truncate">Entrega Comercial & Cierre</span>
+                <span class="text-[10px] text-slate-500 block truncate">Audio, WhatsApp y Objeciones</span>
+              </div>
+            </button>
+
+            <button type="button" onclick="selectSopPanel('sop-04')" id="sopNav-sop-04" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
+              <span class="w-7 h-7 rounded-xl bg-purple-700 text-white font-bold text-xs flex items-center justify-center shrink-0">04</span>
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold block truncate">Onboarding Colaborador VIP</span>
+                <span class="text-[10px] text-slate-500 block truncate">Permisos MeLi sin acceso a MP</span>
+              </div>
+            </button>
+
+            <button type="button" onclick="selectSopPanel('sop-05')" id="sopNav-sop-05" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
+              <span class="w-7 h-7 rounded-xl bg-slate-900 text-white font-bold text-xs flex items-center justify-center shrink-0">05</span>
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold block truncate">Liquidación & Conciliación</span>
+                <span class="text-[10px] text-slate-500 block truncate">Verificación en MP y Facturación</span>
+              </div>
+            </button>
+
+            <div class="pt-2 border-t border-slate-100">
+              <button type="button" onclick="selectSopPanel('all')" id="sopNav-all" class="sop-nav-btn w-full text-center py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+                Mostrar los 7 Protocolos Juntos
               </button>
             </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              <strong>1. Audio de 25 seg:</strong> <em>"Hola [Nombre], te habla Juan de SaldoAudit. Procesamos los últimos 60 días: sobre $[Bruto] auditados, detectamos [X] casos críticos recuperables por $[Recuperable]. Te dejo acá el resumen y el Excel con los links directos."</em>
-            </p>
-            <textarea id="txt-whatsapp-resumen" readonly class="w-full h-32 p-3 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">📊 *INFORME DE AUDITORÍA FORENSE — SALDOAUDIT*
+          </aside>
+
+          <!-- VISOR DETALLADO DERECHO (Col 8/9) -->
+          <div class="lg:col-span-8 xl:col-span-9 space-y-5">
+
+            <!-- =============================================================== -->
+            <!-- PANEL SOP-00: MATRIZ DE SLAS, PLAZOS FATALES Y PRUEBAS          -->
+            <!-- =============================================================== -->
+            <div id="sopPanel-sop-00" class="sop-block bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                  <span class="w-9 h-9 rounded-xl bg-amber-600 text-white font-bold text-sm flex items-center justify-center">00</span>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-00: Matriz de Tiempos Críticos & SLAs de Mercado Libre</h3>
+                    <span class="text-xs text-slate-500">Ventanas reglamentarias de caducidad y requisitos probatorios para no perder el derecho a cobro</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 bg-amber-50 text-amber-800 text-[10px] font-bold rounded-full border border-amber-200">Prioridad Máxima</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+                <div class="p-4 bg-rose-50 rounded-2xl border border-rose-200 space-y-1.5">
+                  <span class="font-bold text-rose-800 uppercase flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-rose-600"></i> 1. Ventana Fatal de 72 Horas Corridas</span>
+                  <p class="text-rose-950 leading-relaxed">
+                    Corre desde el minuto exacto en que el correo marca <strong>"Devolución entregada al vendedor"</strong>. Pasadas las 72h corridas, el botón de reclamo desaparece o soporte desestima por extemporáneo.
+                  </p>
+                </div>
+                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 space-y-1.5">
+                  <span class="font-bold text-blue-800 uppercase flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4 text-blue-600"></i> 2. Umbral de 15 a 20 Días Sin Movimiento</span>
+                  <p class="text-blue-950 leading-relaxed">
+                    Cuando una devolución despachada por el comprador queda estancada en <strong>"En camino a tu domicilio"</strong> superando la fecha prometida + 15 días, se exige indemnización por extravío presunto en tránsito inverso.
+                  </p>
+                </div>
+                <div class="p-4 bg-purple-50 rounded-2xl border border-purple-200 space-y-1.5">
+                  <span class="font-bold text-purple-800 uppercase flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-purple-600"></i> 3. Ventana Histórica de 60 Días Corridos</span>
+                  <p class="text-purple-950 leading-relaxed">
+                    Plazo máximo para auditar hacia atrás siniestros de correo no liquidados, cancelaciones en ruta y cargos indebidos de envío en Mercado Envíos Full.
+                  </p>
+                </div>
+                <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-1.5">
+                  <span class="font-bold text-emerald-800 uppercase flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i> 4. SLA de Resolución MeLi (48 a 72h Hábiles)</span>
+                  <p class="text-emerald-950 leading-relaxed">
+                    Una vez abierto el ticket de reclamo con el número de seguimiento y nuestro script técnico, Mercado Libre liquida el dinero en Mercado Pago dentro de las 48 a 72 horas hábiles.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Checklist de Evidencia Física en Depósito -->
+              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 text-xs">
+                <span class="font-bold text-slate-900 uppercase flex items-center gap-1.5">
+                  <i data-lucide="camera" class="w-4 h-4 text-blue-600"></i> Protocolo de Prueba Fotográfica para Devoluciones (&lt;72h)
+                </span>
+                <p class="text-slate-600">Cuando el depósito del cliente recibe una devolución sospechosa, debe tomar <strong>4 fotos obligatorias</strong> antes de las 72h:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-slate-700">
+                  <div class="p-2.5 bg-white rounded-xl border border-slate-200"><strong>Foto 1:</strong> Etiqueta de Mercado Envíos legible pegada en el paquete exterior.</div>
+                  <div class="p-2.5 bg-white rounded-xl border border-slate-200"><strong>Foto 2:</strong> Estado del embalaje / faja de seguridad al momento de abrirlo.</div>
+                  <div class="p-2.5 bg-white rounded-xl border border-slate-200"><strong>Foto 3:</strong> Producto recibido (mostrando rotura, uso, faltante de piezas o piedra/caja vacía).</div>
+                  <div class="p-2.5 bg-white rounded-xl border border-slate-200"><strong>Foto 4:</strong> Número de serie o código interno (si aplica en electrónica/bazar).</div>
+                </div>
+              </div>
+
+              <div class="flex justify-end pt-2">
+                <button type="button" onclick="selectSopPanel('sop-01')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition">
+                  <span>Siguiente: SOP-01 Ingesta & Anonimización</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- PANEL SOP-01: INGESTA, ANONIMIZACIÓN Y DESAMBIGUACIÓN           -->
+            <!-- =============================================================== -->
+            <div id="sopPanel-sop-01" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                  <span class="w-9 h-9 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">01</span>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-01: Ingesta, Anonimización & Desambiguación Técnica</h3>
+                    <span class="text-xs text-slate-500">Cumplimiento Ley 25.326 de Protección de Datos Personales y lectura de las 67 columnas</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Privacidad 100%</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+                  <span class="font-bold text-slate-900 block">1. Ruta Exacta de Exportación</span>
+                  <p class="text-slate-600 leading-relaxed">El seller ingresa en Mercado Libre a <strong>Ventas &gt; Ventas &gt; Filtrar últimos 60 días &gt; Descargar Excel de ventas</strong> (<code>.xlsx</code>). Tiempo estimado: 45 segundos.</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+                  <span class="font-bold text-slate-900 block">2. Procesamiento Client-Side (RAM)</span>
+                  <p class="text-slate-600 leading-relaxed">El archivo se procesa en el navegador mediante <code>SheetJS</code> local. Ningún dato de clientes ni precios mayoristas viaja a servidores externos.</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+                  <span class="font-bold text-slate-900 block">3. Desambiguador de Fila 6</span>
+                  <p class="text-slate-600 leading-relaxed">El Excel oficial de MeLi Argentina tiene los encabezados en la <strong>Fila 6</strong> y repite nombres como <em>"Estado"</em>. Nuestro parser indexa por posición y contexto.</p>
+                </div>
+              </div>
+
+              <!-- Tabla de Columnas Críticas vs Columnas Descartables -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200 space-y-2">
+                  <span class="font-bold text-emerald-900 uppercase flex items-center gap-1.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Columnas que Usa el Motor Forense
+                  </span>
+                  <ul class="space-y-1 text-slate-700 list-disc list-inside">
+                    <li><code># de venta</code> (Columna A — ID único de 16 dígitos)</li>
+                    <li><code>Fecha de venta</code> (Para calcular antigüedad y ventana 72h/60d)</li>
+                    <li><code>Estado</code> y <code>Descripción del estado</code> (Narrativa logística)</li>
+                    <li><code>Ingresos por productos (ARS)</code> y <code>Cargos por envío (ARS)</code></li>
+                    <li><code>Total (ARS)</code> (Para detectar saldo en <code>$0</code> o negativo)</li>
+                    <li><code>Forma de entrega</code> (Mercado Envíos, Full, Flex, Colecta)</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 bg-slate-100 rounded-2xl border border-slate-200 space-y-2">
+                  <span class="font-bold text-slate-800 uppercase flex items-center gap-1.5">
+                    <i data-lucide="eye-off" class="w-4 h-4 text-slate-600"></i> Columnas PII Ignoradas (Ley 25.326)
+                  </span>
+                  <p class="text-slate-600">El cliente puede borrarlas antes de pasar el Excel sin afectar la auditoría:</p>
+                  <ul class="space-y-1 text-slate-600 list-disc list-inside">
+                    <li><code>Comprador</code> / Nombre y Apellido</li>
+                    <li><code>DNI / CUIT</code> de facturación</li>
+                    <li><code>Domicilio</code>, CP, Localidad y Teléfono del comprador</li>
+                    <li><code>Datos de facturación adjuntos</code></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex justify-between pt-2">
+                <button type="button" onclick="selectSopPanel('sop-00')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                  &larr; Anterior (SOP-00)
+                </button>
+                <button type="button" onclick="selectSopPanel('sop-02')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition">
+                  <span>Siguiente: SOP-02 Matriz Forense</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- PANEL SOP-02: MATRIZ FORENSE DE LAS 4 CATEGORÍAS Y 15 ESTADOS   -->
+            <!-- =============================================================== -->
+            <div id="sopPanel-sop-02" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                  <span class="w-9 h-9 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">02</span>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-02: Matriz Forense de Clasificación & Ruta en Mercado Libre</h3>
+                    <span class="text-xs text-slate-500">Las 4 tipologías operativas calibradas con el caso real Hudson ($599.518 ARS) y cómo entrar en MeLi</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-full border border-blue-200">15 Estados MeLi</span>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
+                  <thead class="bg-slate-900 text-white">
+                    <tr>
+                      <th class="p-3">Categoría Forense</th>
+                      <th class="p-3">Estados en Excel de MeLi</th>
+                      <th class="p-3">Fuga Contable</th>
+                      <th class="p-3">Ruta Exacta en Ayuda de MeLi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    <tr class="hover:bg-slate-50">
+                      <td class="p-3 font-bold text-rose-700 bg-rose-50/50">1. Urgente 72 Horas</td>
+                      <td class="p-3 mono text-slate-700">"Devolución entregada", "Te entregamos el paquete" (&lt; 3 días corridos)</td>
+                      <td class="p-3 text-slate-600">El comprador devuelve un producto roto, usado o caja vacía y MeLi le reembolsa igual.</td>
+                      <td class="p-3 font-semibold text-slate-900">Detalle de la Venta &rarr; <em>"Tengo un problema con el paquete devuelto"</em> &rarr; Adjuntar 4 fotos.</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                      <td class="p-3 font-bold text-amber-700 bg-amber-50/50">2. Siniestro / Extravío Correo</td>
+                      <td class="p-3 mono text-slate-700">"No entregado", "Inconveniente con el correo", "Cancelada por demora en envío"</td>
+                      <td class="p-3 text-slate-600">El transportista pierde o rompe el paquete y el Total en ARS queda en <code>$0</code>.</td>
+                      <td class="p-3 font-semibold text-slate-900">Detalle de la Venta &rarr; <em>"Necesito ayuda"</em> &rarr; <em>"Problemas con el envío / El correo perdió el paquete"</em>.</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                      <td class="p-3 font-bold text-purple-700 bg-purple-50/50">3. Depósito Full Flete Indebido</td>
+                      <td class="p-3 mono text-slate-700">"Revisado en Full", "Enviado a tu depósito con marcas de uso"</td>
+                      <td class="p-3 text-slate-600">El comprador miente en el motivo de devolución y MeLi le debita el flete inverso al seller.</td>
+                      <td class="p-3 font-semibold text-slate-900">Detalle de la Venta &rarr; <em>"Necesito ayuda con el cobro del envío"</em> &rarr; Solicitar reversión de cargo Full.</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                      <td class="p-3 font-bold text-blue-700 bg-blue-50/50">4. Devolución Congelada</td>
+                      <td class="p-3 mono text-slate-700">"El comprador despachó el paquete", "En camino a tu domicilio" (+15/20 días)</td>
+                      <td class="p-3 text-slate-600">El retorno queda estancado en el limbo logístico y el vendedor pierde mercadería y dinero.</td>
+                      <td class="p-3 font-semibold text-slate-900">Detalle de la Venta &rarr; <em>"El paquete devuelto no me llegó y venció el plazo"</em>.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 text-xs text-blue-950 flex items-center justify-between gap-4">
+                <div>
+                  <strong class="block text-blue-900">💡 Link Directo Universal a cada Orden de Mercado Libre Argentina:</strong>
+                  <span class="font-mono text-[11px]">https://www.mercadolibre.com.ar/ventas/{NUMERO_DE_VENTA}/detalle</span>
+                </div>
+                <button type="button" onclick="openHudsonCasesModal()" class="px-3 py-2 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shrink-0 transition">
+                  Ver Ejemplo Real (15 Casos Hudson)
+                </button>
+              </div>
+
+              <div class="flex justify-between pt-2">
+                <button type="button" onclick="selectSopPanel('sop-01')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                  &larr; Anterior (SOP-01)
+                </button>
+                <button type="button" onclick="selectSopPanel('sop-scripts')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition">
+                  <span>Siguiente: Banco de Scripts Oficiales</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- PANEL SCRIPTS: LOS 5 SCRIPTS DE RECLAMO Y APELACIÓN NIVEL 2     -->
+            <!-- =============================================================== -->
+            <div id="sopPanel-sop-scripts" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                  <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center">📜</span>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">Banco de Scripts Oficiales para Soporte de Mercado Libre</h3>
+                    <span class="text-xs text-slate-500">4 plantillas iniciales + 1 Script de Apelación Nivel 2 (cuando un bot rechaza en primera instancia)</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Copiado en 1 Clic</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Script 1 -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-900">1. Siniestro / Extravío de Correo</span>
+                    <button type="button" onclick="copySnippet('txt-script1', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                    </button>
+                  </div>
+                  <textarea id="txt-script1" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Estimado soporte de Mercado Libre, respecto a la venta #{{NUMERO_DE_VENTA}}, despachada en término mediante la etiqueta provista por la plataforma: según el seguimiento logístico, el paquete sufrió un siniestro / extravío en poder del correo transportista y nunca fue entregado. Solicitamos la acreditación íntegra de los fondos correspondientes bajo el Programa de Protección al Vendedor en nuestra cuenta de Mercado Pago. Saludos cordiales.</textarea>
+                </div>
+
+                <!-- Script 2 -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-900">2. Desconocimiento en Ventana 72h</span>
+                    <button type="button" onclick="copySnippet('txt-script2', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                    </button>
+                  </div>
+                  <textarea id="txt-script2" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Estimado equipo de mediaciones de Mercado Libre, en el marco de la venta #{{NUMERO_DE_VENTA}}, desconocemos formalmente la devolución recibida el día {{FECHA}}. Al abrir la caja dentro del plazo reglamentario de 72 horas, constatamos que el producto fue devuelto dañado / usado / incompleto por el comprador. Adjuntamos fotos probatorias del embalaje, etiqueta y artículo. Solicitamos el reintegro inmediato del dinero retenido. Atentamente.</textarea>
+                </div>
+
+                <!-- Script 3 -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-900">3. Devolución Congelada en Tránsito (+15/20 días)</span>
+                    <button type="button" onclick="copySnippet('txt-script3', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                    </button>
+                  </div>
+                  <textarea id="txt-script3" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Hola equipo de Mercado Libre, consultamos por el retorno de la venta #{{NUMERO_DE_VENTA}}. El comprador despachó la devolución pero el seguimiento logístico lleva más de 15 días sin actualización y con la fecha comprometida de entrega vencida. Solicitamos se declare el extravío presunto en tránsito inverso y se nos indemnice el valor total del producto. Muchas gracias.</textarea>
+                </div>
+
+                <!-- Script 4 -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-900">4. Bonificación de Flete Indebido en Full</span>
+                    <button type="button" onclick="copySnippet('txt-script4', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                    </button>
+                  </div>
+                  <textarea id="txt-script4" readonly class="w-full h-28 p-2.5 text-xs bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Estimado soporte de Mercado Envíos Full, en la operación #{{NUMERO_DE_VENTA}} se nos debitó indebidamente el cargo de envío por devolución. El producto fue despachado nuevo y en perfecto estado desde el centro de almacenamiento Full, por lo que solicitamos la bonificación y reintegro del costo de logística inversa invocando el Programa de Protección al Vendedor. Saludos.</textarea>
+                </div>
+              </div>
+
+              <!-- Script 5: Escalado / Apelación Nivel 2 -->
+              <div class="p-4 bg-rose-50/70 rounded-2xl border border-rose-200 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold text-rose-900">5. Script de Apelación / Reapertura Nivel 2 (Contra respuesta automática de Bot)</span>
+                    <span class="text-[11px] text-rose-700 block">Usar cuando el primer mensaje recibe un cierre automático sin lectura humana</span>
+                  </div>
+                  <button type="button" onclick="copySnippet('txt-script5', this)" class="px-2.5 py-1 bg-rose-700 hover:bg-rose-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                    <i data-lucide="copy" class="w-3 h-3"></i> Copiar Apelación
+                  </button>
+                </div>
+                <textarea id="txt-script5" readonly class="w-full h-24 p-2.5 text-xs bg-white border border-rose-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Solicitamos la revisión por un supervisor humano de Posventa para el caso #{{ID_CASO}} correspondiente a la venta #{{NUMERO_DE_VENTA}}. La respuesta automática anterior no contempla que el envío se realizó 100% bajo la red oficial de Mercado Envíos, cumpliendo todos los requisitos de embalaje y despacho en término. Conforme a los Términos y Condiciones del Programa de Protección al Vendedor, la responsabilidad por siniestro o daño en transporte recae sobre el operador logístico designado por la plataforma. Solicitamos la revocación del cierre automático y la liquidación manual del monto retenido.</textarea>
+              </div>
+
+              <div class="flex justify-between pt-2">
+                <button type="button" onclick="selectSopPanel('sop-02')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                  &larr; Anterior (SOP-02)
+                </button>
+                <button type="button" onclick="selectSopPanel('sop-03')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition">
+                  <span>Siguiente: SOP-03 Entrega Comercial</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- PANEL SOP-03: PROTOCOLO DE ENTREGA COMERCIAL Y OBJECIONES       -->
+            <!-- =============================================================== -->
+            <div id="sopPanel-sop-03" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                  <span class="w-9 h-9 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">03</span>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-03: Protocolo de Entrega Comercial & Manejo de Objeciones</h3>
+                    <span class="text-xs text-slate-500">Cómo presentar los hallazgos por WhatsApp para cerrar el 10% (Reporte) o el 20% (Gestión VIP)</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Cierre Comercial</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-900">Paso 1: Guión de Audio WhatsApp (25 seg)</span>
+                    <button type="button" onclick="copySnippet('txt-audio-guion', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg flex items-center gap-1 transition">
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar Guión
+                    </button>
+                  </div>
+                  <textarea id="txt-audio-guion" readonly class="w-full h-32 p-2.5 bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Hola [Nombre], ¿cómo va? Te habla Juan Oviedo de SaldoAudit. Terminamos de correr la auditoría forense sobre los últimos 60 días de [Empresa]. Sobre $[Bruto] auditados, detectamos [X] órdenes críticas con dinero retenido por siniestros de correo y devoluciones sin liquidar que suman $[Recuperable] ARS. Te dejo acá abajo el desglose. Decime si prefieren que les entreguemos el reporte llave en mano al 10% para que lo reclame tu equipo hoy, o si lo cargamos nosotros como colaboradores al 20% contra acreditación.</textarea>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-900">Paso 2: Mensaje Resumen Estructurado</span>
+                    <button type="button" onclick="copySnippet('txt-whatsapp-resumen', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-1 transition">
+                      <i data-lucide="copy" class="w-3 h-3"></i> Copiar Mensaje
+                    </button>
+                  </div>
+                  <textarea id="txt-whatsapp-resumen" readonly class="w-full h-32 p-2.5 bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">📊 *INFORME DE AUDITORÍA FORENSE — SALDOAUDIT*
 Cuenta auditada: *[Empresa]* (Últimos 60 días)
 
 🔹 *Volumen bruto auditado:* $[Monto Bruto] ARS
 ⚠️ *Discrepancias críticas detectadas:* [Cantidad] órdenes
 💵 *Total recuperable identificado:* *$[Monto Recuperable] ARS*
 
-Adjunto el Excel detallado por prioridad con los links directos a cada orden en Mercado Libre para reclamar hoy mismo.</textarea>
-          </div>
+¿Avanzamos con la entrega de la planilla con los links y scripts listos (Modalidad 10%) o preferís que gestionemos nosotros cada ticket hasta que entre la plata en Mercado Pago (Modalidad VIP 20%)?</textarea>
+                </div>
+              </div>
 
-          <!-- SOP-04: Onboarding Colaborador MeLi -->
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div class="flex items-center gap-2.5">
-                <span class="w-7 h-7 rounded-lg bg-purple-700 text-white font-bold text-xs flex items-center justify-center">04</span>
-                <h3 class="text-sm font-bold text-slate-900">SOP-04: Alta como Colaborador Oficial MeLi (Plan VIP 20%)</h3>
+              <!-- Respuestas a las 3 Objeciones Clásicas -->
+              <div class="p-4 bg-blue-50/60 rounded-2xl border border-blue-200 space-y-2.5 text-xs">
+                <span class="font-bold text-blue-900 uppercase block">Respuestas Rápidas a las 3 Objeciones Clásicas del Seller:</span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div class="p-3 bg-white rounded-xl border border-blue-100">
+                    <strong class="text-slate-900 block mb-1">1. "Mi equipo ya mira los reclamos"</strong>
+                    <p class="text-slate-600">El equipo mira la bandeja de mediaciones abiertas, pero los siniestros de correo y devoluciones en tránsito no generan alerta: figuran como cerradas en <code>$0</code> dentro del Excel de 67 columnas.</p>
+                  </div>
+                  <div class="p-3 bg-white rounded-xl border border-blue-100">
+                    <strong class="text-slate-900 block mb-1">2. "Me da miedo pasar el Excel por los datos"</strong>
+                    <p class="text-slate-600">Podés borrar las columnas de nombre, DNI y dirección del comprador antes de mandarlo, o procesarlo directo en nuestro motor web local donde ningún dato sale de tu computadora.</p>
+                  </div>
+                  <div class="p-3 bg-white rounded-xl border border-blue-100">
+                    <strong class="text-slate-900 block mb-1">3. "¿Y si Mercado Libre no me paga?"</strong>
+                    <p class="text-slate-600">En el Plan VIP (20%) solo cobramos sobre el dinero que efectivamente ya se acreditó en tu Mercado Pago. Si MeLi no paga, nuestro honorario es <code>$0</code>.</p>
+                  </div>
+                </div>
               </div>
-              <span class="px-2 py-0.5 bg-purple-50 text-purple-700 text-[10px] font-bold rounded border border-purple-200">Cero Riesgo Bancario</span>
-            </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Ruta en MeLi del cliente: <strong>Ventas &gt; Preferencias de venta &gt; Colaboradores &gt; Invitar a</strong> <code>saldoaudit.oficial@gmail.com</code>.
-            </p>
-            <div class="grid grid-cols-2 gap-3 text-xs">
-              <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
-                <span class="font-bold text-emerald-800 block mb-1">✅ Permisos Solicitados</span>
-                <ul class="text-slate-700 space-y-1 list-disc list-inside text-[11px]">
-                  <li>Atención de Reclamos y Mediaciones</li>
-                  <li>Mensajería Posventa</li>
-                  <li>Visualización y exportación de Ventas</li>
-                </ul>
-              </div>
-              <div class="p-3 bg-rose-50 rounded-xl border border-rose-200">
-                <span class="font-bold text-rose-800 block mb-1">⛔ Permisos Bloqueados</span>
-                <ul class="text-slate-700 space-y-1 list-disc list-inside text-[11px]">
-                  <li>Retiro o transferencia en Mercado Pago</li>
-                  <li>Modificación de CBU / cuentas bancarias</li>
-                  <li>Cambio de precios o publicaciones</li>
-                </ul>
-              </div>
-            </div>
-          </div>
 
+              <div class="flex justify-between pt-2">
+                <button type="button" onclick="selectSopPanel('sop-scripts')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                  &larr; Anterior (Scripts)
+                </button>
+                <button type="button" onclick="selectSopPanel('sop-04')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition">
+                  <span>Siguiente: SOP-04 Onboarding Colaborador</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- PANEL SOP-04: ALTA DE COLABORADOR OFICIAL EN MERCADO LIBRE      -->
+            <!-- =============================================================== -->
+            <div id="sopPanel-sop-04" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                  <span class="w-9 h-9 rounded-xl bg-purple-700 text-white font-bold text-sm flex items-center justify-center">04</span>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-04: Onboarding de Colaborador Oficial MeLi (Plan VIP 20%)</h3>
+                    <span class="text-xs text-slate-500">Configuración de permisos quirúrgicos sin acceso a fondos ni Mercado Pago</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-[10px] font-bold rounded-full border border-purple-200">Cero Riesgo Bancario</span>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-2">
+                <span class="font-bold text-slate-900 block">Instrucción paso a paso para enviarle al dueño / gerente de la tienda:</span>
+                <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                  <li>Ingresar a la cuenta principal de Mercado Libre &rarr; <strong>Mi Perfil / Configuración &gt; Colaboradores</strong>.</li>
+                  <li>Hacer clic en <strong>Invitar colaborador</strong> e ingresar el correo oficial: <code class="font-bold text-blue-700">saldoaudit.oficial@gmail.com</code>.</li>
+                  <li>Crear o asignar el rol <strong>"Auditoría Posventa"</strong> marcando únicamente los 3 permisos verdes de abajo.</li>
+                </ol>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-2">
+                  <span class="font-bold text-emerald-800 block">✅ Permisos Solicitados (Únicos 3 necesarios)</span>
+                  <ul class="text-slate-700 space-y-1.5 list-disc list-inside">
+                    <li><strong>Ventas y envíos:</strong> Visualizar el listado de operaciones y descargar el reporte Excel.</li>
+                    <li><strong>Reclamos y devoluciones:</strong> Abrir tickets ante soporte y adjuntar pruebas fotográficas.</li>
+                    <li><strong>Mensajería posventa:</strong> Ver el historial de chat con el comprador como evidencia ante el mediador.</li>
+                  </ul>
+                </div>
+                <div class="p-4 bg-rose-50 rounded-2xl border border-rose-200 space-y-2">
+                  <span class="font-bold text-rose-800 block">⛔ Permisos Bloqueados por Diseño</span>
+                  <ul class="text-slate-700 space-y-1.5 list-disc list-inside">
+                    <li><strong>Mercado Pago (Saldos, Transferencias, Tarjetas):</strong> 100% desactivado.</li>
+                    <li><strong>Modificación de CBU o cuentas de retiro:</strong> Imposible por rol.</li>
+                    <li><strong>Publicaciones, Precios, Stock y Publicidad (Product Ads):</strong> Sin acceso.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex justify-between pt-2">
+                <button type="button" onclick="selectSopPanel('sop-03')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                  &larr; Anterior (SOP-03)
+                </button>
+                <button type="button" onclick="selectSopPanel('sop-05')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition">
+                  <span>Siguiente: SOP-05 Liquidación & Cierre</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- PANEL SOP-05: CONCILIACIÓN EN MERCADO PAGO Y LIQUIDACIÓN        -->
+            <!-- =============================================================== -->
+            <div id="sopPanel-sop-05" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-3">
+                  <span class="w-9 h-9 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center">05</span>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-05: Conciliación de Fondos Acreditados & Liquidación Mensual</h3>
+                    <span class="text-xs text-slate-500">Cómo verificar que Mercado Libre pagó cada reclamo y cómo liquidar nuestros honorarios</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Cobro de Honorarios</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+                  <span class="font-bold text-slate-900 block">1. Trazabilidad por # de Caso</span>
+                  <p class="text-slate-600 leading-relaxed">Cada reclamo abierto en MeLi arroja un ID de consulta (ej. <code>#319482710</code>). Se registra en la planilla maestra del cliente junto al ID de venta original.</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+                  <span class="font-bold text-slate-900 block">2. Confirmación de Acreditación</span>
+                  <p class="text-slate-600 leading-relaxed">Cuando soporte aprueba el caso, emite el mensaje: <em>"Acreditamos $XX.XXX en tu cuenta de Mercado Pago"</em> bajo el concepto <strong>"Dinero a favor por reclamo / cobertura"</strong>.</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+                  <span class="font-bold text-slate-900 block">3. Liquidación y Renovación</span>
+                  <p class="text-slate-600 leading-relaxed">Se envía al cliente el <strong>Certificado de Recupero</strong> con las órdenes acreditadas, se factura el 10% o 20% acordado y se agenda la auditoría del mes siguiente.</p>
+                </div>
+              </div>
+
+              <div class="flex justify-between pt-2">
+                <button type="button" onclick="selectSopPanel('sop-04')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                  &larr; Anterior (SOP-04)
+                </button>
+                <button type="button" onclick="selectSopPanel('all')" class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+                  Ver Todos los Procedimientos Juntos
+                </button>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
@@ -798,21 +1112,21 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
       </section>
 
       <!-- ========================================================================= -->
-      <!-- MÓDULO 4: BRAND KIT OFICIAL COMPLETO                                      -->
+      <!-- MÓDULO 4: BRAND KIT OFICIAL COMPLETO (TODO INTEGRADO + PNG / JPG / SVG)   -->
       <!-- ========================================================================= -->
       <section id="view-brand" class="hidden space-y-6">
         
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2">
-              Manual de Identidad Visual & Recursos Vectoriales (SSOT)
+              Manual de Identidad Visual & Recursos Oficiales (SSOT Integrado)
             </div>
             <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Brand Kit Oficial — SaldoAudit</h2>
-            <p class="text-xs text-slate-500 mt-1">Logos SVG descargables, paleta cromática semántica, tipografías y reglas de co-branding.</p>
+            <p class="text-xs text-slate-500 mt-1">Descarga instantánea de logos en <strong>PNG (Transparente)</strong>, <strong>JPG (Fondo Sólido)</strong> y <strong>SVG Vector</strong>, paleta cromática y UI Kit.</p>
           </div>
-          <a href="brand.html" target="_blank" class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 self-start sm:self-center transition">
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Vista Pública Brand Kit
-          </a>
+          <span class="px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold self-start sm:self-center">
+            PNG / JPG HD 1200px Listos
+          </span>
         </div>
 
         <!-- Paleta Cromática con Copia Rápida -->
@@ -853,70 +1167,107 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
           </div>
         </div>
 
-        <!-- Galería de 4 Logos con Descarga Directa -->
+        <!-- Galería de 4 Logos con Descarga Triple: PNG (Transparente), JPG (Sólido) y SVG -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- LOGO 1: HORIZONTAL FONDO CLARO -->
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded">1. Logo Principal (Fondo Claro)</span>
-                <span class="text-[10px] font-mono text-blue-600 font-bold">SVG Vector</span>
+                <span class="text-[10px] font-mono text-blue-600 font-bold">PNG &bull; JPG &bull; SVG</span>
               </div>
               <div class="h-36 checkerboard rounded-xl p-4 flex items-center justify-center border border-slate-200/60 my-3">
                 <img src="assets/logo-saldoaudit.svg" alt="SaldoAudit Claro" class="max-h-16 w-auto object-contain">
               </div>
-              <p class="text-xs text-slate-500">Uso: Membretes, facturas, reportes PDF y fondos claros.</p>
+              <p class="text-xs text-slate-500">Uso: Membretes, facturas, reportes PDF, documentos Word y fondos blancos.</p>
             </div>
-            <a href="assets/logo-saldoaudit.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2.5 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar logo-saldoaudit.svg
-            </a>
+            <div class="grid grid-cols-3 gap-2 mt-4">
+              <button type="button" onclick="downloadLogoRaster('light', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
+              </button>
+              <button type="button" onclick="downloadLogoRaster('light', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
+              </button>
+              <a href="assets/logo-saldoaudit.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="file-code" class="w-3.5 h-3.5"></i> SVG
+              </a>
+            </div>
           </div>
 
+          <!-- LOGO 2: HORIZONTAL FONDO OSCURO -->
           <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 shadow-md text-white flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">2. Logo Invertido (Fondo Oscuro)</span>
-                <span class="text-[10px] font-mono text-blue-300 font-bold">SVG Vector</span>
+                <span class="text-[10px] font-mono text-blue-300 font-bold">PNG &bull; JPG &bull; SVG</span>
               </div>
               <div class="h-36 bg-slate-950 rounded-xl p-4 flex items-center justify-center border border-slate-800 my-3">
                 <img src="assets/logo-saldoaudit-dark.svg" alt="SaldoAudit Oscuro" class="max-h-16 w-auto object-contain">
               </div>
-              <p class="text-xs text-slate-400">Uso: Cabeceras oscuras, presentaciones ejecutivas y banners.</p>
+              <p class="text-xs text-slate-400">Uso: Cabeceras oscuras, presentaciones ejecutivas y portadas LinkedIn.</p>
             </div>
-            <a href="assets/logo-saldoaudit-dark.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2.5 px-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar logo-saldoaudit-dark.svg
-            </a>
+            <div class="grid grid-cols-3 gap-2 mt-4">
+              <button type="button" onclick="downloadLogoRaster('dark', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
+              </button>
+              <button type="button" onclick="downloadLogoRaster('dark', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
+              </button>
+              <a href="assets/logo-saldoaudit-dark.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl border border-slate-700 transition">
+                <i data-lucide="file-code" class="w-3.5 h-3.5"></i> SVG
+              </a>
+            </div>
           </div>
 
+          <!-- LOGO 3: ISOTIPO RADAR FORENSE CUADRADO -->
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">3. Isotipo Radar Forense (Lupa + Métricas)</span>
-                <span class="text-[10px] font-mono text-emerald-600 font-bold">SVG Vector</span>
+                <span class="text-[10px] font-mono text-emerald-600 font-bold">PNG &bull; JPG &bull; SVG</span>
               </div>
               <div class="h-36 checkerboard rounded-xl p-4 flex items-center justify-center border border-slate-200/60 my-3">
                 <img src="assets/logo-saldoaudit-icon.svg" alt="SaldoAudit Isotipo" class="max-h-20 w-auto object-contain">
               </div>
-              <p class="text-xs text-slate-500">Uso: Foto de perfil de WhatsApp Business, Gmail, LinkedIn y Favicon.</p>
+              <p class="text-xs text-slate-500">Uso: Foto de perfil de WhatsApp Business, Avatar de Gmail, LinkedIn y Favicon.</p>
             </div>
-            <a href="assets/logo-saldoaudit-icon.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2.5 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar logo-saldoaudit-icon.svg
-            </a>
+            <div class="grid grid-cols-3 gap-2 mt-4">
+              <button type="button" onclick="downloadLogoRaster('icon', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
+              </button>
+              <button type="button" onclick="downloadLogoRaster('icon', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
+              </button>
+              <a href="assets/logo-saldoaudit-icon.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="file-code" class="w-3.5 h-3.5"></i> SVG
+              </a>
+            </div>
           </div>
 
+          <!-- LOGO 4: MONOCROMO / SELLOS -->
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-800 bg-slate-100 px-2 py-0.5 rounded">4. Monocromo / Sellos Oficiales</span>
-                <span class="text-[10px] font-mono text-slate-600 font-bold">SVG Vector</span>
+                <span class="text-[10px] font-mono text-slate-600 font-bold">PNG &bull; JPG &bull; SVG</span>
               </div>
               <div class="h-36 checkerboard rounded-xl p-4 flex items-center justify-center border border-slate-200/60 my-3">
                 <img src="assets/logo-saldoaudit-mono.svg" alt="SaldoAudit Mono" class="max-h-16 w-auto object-contain">
               </div>
-              <p class="text-xs text-slate-500">Uso: Contratos impresos en blanco y negro, sellos de agua y anexos.</p>
+              <p class="text-xs text-slate-500">Uso: Contratos impresos en blanco y negro, sellos de agua y anexos legales.</p>
             </div>
-            <a href="assets/logo-saldoaudit-mono.svg" download class="touch-target mt-4 w-full flex items-center justify-center gap-1.5 py-2.5 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i> Descargar logo-saldoaudit-mono.svg
-            </a>
+            <div class="grid grid-cols-3 gap-2 mt-4">
+              <button type="button" onclick="downloadLogoRaster('mono', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
+              </button>
+              <button type="button" onclick="downloadLogoRaster('mono', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
+              </button>
+              <a href="assets/logo-saldoaudit-mono.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
+                <i data-lucide="file-code" class="w-3.5 h-3.5"></i> SVG
+              </a>
+            </div>
           </div>
         </div>
 
@@ -933,7 +1284,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
           <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-1.5">
             <span class="font-bold text-blue-700 uppercase">Zona de Exclusión (0.5X)</span>
             <p class="text-slate-600 leading-relaxed">
-              Mantener siempre un margen libre de 0.5X alrededor del escudo. En co-branding con logos de clientes o Mercado Libre, separar con línea vertical gris <code>#E2E8F0</code>.
+              Mantener siempre un margen libre de 0.5X alrededor del isotipo Radar Forense. En co-branding con logos de clientes o Mercado Libre, separar con línea vertical gris <code>#E2E8F0</code>.
             </p>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-1.5">
@@ -941,6 +1292,35 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
             <p class="text-slate-600 leading-relaxed">
               Precisión cuantitativa y sobriedad contable. Cero promesas vacías: hablamos con números de orden, fechas exactas y artículos del Programa de Protección al Vendedor.
             </p>
+          </div>
+        </div>
+
+        <!-- UI Kit Oficial Integrado -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">UI Kit Oficial (Componentes y Semántica de Prioridad)</span>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5">
+              <span class="font-bold text-slate-700 uppercase block">Botones de Acción</span>
+              <button type="button" class="w-full py-2 px-3 bg-blue-700 text-white font-bold rounded-xl">Primario Forense (#1D4ED8)</button>
+              <button type="button" class="w-full py-2 px-3 bg-slate-900 text-white font-bold rounded-xl">Ejecutivo Dark (#0F172A)</button>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5">
+              <span class="font-bold text-slate-700 uppercase block">Badges de Urgencia</span>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200 font-bold rounded-full">Crítica (&lt;72h)</span>
+                <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 font-bold rounded-full">Siniestro Correo</span>
+                <span class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 font-bold rounded-full">Retorno Trancado</span>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold rounded-full">Liquidado MP</span>
+              </div>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
+              <span class="font-bold text-slate-700 uppercase block">Formatos Recomendados</span>
+              <p class="text-slate-600 leading-relaxed">
+                &bull; <strong>WhatsApp / Gmail / LinkedIn:</strong> Usar Isotipo n.° 3 en <strong>JPG</strong> o <strong>PNG</strong>.<br>
+                &bull; <strong>Reportes PDF / Word:</strong> Usar Logo n.° 1 en <strong>PNG</strong>.<br>
+                &bull; <strong>Imprenta / Web:</strong> Usar <strong>SVG</strong>.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -1835,11 +2215,127 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       lucide.createIcons();
     }
 
-    function filterSopBlocks() {
-      const q = (document.getElementById('sopSearchInput').value || '').toLowerCase();
-      document.querySelectorAll('.sop-block').forEach(b => {
-        b.style.display = b.innerText.toLowerCase().includes(q) ? '' : 'none';
+    // Selector Interactivo del Panel de SOPs
+    function selectSopPanel(sopId) {
+      const allIds = ['sop-00', 'sop-01', 'sop-02', 'sop-scripts', 'sop-03', 'sop-04', 'sop-05'];
+      document.querySelectorAll('.sop-nav-btn').forEach(btn => {
+        if (btn.id === 'sopNav-all') {
+          btn.className = "sop-nav-btn w-full text-center py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition";
+        } else {
+          btn.className = "sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition";
+        }
       });
+
+      if (sopId === 'all') {
+        allIds.forEach(id => {
+          const el = document.getElementById(`sopPanel-${id}`);
+          if (el) {
+            el.classList.remove('hidden');
+            el.style.display = '';
+          }
+        });
+        const allBtn = document.getElementById('sopNav-all');
+        if (allBtn) {
+          allBtn.className = "sop-nav-btn w-full text-center py-2 px-3 rounded-xl bg-blue-700 text-white font-bold text-xs transition";
+        }
+      } else {
+        allIds.forEach(id => {
+          const el = document.getElementById(`sopPanel-${id}`);
+          if (el) {
+            if (id === sopId) {
+              el.classList.remove('hidden');
+              el.style.display = '';
+            } else {
+              el.classList.add('hidden');
+              el.style.display = 'none';
+            }
+          }
+        });
+        const activeBtn = document.getElementById(`sopNav-${sopId}`);
+        if (activeBtn) {
+          activeBtn.className = "sop-nav-btn w-full text-left p-2.5 rounded-2xl bg-blue-50 text-blue-800 border border-blue-200 flex items-center gap-3 transition";
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function filterSopBlocks() {
+      const q = (document.getElementById('sopSearchInput').value || '').trim().toLowerCase();
+      if (!q) {
+        selectSopPanel('sop-00');
+        return;
+      }
+      document.querySelectorAll('.sop-block').forEach(b => {
+        const match = b.innerText.toLowerCase().includes(q);
+        if (match) {
+          b.classList.remove('hidden');
+          b.style.display = '';
+        } else {
+          b.classList.add('hidden');
+          b.style.display = 'none';
+        }
+      });
+    }
+
+    // Motor de Exportación Instantánea en PNG (Transparente) y JPG (Fondo Sólido) en Alta Definición
+    const LOGO_SVGS = {
+      light: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><defs><linearGradient id="radarGradLight" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#1E40AF"/></linearGradient></defs><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="url(#radarGradLight)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#0F172A" letter-spacing="-1">Saldo<tspan fill="#1D4ED8">Audit</tspan></text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#64748B" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`,
+      dark: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><defs><linearGradient id="radarGradDark" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2563EB"/><stop offset="100%" stop-color="#1D4ED8"/></linearGradient></defs><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="url(#radarGradDark)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#FFFFFF" letter-spacing="-1">Saldo<tspan fill="#60A5FA">Audit</tspan></text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#94A3B8" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`,
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="1024" height="1024"><defs><linearGradient id="radarIconGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1D4ED8"/><stop offset="100%" stop-color="#1E40AF"/></linearGradient></defs><g transform="scale(6.25)"><rect width="32" height="32" rx="7.5" fill="url(#radarIconGrad)"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#93C5FD"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#34D399"/></g></svg>`,
+      mono: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" width="1440" height="300"><g transform="translate(10, 10) scale(2.5)"><rect width="32" height="32" rx="8" fill="#0F172A"/><circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2" fill="none"/><path d="M21 21L27 27" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/><rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#94A3B8"/><rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#CBD5E1"/><rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#ffffff"/></g><text x="110" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="38" fill="#0F172A" letter-spacing="-1">SaldoAudit</text><text x="112" y="78" font-family="'Inter', Arial, sans-serif" font-weight="700" font-size="10.5" fill="#475569" letter-spacing="2.5">AUDITORÍA FORENSE MERCADO LIBRE</text></svg>`
+    };
+
+    function downloadLogoRaster(variant, format, btn) {
+      const svgString = LOGO_SVGS[variant];
+      if (!svgString) return;
+
+      const isSquare = variant === 'icon';
+      const width = isSquare ? 1024 : 1440;
+      const height = isSquare ? 1024 : 300;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      if (format === 'jpg') {
+        ctx.fillStyle = (variant === 'dark') ? '#0F172A' : '#FFFFFF';
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      const img = new Image();
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+
+        const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
+        const dataUrl = canvas.toDataURL(mime, 0.98);
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        const fileNames = {
+          light: `logo-saldoaudit.${format}`,
+          dark: `logo-saldoaudit-dark.${format}`,
+          icon: `logo-saldoaudit-icon.${format}`,
+          mono: `logo-saldoaudit-mono.${format}`
+        };
+        a.download = fileNames[variant] || `saldoaudit.${format}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        if (btn) {
+          const prev = btn.innerHTML;
+          btn.innerHTML = `✓ Listo`;
+          setTimeout(() => {
+            btn.innerHTML = prev;
+            lucide.createIcons();
+          }, 1500);
+        }
+      };
+      img.src = url;
     }
 
     // Modal Nuevo Seller
