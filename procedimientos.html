@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-100 text-slate-800">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Procedimientos & Operaciones (SOPs) | SaldoAudit</title>
+  
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D4ED8' stroke-width='2.5'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><path d='m9 12 2 2 4-4'/></svg>">
+
+  <!-- Google Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-slate-800 bg-slate-100">
+
+  <!-- ================= BARRA DE NAVEGACIÓN ================= -->
+  <header class="bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between gap-3 shrink-0 z-30 shadow-xs">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-2.5 group">
+        <div class="w-8 h-8 rounded-lg bg-blue-700 text-white flex items-center justify-center font-bold text-sm shadow-sm group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base text-slate-900 tracking-tight leading-none">Saldo<span class="text-blue-600">Audit</span></span>
+            <span class="text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">SOPs Operativos</span>
+          </div>
+          <span class="text-[11px] text-slate-500 leading-tight block">Protocolos Forenses Estandarizados</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a href="brand.html" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 text-xs font-semibold flex items-center gap-1.5 hover:bg-slate-50 transition">
+        <i data-lucide="palette" class="w-3.5 h-3.5 text-blue-600"></i> Manual de Marca
+      </a>
+      <a href="index.html" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+        <i data-lucide="globe" class="w-3.5 h-3.5"></i> Sitio Web
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= LAYOUT PRINCIPAL ================= -->
+  <div class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+    
+    <!-- ÍNDICE LATERAL (Sticky en Desktop) -->
+    <aside class="lg:col-span-1 space-y-2">
+      <div class="sticky top-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block px-2 mb-2">Procedimientos Oficiales</span>
+        <a href="#sop-01" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition">
+          <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-[10px]">01</span>
+          Ingesta & Desidentificación
+        </a>
+        <a href="#sop-02" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition">
+          <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-[10px]">02</span>
+          Matriz de Reclamos MeLi
+        </a>
+        <a href="#sop-03" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition">
+          <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-[10px]">03</span>
+          Protocolo de Entrega VIP
+        </a>
+        <a href="#sop-04" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition">
+          <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-[10px]">04</span>
+          Onboarding Colaborador
+        </a>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO CENTRAL DE LOS SOPS -->
+    <main class="lg:col-span-3 space-y-8">
+
+      <!-- BANNER DE BIENVENIDA -->
+      <div class="bg-gradient-to-r from-slate-900 to-[#1D4ED8] p-6 sm:p-8 rounded-3xl text-white shadow-md">
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-300 bg-blue-500/20 px-2.5 py-1 rounded-full border border-blue-400/30">
+          Garantía de Calidad & Compliance
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-extrabold mt-3">Manual Operativo de Auditoría Forense</h1>
+        <p class="text-slate-200 text-xs sm:text-sm mt-2 max-w-xl leading-relaxed">
+          Estándares rigurosos para el procesamiento de planillas masivas, detección algorítmica de pérdidas ocultas y apertura formal de reclamos ante Mercado Libre Argentina.
+        </p>
+      </div>
+
+      <!-- SOP-01: INGESTA Y DESIDENTIFICACIÓN -->
+      <section id="sop-01" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center">01</span>
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Ingesta & Desidentificación de Reportes</h2>
+              <span class="text-xs text-slate-500">Privacidad de datos y procesamiento local seguro</span>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Obligatorio</span>
+        </div>
+
+        <p class="text-sm text-slate-600 leading-relaxed">
+          El cliente provee su reporte de <strong>Ventas</strong> de los últimos 60 días descargado de Mercado Libre (`.xlsx`, `.xls` o `.csv`). Para proteger el secreto comercial del seller y los datos personales (Ley 25.326):
+        </p>
+
+        <ul class="space-y-2.5 text-xs text-slate-700">
+          <li class="flex items-start gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+            <span><strong>Cero subida a la nube:</strong> El archivo se procesa 100% en memoria en el navegador local del auditor. Nunca viaja a servidores de terceros ni queda almacenado sin cifrar.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+            <span><strong>Limpieza de PII:</strong> Nombres, DNIs y domicilios de compradores finales se omiten del reporte de recupero. Únicamente se conservan los campos clave: `# de Venta`, `Título de Publicación`, `Monto Total`, `Estado` y `Fecha`.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+            <span><strong>Desambiguación de cabeceras:</strong> El motor renombra automáticamente las columnas repetidas que genera MeLi (`Estado` de venta vs. `Estado` de envío).</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- SOP-02: MATRIZ DE RECLAMOS MELI -->
+      <section id="sop-02" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center">02</span>
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Matriz de Clasificación & Recupero</h2>
+              <span class="text-xs text-slate-500">Reglas algorítmicas de los 15 estados críticos</span>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-full border border-blue-200">Algorítmico</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 bg-rose-50 rounded-2xl border border-rose-200 space-y-2">
+            <span class="text-xs font-bold text-rose-800 uppercase">1. Siniestros de Correo</span>
+            <p class="text-xs text-rose-900 leading-relaxed">
+              Paquetes con estado <em>"El paquete se perdió"</em>, <em>"Dañado en camino"</em> o <em>"Extraviado por correo"</em> donde Mercado Libre no acreditó la indemnización automática al vendedor.
+            </p>
+          </div>
+          <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 space-y-2">
+            <span class="text-xs font-bold text-amber-800 uppercase">2. Ventana Crítica 72h</span>
+            <p class="text-xs text-amber-900 leading-relaxed">
+              Devoluciones entregadas al vendedor en los últimos 3 días donde el comprador devolvió una caja vacía, otro producto o roto. El seller tiene 72 horas para desconocer la devolución.
+            </p>
+          </div>
+          <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 space-y-2">
+            <span class="text-xs font-bold text-blue-800 uppercase">3. Devoluciones Trancadas</span>
+            <p class="text-xs text-blue-900 leading-relaxed">
+              Envíos en retorno que llevan más de 20 días en estado <em>"El comprador lo despachó"</em> pero nunca llegaron al depósito del seller. Aplica indemnización por extravío en tránsito.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOP-03: PROTOCOLO DE ENTREGA EJECUTIVA -->
+      <section id="sop-03" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center">03</span>
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Protocolo de Entrega al E-Commerce Lead</h2>
+              <span class="text-xs text-slate-500">Entrega de alto impacto por WhatsApp & Correo</span>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Comercial</span>
+        </div>
+
+        <p class="text-sm text-slate-600 leading-relaxed">
+          Los gerentes y directores de e-commerce reciben decenas de mensajes al día. La entrega debe ser <strong>inmediata, quirúrgica y sin fricción</strong>:
+        </p>
+
+        <div class="space-y-3">
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-3">
+            <i data-lucide="mic" class="w-5 h-5 text-blue-600 shrink-0 mt-0.5"></i>
+            <div class="text-xs text-slate-700">
+              <strong>Audio Personalizado de 20-30 segundos:</strong> Explicando el monto total auditado (ej. Hudson $296M), la cantidad exacta de casos detectados (15 casos) y el importe exacto recuperable ($599.518 ARS).
+            </div>
+          </div>
+          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-3">
+            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-blue-600 shrink-0 mt-0.5"></i>
+            <div class="text-xs text-slate-700">
+              <strong>Planilla Excel de Recupero Lista:</strong> Ordenada por prioridad (Crítica / Alta / Media), con link directo a cada orden en Mercado Libre y el motivo exacto para abrir el reclamo.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOP-04: ONBOARDING COLABORADOR OFICIAL -->
+      <section id="sop-04" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-xl bg-blue-600 text-white font-bold text-sm flex items-center justify-center">04</span>
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Onboarding de Colaborador Oficial en MeLi</h2>
+              <span class="text-xs text-slate-500">Gestión Integral VIP al 20% con CERO acceso bancario</span>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-[10px] font-bold rounded-full border border-purple-200">VIP</span>
+        </div>
+
+        <p class="text-sm text-slate-600 leading-relaxed">
+          Para los clientes que contratan la <strong>Gestión Integral al 20% a éxito</strong>, SaldoAudit se encarga de abrir y defender los reclamos directamente ante los agentes de Mercado Libre:
+        </p>
+
+        <div class="p-4 bg-slate-900 text-white rounded-2xl space-y-2 text-xs">
+          <div class="font-bold text-blue-400 flex items-center gap-2">
+            <i data-lucide="lock" class="w-4 h-4"></i> Rol Estrictamente Limitado (Seguridad Total)
+          </div>
+          <p class="text-slate-300 leading-relaxed">
+            El seller nos invita desde su panel de Mercado Libre con el rol oficial de <strong>"Colaborador: Posventa y Reclamos"</strong>. Este rol permite exclusivamente gestionar disputas de envíos.
+          </p>
+          <div class="text-rose-400 font-semibold pt-1">
+            ⛔ Cero acceso a Mercado Pago, transferencias, cuentas bancarias ni modificación de precios.
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
