@@ -98,7 +98,7 @@
       min-width: 44px;
     }
     .dropzone-active {
-      border-color: #1d4ed8 !important;
+      border-color: #059669 !important;
       background-color: #eff6ff !important;
     }
     dialog:modal {
@@ -160,7 +160,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-6">
       
       <!-- Pill de autoridad -->
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200 shadow-2xs">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>Validado con más de $296M en ventas auditadas de Mercado Libre</span>
       </div>
@@ -168,7 +168,7 @@
       <!-- Título Principal -->
       <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-slate-900 tracking-tight leading-[1.15]">
         Recuperá el dinero que <br class="hidden sm:inline">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-600">Mercado Libre nunca te avisa que perdiste</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 to-teal-800">Mercado Libre nunca te avisa que perdiste</span>
       </h1>
 
       <!-- Bajada Comercial Directa -->
@@ -179,7 +179,7 @@
       <!-- Garantía de Seguridad / Privacidad -->
       <div class="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-500 font-semibold">
         <span class="inline-flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> 100% Privado en tu Navegador</span>
-        <span class="inline-flex items-center gap-1.5"><i data-lucide="key" class="w-4 h-4 text-blue-600"></i> Cero Claves ni Acceso a tu Cuenta</span>
+        <span class="inline-flex items-center gap-1.5"><i data-lucide="key" class="w-4 h-4 text-emerald-600"></i> Cero Claves ni Acceso a tu Cuenta</span>
         <span class="inline-flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Diagnóstico en 10 Segundos</span>
       </div>
 
@@ -195,7 +195,7 @@
           <span class="text-xs text-slate-500 font-medium">Volumen Bruto Auditado</span>
         </div>
         <div class="p-3">
-          <div class="text-2xl sm:text-3xl font-heading font-black text-blue-600">$599.500+</div>
+          <div class="text-2xl sm:text-3xl font-heading font-black text-emerald-600">$599.500+</div>
           <span class="text-xs text-slate-500 font-medium">Recuperados por Cuenta Líder</span>
         </div>
         <div class="p-3">
@@ -225,11 +225,11 @@
     <!-- Dropzone Area -->
     <div 
       id="dropzone" 
-      class="border-2 border-dashed border-slate-300 hover:border-blue-600 rounded-3xl p-6 sm:p-10 text-center bg-white hover:bg-blue-50/20 transition-all cursor-pointer shadow-sm relative group"
+      class="border-2 border-dashed border-slate-300 hover:border-emerald-600 rounded-3xl p-6 sm:p-10 text-center bg-white hover:bg-emerald-50/20 transition-all cursor-pointer shadow-sm relative group"
     >
       <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden">
       
-      <div class="w-16 h-16 mx-auto mb-4 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center border border-blue-100 group-hover:scale-105 transition-transform">
+      <div class="w-16 h-16 mx-auto mb-4 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center border border-emerald-100 group-hover:scale-105 transition-transform">
         <i data-lucide="upload-cloud" class="w-8 h-8"></i>
       </div>
 
@@ -244,7 +244,7 @@
         <button 
           type="button" 
           onclick="document.getElementById('fileInput').click()" 
-          class="touch-target w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold rounded-xl transition shadow-xs flex items-center justify-center gap-2"
+          class="touch-target w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl transition shadow-xs flex items-center justify-center gap-2"
         >
           <i data-lucide="file-up" class="w-4 h-4"></i>
           <span>Seleccionar archivo Excel / CSV</span>
@@ -259,7 +259,7 @@
         </button>
       </div>
 
-      <div id="fileInfo" class="mt-4 text-xs font-mono text-blue-700 bg-blue-50 inline-block px-3 py-1.5 rounded-lg border border-blue-100 hidden"></div>
+      <div id="fileInfo" class="mt-4 text-xs font-mono text-emerald-700 bg-emerald-50 inline-block px-3 py-1.5 rounded-lg border border-emerald-100 hidden"></div>
 
       <!-- 3 Puntos Clave Auditados -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-8 pt-6 border-t border-slate-100 text-left">
@@ -272,7 +272,7 @@
           <p class="text-xs text-slate-600">Paquetes perdidos o cancelados por demora del transporte donde Mercado Libre no liquidó la indemnización.</p>
         </div>
         <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
-          <span class="text-xs font-bold text-blue-700 flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4"></i> 3. Devoluciones Congeladas</span>
+          <span class="text-xs font-bold text-emerald-700 flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4"></i> 3. Devoluciones Congeladas</span>
           <p class="text-xs text-slate-600">Envíos de regreso que quedaron trabados en el correo y superan la fecha de entrega comprometida.</p>
         </div>
       </div>
@@ -310,7 +310,7 @@
         </div>
         <div class="bg-white p-4 rounded-2xl border border-slate-200 col-span-2 md:col-span-1">
           <span class="text-xs text-slate-400 block">Cobertura Legal</span>
-          <span class="text-xl font-heading font-extrabold text-blue-600">Plazos MeLi 72h / 60d</span>
+          <span class="text-xl font-heading font-extrabold text-emerald-600">Plazos MeLi 72h / 60d</span>
         </div>
       </div>
 
@@ -318,7 +318,7 @@
       <div class="hidden md:block bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xs">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
           <h4 class="text-sm font-heading font-bold text-slate-900">Detalle de Casos Detectados</h4>
-          <span id="badgeCounter" class="text-xs font-mono font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md">0 casos</span>
+          <span id="badgeCounter" class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md">0 casos</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs text-slate-700">
@@ -349,7 +349,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
       <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 block">Proceso Quirúrgico</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Proceso Quirúrgico</span>
         <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
           ¿Por qué se pierde dinero en Mercado Libre?
         </h2>
@@ -360,7 +360,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center">1</div>
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">1</div>
           <h3 class="text-base font-heading font-bold text-slate-900">Mercado Libre no notifica las pérdidas</h3>
           <p class="text-xs text-slate-600 leading-relaxed">
             Cuando un transportista extravía un paquete o cancela una entrega por demoras, el sistema no te envía una alerta de cobro. Si no abrís el reclamo dentro de los 60 días, el derecho a indemnización prescribe.
@@ -402,7 +402,7 @@
     <div class="space-y-4 text-xs">
       <div>
         <span class="font-semibold text-slate-400 block mb-1">Tipo de Reclamo Detectado:</span>
-        <span id="modalDiscrepancyType" class="inline-block px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 font-bold border border-blue-100"></span>
+        <span id="modalDiscrepancyType" class="inline-block px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-bold border border-emerald-100"></span>
       </div>
 
       <div>
@@ -410,13 +410,13 @@
         <textarea id="modalDossierText" rows="6" readonly class="w-full font-mono text-[11px] bg-slate-50 p-3 rounded-xl border border-slate-200 text-slate-700 leading-relaxed focus:outline-none"></textarea>
       </div>
 
-      <div class="p-3 bg-blue-50/60 rounded-xl border border-blue-100 text-slate-600">
+      <div class="p-3 bg-emerald-50/60 rounded-xl border border-emerald-100 text-slate-600">
         <strong class="text-slate-900 block mb-0.5">Guía de navegación en Mercado Libre:</strong>
         <span id="modalGuide"></span>
       </div>
 
       <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
-        <button type="button" id="btnCopyDossier" class="touch-target px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition">
+        <button type="button" id="btnCopyDossier" class="touch-target px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition">
           📋 Copiar Argumento
         </button>
         <a id="modalClaimLink" href="#" target="_blank" class="touch-target px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition inline-flex items-center gap-1.5">
@@ -432,7 +432,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
       <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 block">Modelo 100% a Éxito</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Modelo 100% a Éxito</span>
         <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
           Tarifas transparentes: solo cobramos si hay dinero a favor
         </h2>
@@ -446,7 +446,7 @@
         <!-- Tarifa 1 -->
         <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between">
           <div class="space-y-4">
-            <div class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+            <div class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
               Opción 1: Reporte en Mano
             </div>
             <div>
@@ -462,7 +462,7 @@
               <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> <strong>Garantía SaldoAudit:</strong> Si MeLi rechaza +50% por causas ajenas al seller, se acredita para el próximo mes.</li>
             </ul>
           </div>
-          <a href="#auditar-ahora" class="touch-target w-full py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition text-center shadow-xs block">
+          <a href="#auditar-ahora" class="touch-target w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition text-center shadow-xs block">
             Auditar mi Reporte Gratis
           </a>
         </div>
@@ -501,7 +501,7 @@
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       
       <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 block">Resolvé tus Dudas</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Resolvé tus Dudas</span>
         <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
           Preguntas Frecuentes de Seguridad y Operatoria
         </h2>
@@ -572,21 +572,21 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div>
             <label class="font-semibold text-slate-300 block mb-1">Nombre y Apellido *</label>
-            <input type="text" id="leadNombre" required placeholder="Tu nombre" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+            <input type="text" id="leadNombre" required placeholder="Tu nombre" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
           </div>
           <div>
             <label class="font-semibold text-slate-300 block mb-1">Empresa / Tienda Oficial MeLi *</label>
-            <input type="text" id="leadEmpresa" required placeholder="Nombre de tu marca" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+            <input type="text" id="leadEmpresa" required placeholder="Nombre de tu marca" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
           </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div>
             <label class="font-semibold text-slate-300 block mb-1">WhatsApp de Contacto *</label>
-            <input type="tel" id="leadTelefono" required placeholder="+54 9 11 ..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+            <input type="tel" id="leadTelefono" required placeholder="+54 9 11 ..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
           </div>
           <div>
             <label class="font-semibold text-slate-300 block mb-1">Rubro Principal</label>
-            <input type="text" id="leadRubro" placeholder="Bazar, Calzado, Autopartes..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+            <input type="text" id="leadRubro" placeholder="Bazar, Calzado, Autopartes..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
           </div>
         </div>
         <div class="pt-2">
@@ -607,7 +607,7 @@
   <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
       <div class="flex items-center gap-2">
-        <span class="font-heading font-extrabold text-slate-900">Saldo<span class="text-blue-600">Audit</span></span>
+        <span class="font-heading font-extrabold text-slate-900">Saldo<span class="text-emerald-600">Audit</span></span>
         <span>&bull; Herramienta Independiente de Conciliación para Sellers</span>
       </div>
       <div class="flex items-center gap-4">
@@ -924,7 +924,7 @@ Número de Seguimiento: ${tracking}`;
           <td class="px-6 py-3 font-mono font-bold text-slate-900">${item.orderId}</td>
           <td class="px-6 py-3 max-w-xs truncate" title="${item.itemTitle}">${item.itemTitle}</td>
           <td class="px-6 py-3 font-extrabold text-slate-900 whitespace-nowrap">${formatARS.format(item.amount)}</td>
-          <td class="px-6 py-3 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">${item.discrepancyType}</span></td>
+          <td class="px-6 py-3 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">${item.discrepancyType}</span></td>
           <td class="px-6 py-3 whitespace-nowrap"><span class="px-2 py-0.5 rounded-md text-[11px] font-bold ${item.isThreeDayWindow ? 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse' : 'bg-slate-100 text-slate-700'}">${item.isThreeDayWindow ? 'Urgente 72h' : 'Prioritaria'}</span></td>
           <td class="px-6 py-3 text-right whitespace-nowrap">
             <button type="button" onclick="openModal(${index})" class="touch-target px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">
@@ -944,7 +944,7 @@ Número de Seguimiento: ${tracking}`;
           </div>
           <div class="text-xs font-semibold text-slate-800 line-clamp-2">${item.itemTitle}</div>
           <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-700">${item.discrepancyType}</span>
+            <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700">${item.discrepancyType}</span>
             ${item.isThreeDayWindow ? '<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">🚨 Urgente 72h</span>' : ''}
           </div>
           <div class="pt-2 flex justify-end">

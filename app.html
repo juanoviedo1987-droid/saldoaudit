@@ -252,7 +252,7 @@
           <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs">
             <div class="flex items-center justify-between text-slate-400 mb-1">
               <span class="text-[11px] font-bold uppercase tracking-wider">Sellers en Pipeline</span>
-              <i data-lucide="store" class="w-4 h-4 text-blue-600"></i>
+              <i data-lucide="store" class="w-4 h-4 text-emerald-600"></i>
             </div>
             <div class="text-xl sm:text-2xl font-heading font-extrabold text-slate-900" id="kpiSellersCount">5 cuentas</div>
             <span class="text-[11px] text-slate-500 font-medium">Caso testigo activo: Hudson</span>
@@ -261,9 +261,9 @@
           <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs">
             <div class="flex items-center justify-between text-slate-400 mb-1">
               <span class="text-[11px] font-bold uppercase tracking-wider">Comisión Estimada</span>
-              <i data-lucide="percent" class="w-4 h-4 text-blue-600"></i>
+              <i data-lucide="percent" class="w-4 h-4 text-emerald-600"></i>
             </div>
-            <div class="text-xl sm:text-2xl font-heading font-extrabold text-blue-700" id="kpiComisionProyectada">$59.951</div>
+            <div class="text-xl sm:text-2xl font-heading font-extrabold text-emerald-700" id="kpiComisionProyectada">$59.951</div>
             <span class="text-[11px] text-slate-500 font-medium">Opción 10% | Si VIP (20%): $119.903</span>
           </div>
 
@@ -288,7 +288,7 @@
               id="searchSeller" 
               placeholder="Buscar empresa, contacto, tienda oficial, rubro o notas..." 
               oninput="renderCRM()"
-              class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 transition"
+              class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-emerald-600 transition"
             >
           </div>
 
@@ -296,7 +296,7 @@
           <div class="flex items-center flex-wrap gap-2 text-xs">
             
             <!-- Filtro Prioridad -->
-            <select id="filterPriority" onchange="renderCRM()" class="bg-white border border-slate-300 text-slate-700 rounded-xl px-2.5 py-2 font-medium focus:outline-none focus:border-blue-600">
+            <select id="filterPriority" onchange="renderCRM()" class="bg-white border border-slate-300 text-slate-700 rounded-xl px-2.5 py-2 font-medium focus:outline-none focus:border-emerald-600">
               <option value="all">Prioridad: Todas</option>
               <option value="A">Prioridad A (Alta)</option>
               <option value="B">Prioridad B (Media)</option>
@@ -305,7 +305,7 @@
 
             <!-- Toggle Vista Kanban / Vista Tabla -->
             <div class="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200">
-              <button type="button" onclick="setCrmLayout('kanban')" id="btnLayoutKanban" class="px-3 py-1.5 rounded-lg font-bold bg-white text-blue-700 shadow-2xs flex items-center gap-1.5 transition">
+              <button type="button" onclick="setCrmLayout('kanban')" id="btnLayoutKanban" class="px-3 py-1.5 rounded-lg font-bold bg-white text-emerald-700 shadow-2xs flex items-center gap-1.5 transition">
                 <i data-lucide="columns" class="w-3.5 h-3.5"></i>
                 <span>Kanban</span>
               </button>
@@ -317,7 +317,7 @@
 
             <!-- Exportar CSV -->
             <button type="button" onclick="exportSellersToCSV()" class="px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold flex items-center gap-1.5 transition shadow-2xs" title="Descargar cartera en CSV/Excel">
-              <i data-lucide="download" class="w-3.5 h-3.5 text-blue-600"></i>
+              <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
               <span class="hidden sm:inline">Exportar CSV</span>
             </button>
 
@@ -344,13 +344,13 @@
           </div>
 
           <!-- Columna 2: Planilla en Auditoría -->
-          <div class="bg-blue-50/70 rounded-2xl p-3 border border-blue-200/80 space-y-3">
+          <div class="bg-emerald-50/70 rounded-2xl p-3 border border-emerald-200/80 space-y-3">
             <div class="flex items-center justify-between px-1">
               <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-blue-950">2. En Auditoría (Excel)</h3>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-emerald-950">2. En Auditoría (Excel)</h3>
               </div>
-              <span id="count-en_auditoria" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-blue-700 border border-blue-200">0</span>
+              <span id="count-en_auditoria" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-emerald-700 border border-emerald-200">0</span>
             </div>
             <div id="col-en_auditoria" class="space-y-2.5 min-h-[120px]"></div>
           </div>
@@ -410,9 +410,9 @@
       <section id="view-sops" class="hidden space-y-5">
         
         <!-- Cabecera SOPs con Buscador y Selector "Ver Todo" -->
-        <div class="bg-gradient-to-r from-[#0F172A] to-[#1D4ED8] p-5 sm:p-6 rounded-3xl text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="bg-gradient-to-r from-[#090D16] to-[#059669] p-5 sm:p-6 rounded-3xl text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/20 px-2.5 py-1 rounded-full border border-blue-400/30">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-400/30">
               Código: SOP-SALDOAUDIT-2026 &bull; Manual Maestro de Operaciones
             </span>
             <h2 class="text-xl sm:text-2xl font-extrabold mt-2">Centro de Procedimientos Forenses (SOPs)</h2>
@@ -436,10 +436,10 @@
           <aside class="lg:col-span-4 xl:col-span-3 bg-white p-3.5 rounded-3xl border border-slate-200 shadow-2xs lg:sticky lg:top-4 space-y-1.5">
             <div class="px-2 py-1.5 border-b border-slate-100 flex items-center justify-between">
               <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Índice de Protocolos (7)</span>
-              <span class="text-[10px] font-semibold text-blue-600">Interactivo</span>
+              <span class="text-[10px] font-semibold text-emerald-600">Interactivo</span>
             </div>
 
-            <button type="button" onclick="selectSopPanel('sop-00')" id="sopNav-sop-00" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl bg-blue-50 text-blue-800 border border-blue-200 flex items-center gap-3 transition">
+            <button type="button" onclick="selectSopPanel('sop-00')" id="sopNav-sop-00" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-3 transition">
               <span class="w-7 h-7 rounded-xl bg-amber-600 text-white font-bold text-xs flex items-center justify-center shrink-0">00</span>
               <div class="min-w-0 flex-1">
                 <span class="text-xs font-bold block truncate">SLAs & Plazos Fatales</span>
@@ -448,7 +448,7 @@
             </button>
 
             <button type="button" onclick="selectSopPanel('sop-01')" id="sopNav-sop-01" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
-              <span class="w-7 h-7 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0">01</span>
+              <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">01</span>
               <div class="min-w-0 flex-1">
                 <span class="text-xs font-bold block truncate">Ingesta & Anonimización</span>
                 <span class="text-[10px] text-slate-500 block truncate">Exportación MeLi y 67 columnas</span>
@@ -456,7 +456,7 @@
             </button>
 
             <button type="button" onclick="selectSopPanel('sop-02')" id="sopNav-sop-02" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
-              <span class="w-7 h-7 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0">02</span>
+              <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">02</span>
               <div class="min-w-0 flex-1">
                 <span class="text-xs font-bold block truncate">Matriz Forense (15 Estados)</span>
                 <span class="text-[10px] text-slate-500 block truncate">Las 4 categorías + Ruta en MeLi</span>
@@ -472,7 +472,7 @@
             </button>
 
             <button type="button" onclick="selectSopPanel('sop-03')" id="sopNav-sop-03" class="sop-nav-btn w-full text-left p-2.5 rounded-2xl hover:bg-slate-50 text-slate-700 border border-transparent flex items-center gap-3 transition">
-              <span class="w-7 h-7 rounded-xl bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0">03</span>
+              <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">03</span>
               <div class="min-w-0 flex-1">
                 <span class="text-xs font-bold block truncate">Entrega Comercial & Cierre</span>
                 <span class="text-[10px] text-slate-500 block truncate">Audio, WhatsApp y Objeciones</span>
@@ -527,9 +527,9 @@
                     Corre desde el minuto exacto en que el correo marca <strong>"Devolución entregada al vendedor"</strong>. Pasadas las 72h corridas, el botón de reclamo desaparece o soporte desestima por extemporáneo.
                   </p>
                 </div>
-                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 space-y-1.5">
-                  <span class="font-bold text-blue-800 uppercase flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4 text-blue-600"></i> 2. Umbral de 15 a 20 Días Sin Movimiento</span>
-                  <p class="text-blue-950 leading-relaxed">
+                <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-1.5">
+                  <span class="font-bold text-emerald-800 uppercase flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4 text-emerald-600"></i> 2. Umbral de 15 a 20 Días Sin Movimiento</span>
+                  <p class="text-emerald-950 leading-relaxed">
                     Cuando una devolución despachada por el comprador queda estancada en <strong>"En camino a tu domicilio"</strong> superando la fecha prometida + 15 días, se exige indemnización por extravío presunto en tránsito inverso.
                   </p>
                 </div>
@@ -550,7 +550,7 @@
               <!-- Checklist de Evidencia Física en Depósito -->
               <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 text-xs">
                 <span class="font-bold text-slate-900 uppercase flex items-center gap-1.5">
-                  <i data-lucide="camera" class="w-4 h-4 text-blue-600"></i> Protocolo de Prueba Fotográfica para Devoluciones (&lt;72h)
+                  <i data-lucide="camera" class="w-4 h-4 text-emerald-600"></i> Protocolo de Prueba Fotográfica para Devoluciones (&lt;72h)
                 </span>
                 <p class="text-slate-600">Cuando el depósito del cliente recibe una devolución sospechosa, debe tomar <strong>4 fotos obligatorias</strong> antes de las 72h:</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-slate-700">
@@ -575,7 +575,7 @@
             <div id="sopPanel-sop-01" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
               <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div class="flex items-center gap-3">
-                  <span class="w-9 h-9 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">01</span>
+                  <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center">01</span>
                   <div>
                     <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-01: Ingesta, Anonimización & Desambiguación Técnica</h3>
                     <span class="text-xs text-slate-500">Cumplimiento Ley 25.326 de Protección de Datos Personales y lectura de las 67 columnas</span>
@@ -646,13 +646,13 @@
             <div id="sopPanel-sop-02" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
               <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div class="flex items-center gap-3">
-                  <span class="w-9 h-9 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">02</span>
+                  <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center">02</span>
                   <div>
                     <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-02: Matriz Forense de Clasificación & Ruta en Mercado Libre</h3>
                     <span class="text-xs text-slate-500">Las 4 tipologías operativas calibradas con el caso real Hudson ($599.518 ARS) y cómo entrar en MeLi</span>
                   </div>
                 </div>
-                <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-full border border-blue-200">15 Estados MeLi</span>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">15 Estados MeLi</span>
               </div>
 
               <div class="overflow-x-auto">
@@ -685,7 +685,7 @@
                       <td class="p-3 font-semibold text-slate-900">Detalle de la Venta &rarr; <em>"Necesito ayuda con el cobro del envío"</em> &rarr; Solicitar reversión de cargo Full.</td>
                     </tr>
                     <tr class="hover:bg-slate-50">
-                      <td class="p-3 font-bold text-blue-700 bg-blue-50/50">4. Devolución Congelada</td>
+                      <td class="p-3 font-bold text-emerald-700 bg-emerald-50/50">4. Devolución Congelada</td>
                       <td class="p-3 mono text-slate-700">"El comprador despachó el paquete", "En camino a tu domicilio" (+15/20 días)</td>
                       <td class="p-3 text-slate-600">El retorno queda estancado en el limbo logístico y el vendedor pierde mercadería y dinero.</td>
                       <td class="p-3 font-semibold text-slate-900">Detalle de la Venta &rarr; <em>"El paquete devuelto no me llegó y venció el plazo"</em>.</td>
@@ -694,12 +694,12 @@
                 </table>
               </div>
 
-              <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 text-xs text-blue-950 flex items-center justify-between gap-4">
+              <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-950 flex items-center justify-between gap-4">
                 <div>
-                  <strong class="block text-blue-900">💡 Link Directo Universal a cada Orden de Mercado Libre Argentina:</strong>
+                  <strong class="block text-emerald-950">💡 Link Directo Universal a cada Orden de Mercado Libre Argentina:</strong>
                   <span class="font-mono text-[11px]">https://www.mercadolibre.com.ar/ventas/{NUMERO_DE_VENTA}/detalle</span>
                 </div>
-                <button type="button" onclick="openHudsonCasesModal()" class="px-3 py-2 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shrink-0 transition">
+                <button type="button" onclick="openHudsonCasesModal()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shrink-0 transition">
                   Ver Ejemplo Real (15 Casos Hudson)
                 </button>
               </div>
@@ -735,7 +735,7 @@
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="text-xs font-bold text-slate-900">1. Siniestro / Extravío de Correo</span>
-                    <button type="button" onclick="copySnippet('txt-script1', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                    <button type="button" onclick="copySnippet('txt-script1', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
                       <i data-lucide="copy" class="w-3 h-3"></i> Copiar
                     </button>
                   </div>
@@ -746,7 +746,7 @@
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="text-xs font-bold text-slate-900">2. Desconocimiento en Ventana 72h</span>
-                    <button type="button" onclick="copySnippet('txt-script2', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                    <button type="button" onclick="copySnippet('txt-script2', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
                       <i data-lucide="copy" class="w-3 h-3"></i> Copiar
                     </button>
                   </div>
@@ -757,7 +757,7 @@
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="text-xs font-bold text-slate-900">3. Devolución Congelada en Tránsito (+15/20 días)</span>
-                    <button type="button" onclick="copySnippet('txt-script3', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                    <button type="button" onclick="copySnippet('txt-script3', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
                       <i data-lucide="copy" class="w-3 h-3"></i> Copiar
                     </button>
                   </div>
@@ -768,7 +768,7 @@
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="text-xs font-bold text-slate-900">4. Bonificación de Flete Indebido en Full</span>
-                    <button type="button" onclick="copySnippet('txt-script4', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
+                    <button type="button" onclick="copySnippet('txt-script4', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1 transition">
                       <i data-lucide="copy" class="w-3 h-3"></i> Copiar
                     </button>
                   </div>
@@ -807,7 +807,7 @@
             <div id="sopPanel-sop-03" class="sop-block hidden bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-5">
               <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div class="flex items-center gap-3">
-                  <span class="w-9 h-9 rounded-xl bg-blue-700 text-white font-bold text-sm flex items-center justify-center">03</span>
+                  <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center">03</span>
                   <div>
                     <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-03: Protocolo de Entrega Comercial & Manejo de Objeciones</h3>
                     <span class="text-xs text-slate-500">Cómo presentar los hallazgos por WhatsApp para cerrar el 10% (Reporte) o el 20% (Gestión VIP)</span>
@@ -820,7 +820,7 @@
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
                   <div class="flex items-center justify-between">
                     <span class="font-bold text-slate-900">Paso 1: Guión de Audio WhatsApp (25 seg)</span>
-                    <button type="button" onclick="copySnippet('txt-audio-guion', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg flex items-center gap-1 transition">
+                    <button type="button" onclick="copySnippet('txt-audio-guion', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-1 transition">
                       <i data-lucide="copy" class="w-3 h-3"></i> Copiar Guión
                     </button>
                   </div>
@@ -846,18 +846,18 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
               </div>
 
               <!-- Respuestas a las 3 Objeciones Clásicas -->
-              <div class="p-4 bg-blue-50/60 rounded-2xl border border-blue-200 space-y-2.5 text-xs">
-                <span class="font-bold text-blue-900 uppercase block">Respuestas Rápidas a las 3 Objeciones Clásicas del Seller:</span>
+              <div class="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-200 space-y-2.5 text-xs">
+                <span class="font-bold text-emerald-950 uppercase block">Respuestas Rápidas a las 3 Objeciones Clásicas del Seller:</span>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div class="p-3 bg-white rounded-xl border border-blue-100">
+                  <div class="p-3 bg-white rounded-xl border border-emerald-100">
                     <strong class="text-slate-900 block mb-1">1. "Mi equipo ya mira los reclamos"</strong>
                     <p class="text-slate-600">El equipo mira la bandeja de mediaciones abiertas, pero los siniestros de correo y devoluciones en tránsito no generan alerta: figuran como cerradas en <code>$0</code> dentro del Excel de 67 columnas.</p>
                   </div>
-                  <div class="p-3 bg-white rounded-xl border border-blue-100">
+                  <div class="p-3 bg-white rounded-xl border border-emerald-100">
                     <strong class="text-slate-900 block mb-1">2. "Me da miedo pasar el Excel por los datos"</strong>
                     <p class="text-slate-600">Podés borrar las columnas de nombre, DNI y dirección del comprador antes de mandarlo, o procesarlo directo en nuestro motor web local donde ningún dato sale de tu computadora.</p>
                   </div>
-                  <div class="p-3 bg-white rounded-xl border border-blue-100">
+                  <div class="p-3 bg-white rounded-xl border border-emerald-100">
                     <strong class="text-slate-900 block mb-1">3. "¿Y si Mercado Libre no me paga?"</strong>
                     <p class="text-slate-600">En el Plan VIP (20%) solo cobramos sobre el dinero que efectivamente ya se acreditó en tu Mercado Pago. Si MeLi no paga, nuestro honorario es <code>$0</code>.</p>
                   </div>
@@ -894,7 +894,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
                 <span class="font-bold text-slate-900 block">Instrucción paso a paso para enviarle al dueño / gerente de la tienda:</span>
                 <ol class="list-decimal list-inside space-y-1 text-slate-700">
                   <li>Ingresar a la cuenta principal de Mercado Libre &rarr; <strong>Mi Perfil / Configuración &gt; Colaboradores</strong>.</li>
-                  <li>Hacer clic en <strong>Invitar colaborador</strong> e ingresar el correo oficial: <code class="font-bold text-blue-700">saldoaudit.oficial@gmail.com</code>.</li>
+                  <li>Hacer clic en <strong>Invitar colaborador</strong> e ingresar el correo oficial: <code class="font-bold text-emerald-700">saldoaudit.oficial@gmail.com</code>.</li>
                   <li>Crear o asignar el rol <strong>"Auditoría Posventa"</strong> marcando únicamente los 3 permisos verdes de abajo.</li>
                 </ol>
               </div>
@@ -963,7 +963,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
                 <button type="button" onclick="selectSopPanel('sop-04')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
                   &larr; Anterior (SOP-04)
                 </button>
-                <button type="button" onclick="selectSopPanel('all')" class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+                <button type="button" onclick="selectSopPanel('all')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
                   Ver Todos los Procedimientos Juntos
                 </button>
               </div>
@@ -980,7 +980,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
         
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
               Plan de Negocios & Estrategia Comercial B2B
             </div>
             <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Business Plan & Playbook de Prospección</h2>
@@ -1000,7 +1000,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
             </p>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <span class="font-bold text-blue-700 uppercase tracking-wider block">2. El Caballo de Troya</span>
+            <span class="font-bold text-emerald-700 uppercase tracking-wider block">2. El Caballo de Troya</span>
             <p class="text-slate-600 leading-relaxed">
               No vendemos una suscripción de software en frío. Ofrecemos <strong>auditar sin cargo los últimos 60 días</strong>. Cuando le mostramos al gerente que tiene $600.000 ARS listos para cobrar hoy, el cierre del 10% o 20% se vuelve automático.
             </p>
@@ -1016,7 +1016,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
         <!-- Proyección Financiera 6 Meses -->
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
           <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-            <i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-600"></i> Proyección Financiera & Escala (Primeros 6 Meses)
+            <i data-lucide="bar-chart-3" class="w-5 h-5 text-emerald-600"></i> Proyección Financiera & Escala (Primeros 6 Meses)
           </h3>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
@@ -1071,7 +1071,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
           
           <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-3 text-xs">
             <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <i data-lucide="crosshair" class="w-4 h-4 text-blue-600"></i> Los 4 Verticales de Oro en Mercado Libre
+              <i data-lucide="crosshair" class="w-4 h-4 text-emerald-600"></i> Los 4 Verticales de Oro en Mercado Libre
             </h3>
             <div class="space-y-2">
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
@@ -1092,9 +1092,9 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
           <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-3 text-xs">
             <div class="flex items-center justify-between">
               <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="send" class="w-4 h-4 text-blue-600"></i> Script Outbound LinkedIn (Caso Hudson)
+                <i data-lucide="send" class="w-4 h-4 text-emerald-600"></i> Script Outbound LinkedIn (Caso Hudson)
               </h3>
-              <button type="button" onclick="copySnippet('txt-outbound-linkedin', this)" class="px-2.5 py-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg flex items-center gap-1 transition">
+              <button type="button" onclick="copySnippet('txt-outbound-linkedin', this)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-1 transition">
                 <i data-lucide="copy" class="w-3 h-3"></i> Copiar
               </button>
             </div>
@@ -1119,7 +1119,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
         
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
               Manual de Identidad Visual & Recursos Oficiales (SSOT Integrado)
             </div>
             <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Brand Kit Oficial — SaldoAudit</h2>
@@ -1175,8 +1175,8 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
           <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2 py-0.5 rounded">1. Logo Principal (Fondo Claro)</span>
-                <span class="text-[10px] font-mono text-blue-600 font-bold">PNG &bull; JPG &bull; SVG</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">1. Logo Principal (Fondo Claro)</span>
+                <span class="text-[10px] font-mono text-emerald-600 font-bold">PNG &bull; JPG &bull; SVG</span>
               </div>
               <div class="h-36 checkerboard rounded-xl p-4 flex items-center justify-center border border-slate-200/60 my-3">
                 <img src="assets/logo-saldoaudit.svg" alt="SaldoAudit Claro" class="max-h-16 w-auto object-contain">
@@ -1187,7 +1187,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
               <button type="button" onclick="downloadLogoRaster('light', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
               </button>
-              <button type="button" onclick="downloadLogoRaster('light', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+              <button type="button" onclick="downloadLogoRaster('light', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
               </button>
               <a href="assets/logo-saldoaudit.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
@@ -1200,8 +1200,8 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
           <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 shadow-md text-white flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">2. Logo Invertido (Fondo Oscuro)</span>
-                <span class="text-[10px] font-mono text-blue-300 font-bold">PNG &bull; JPG &bull; SVG</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">2. Logo Invertido (Fondo Oscuro)</span>
+                <span class="text-[10px] font-mono text-emerald-300 font-bold">PNG &bull; JPG &bull; SVG</span>
               </div>
               <div class="h-36 bg-slate-950 rounded-xl p-4 flex items-center justify-center border border-slate-800 my-3">
                 <img src="assets/logo-saldoaudit-dark.svg" alt="SaldoAudit Oscuro" class="max-h-16 w-auto object-contain">
@@ -1212,7 +1212,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
               <button type="button" onclick="downloadLogoRaster('dark', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
               </button>
-              <button type="button" onclick="downloadLogoRaster('dark', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition">
+              <button type="button" onclick="downloadLogoRaster('dark', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
               </button>
               <a href="assets/logo-saldoaudit-dark.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl border border-slate-700 transition">
@@ -1237,7 +1237,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
               <button type="button" onclick="downloadLogoRaster('icon', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
               </button>
-              <button type="button" onclick="downloadLogoRaster('icon', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+              <button type="button" onclick="downloadLogoRaster('icon', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
               </button>
               <a href="assets/logo-saldoaudit-icon.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
@@ -1262,7 +1262,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
               <button type="button" onclick="downloadLogoRaster('mono', 'png', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="download" class="w-3.5 h-3.5"></i> PNG
               </button>
-              <button type="button" onclick="downloadLogoRaster('mono', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition">
+              <button type="button" onclick="downloadLogoRaster('mono', 'jpg', this)" class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
                 <i data-lucide="image" class="w-3.5 h-3.5"></i> JPG
               </button>
               <a href="assets/logo-saldoaudit-mono.svg" download class="touch-target flex items-center justify-center gap-1 py-2.5 px-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
@@ -1275,7 +1275,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
         <!-- Tipografías, Voz y Co-Branding -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-1.5">
-            <span class="font-bold text-blue-700 uppercase">Sistema Tipográfico</span>
+            <span class="font-bold text-emerald-700 uppercase">Sistema Tipográfico</span>
             <p class="text-slate-600 leading-relaxed">
               <strong>Plus Jakarta Sans:</strong> Títulos e importes.<br>
               <strong>Inter:</strong> Lectura corrida en móviles.<br>
@@ -1283,13 +1283,13 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
             </p>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-1.5">
-            <span class="font-bold text-blue-700 uppercase">Zona de Exclusión (0.5X)</span>
+            <span class="font-bold text-emerald-700 uppercase">Zona de Exclusión (0.5X)</span>
             <p class="text-slate-600 leading-relaxed">
               Mantener siempre un margen libre de 0.5X alrededor del isotipo Radar Forense. En co-branding con logos de clientes o Mercado Libre, separar con línea vertical gris <code>#E2E8F0</code>.
             </p>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-1.5">
-            <span class="font-bold text-blue-700 uppercase">Tono de Voz Forense</span>
+            <span class="font-bold text-emerald-700 uppercase">Tono de Voz Forense</span>
             <p class="text-slate-600 leading-relaxed">
               Precisión cuantitativa y sobriedad contable. Cero promesas vacías: hablamos con números de orden, fechas exactas y artículos del Programa de Protección al Vendedor.
             </p>
@@ -1302,15 +1302,15 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5">
               <span class="font-bold text-slate-700 uppercase block">Botones de Acción</span>
-              <button type="button" class="w-full py-2 px-3 bg-blue-700 text-white font-bold rounded-xl">Primario Forense (#1D4ED8)</button>
-              <button type="button" class="w-full py-2 px-3 bg-slate-900 text-white font-bold rounded-xl">Ejecutivo Dark (#0F172A)</button>
+              <button type="button" class="w-full py-2 px-3 bg-emerald-600 text-white font-bold rounded-xl">Primario Forense (#059669)</button>
+              <button type="button" class="w-full py-2 px-3 bg-slate-900 text-white font-bold rounded-xl">Ejecutivo Dark (#090D16)</button>
             </div>
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5">
               <span class="font-bold text-slate-700 uppercase block">Badges de Urgencia</span>
               <div class="flex flex-wrap gap-2">
                 <span class="px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200 font-bold rounded-full">Crítica (&lt;72h)</span>
                 <span class="px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 font-bold rounded-full">Siniestro Correo</span>
-                <span class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 font-bold rounded-full">Retorno Trancado</span>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold rounded-full">Retorno Trancado</span>
                 <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold rounded-full">Liquidado MP</span>
               </div>
             </div>
@@ -1380,14 +1380,14 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
         </div>
 
         <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-2 text-xs">
-          <div class="font-bold text-blue-400 flex items-center gap-2">
+          <div class="font-bold text-emerald-400 flex items-center gap-2">
             <i data-lucide="info" class="w-4 h-4"></i> Paso a paso para activarla en Gmail (`saldoaudit.oficial@gmail.com`)
           </div>
           <ol class="text-slate-300 space-y-1 list-decimal list-inside leading-relaxed">
             <li>Tocá el botón verde <strong>"Copiar Firma Visual"</strong> de acá arriba.</li>
             <li>En tu Gmail, hacé clic en el engranaje arriba a la derecha &rarr; <strong>Ver todos los ajustes</strong>.</li>
             <li>Bajá hasta <strong>Firma</strong> &rarr; <strong>Crear nueva</strong> (poné "Oficial").</li>
-            <li>Pegá en el cuadro con <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-blue-300 font-mono">Ctrl + V</kbd>, elegila como predeterminada y bajá a tocar <strong>Guardar cambios</strong>.</li>
+            <li>Pegá en el cuadro con <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-emerald-300 font-mono">Ctrl + V</kbd>, elegila como predeterminada y bajá a tocar <strong>Guardar cambios</strong>.</li>
           </ol>
         </div>
       </section>
@@ -1399,7 +1399,7 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
         
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
               Marco Comercial & Confidencialidad (Ley 25.326)
             </div>
             <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Tarifario Oficial & Acuerdo Legal (NDA)</h2>
@@ -1412,8 +1412,8 @@ Desarrollamos un motor forense (SaldoAudit) que cruza el Excel de ventas en 10 s
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-5 rounded-2xl border-2 border-blue-500/30 bg-blue-50/20 space-y-3">
-            <span class="text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-blue-600 text-white inline-block">Modalidad 1: Reporte en Mano</span>
+          <div class="p-5 rounded-2xl border-2 border-emerald-500/30 bg-emerald-50/20 space-y-3">
+            <span class="text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-emerald-600 text-white inline-block">Modalidad 1: Reporte en Mano</span>
             <div class="text-2xl font-heading font-extrabold text-slate-900">10% <span class="text-xs font-medium text-slate-500 font-sans">sobre el monto detectado</span></div>
             <p class="text-xs text-slate-600 leading-relaxed">
               Entrega inmediata de la planilla de auditoría con las órdenes filtradas por prioridad, el motivo técnico y los links directos a soporte de MeLi para que el equipo interno del seller abra los reclamos.
@@ -1471,7 +1471,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       <div class="p-4 sm:p-5 border-b border-slate-200 flex items-start justify-between bg-slate-50">
         <div>
           <div class="flex items-center gap-2">
-            <span id="detailTiendaBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">TIENDA</span>
+            <span id="detailTiendaBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">TIENDA</span>
             <span id="detailPrioBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">Prioridad A</span>
           </div>
           <h2 id="detailEmpresaTitle" class="text-lg sm:text-xl font-heading font-extrabold text-slate-900 mt-1">Nombre Empresa</h2>
@@ -1492,22 +1492,22 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
             <span>Abrir WhatsApp</span>
           </a>
           <button type="button" onclick="copyDetailPhone(this)" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold border border-slate-300 transition">
-            <i data-lucide="phone" class="w-4 h-4 text-blue-600"></i>
+            <i data-lucide="phone" class="w-4 h-4 text-emerald-600"></i>
             <span>Copiar Teléfono</span>
           </button>
           <a id="detailLiBtn" href="#" target="_blank" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold border border-slate-300 transition">
-            <i data-lucide="linkedin" class="w-4 h-4 text-blue-700"></i>
+            <i data-lucide="linkedin" class="w-4 h-4 text-emerald-700"></i>
             <span>Abrir LinkedIn</span>
           </a>
         </div>
 
         <!-- Botón Especial Ver 15 Casos (Solo para Hudson o cuentas con desglose) -->
-        <div id="detailCasosBanner" class="hidden p-3.5 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between">
+        <div id="detailCasosBanner" class="hidden p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
           <div>
-            <span class="text-[11px] font-bold text-blue-900 uppercase block">Dossier Forense Auditado (60 Días)</span>
-            <span class="text-xs text-blue-800">15 órdenes críticas detectadas por <strong>$599.518,74 ARS</strong></span>
+            <span class="text-[11px] font-bold text-emerald-950 uppercase block">Dossier Forense Auditado (60 Días)</span>
+            <span class="text-xs text-emerald-800">15 órdenes críticas detectadas por <strong>$599.518,74 ARS</strong></span>
           </div>
-          <button type="button" onclick="openHudsonCasesModal()" class="px-3 py-2 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition">
+          <button type="button" onclick="openHudsonCasesModal()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition">
             <i data-lucide="table-2" class="w-4 h-4"></i>
             <span>Ver 15 Casos</span>
           </button>
@@ -1591,7 +1591,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
         <span id="saveStatusMsg" class="text-xs text-emerald-700 font-semibold"></span>
         <div class="flex items-center gap-2">
           <button type="button" onclick="closeSellerDetailModal()" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-200 font-semibold transition">Cancelar</button>
-          <button type="button" onclick="saveSellerChanges()" id="btnSaveDetail" class="px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold shadow-xs flex items-center gap-1.5 transition">
+          <button type="button" onclick="saveSellerChanges()" id="btnSaveDetail" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-xs flex items-center gap-1.5 transition">
             <i data-lucide="save" class="w-3.5 h-3.5"></i>
             <span>Guardar Cambios</span>
           </button>
@@ -1699,7 +1699,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       </div>
       <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
         <button type="button" onclick="closeNewSellerModal()" class="touch-target px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl font-semibold">Cancelar</button>
-        <button type="submit" class="touch-target px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-bold shadow-xs">Guardar Seller</button>
+        <button type="submit" class="touch-target px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-xs">Guardar Seller</button>
       </div>
     </form>
   </dialog>
@@ -1871,12 +1871,12 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       if (mode === 'kanban') {
         kView.classList.remove('hidden');
         tView.classList.add('hidden');
-        btnK.className = "px-3 py-1.5 rounded-lg font-bold bg-white text-blue-700 shadow-2xs flex items-center gap-1.5 transition";
+        btnK.className = "px-3 py-1.5 rounded-lg font-bold bg-white text-emerald-700 shadow-2xs flex items-center gap-1.5 transition";
         btnT.className = "px-3 py-1.5 rounded-lg font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition";
       } else {
         kView.classList.add('hidden');
         tView.classList.remove('hidden');
-        btnT.className = "px-3 py-1.5 rounded-lg font-bold bg-white text-blue-700 shadow-2xs flex items-center gap-1.5 transition";
+        btnT.className = "px-3 py-1.5 rounded-lg font-bold bg-white text-emerald-700 shadow-2xs flex items-center gap-1.5 transition";
         btnK.className = "px-3 py-1.5 rounded-lg font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition";
       }
       renderCRM();
@@ -1885,7 +1885,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
     function getStageLabel(stage) {
       const map = {
         'lead_contactado': { label: 'Lead / Outbound', cls: 'bg-slate-100 text-slate-700 border-slate-300' },
-        'en_auditoria': { label: 'En Auditoría', cls: 'bg-blue-50 text-blue-700 border-blue-200' },
+        'en_auditoria': { label: 'En Auditoría', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
         'informe_entregado': { label: 'Informe Entregado', cls: 'bg-amber-50 text-amber-800 border-amber-200' },
         'cliente_activo': { label: 'Cliente Activo', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' }
       };
@@ -1924,7 +1924,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
 
         items.forEach(s => {
           const card = document.createElement('div');
-          card.className = "bg-white rounded-xl p-3.5 border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-blue-300 transition cursor-pointer space-y-2.5";
+          card.className = "bg-white rounded-xl p-3.5 border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-emerald-300 transition cursor-pointer space-y-2.5";
           card.onclick = () => openSellerDetailModal(s.id);
 
           const prioBadge = s.prioridad === 'A'
@@ -1939,7 +1939,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
             : '';
 
           const hudsonBtn = (s.empresa || '').toLowerCase().includes('hudson')
-            ? `<button type="button" onclick="event.stopPropagation(); openHudsonCasesModal();" class="w-full py-1.5 px-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold text-[11px] flex items-center justify-center gap-1.5 transition">
+            ? `<button type="button" onclick="event.stopPropagation(); openHudsonCasesModal();" class="w-full py-1.5 px-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] flex items-center justify-center gap-1.5 transition">
                  <i data-lucide="table-2" class="w-3.5 h-3.5"></i> Ver 15 Casos ($599.518)
                </button>`
             : '';
@@ -1947,7 +1947,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
           card.innerHTML = `
             <div class="flex items-start justify-between gap-2">
               <div>
-                <span class="text-[10px] font-mono font-bold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">${s.tienda_oficial || '-'}</span>
+                <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">${s.tienda_oficial || '-'}</span>
                 <h4 class="font-heading font-bold text-xs text-slate-900 mt-1 leading-snug">${s.empresa}</h4>
               </div>
               ${prioBadge}
@@ -1967,7 +1967,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
               </span>
               <div class="flex items-center gap-1" onclick="event.stopPropagation()">
                 ${s.contacto_telefono ? `<a href="https://wa.me/${s.contacto_telefono.replace(/[^0-9]/g, '')}" target="_blank" class="p-1 rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100" title="WhatsApp"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i></a>` : ''}
-                ${s.contacto_linkedin ? `<a href="${s.contacto_linkedin}" target="_blank" class="p-1 rounded bg-blue-50 text-blue-700 hover:bg-blue-100" title="LinkedIn"><i data-lucide="linkedin" class="w-3.5 h-3.5"></i></a>` : ''}
+                ${s.contacto_linkedin ? `<a href="${s.contacto_linkedin}" target="_blank" class="p-1 rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100" title="LinkedIn"><i data-lucide="linkedin" class="w-3.5 h-3.5"></i></a>` : ''}
               </div>
             </div>
           `;
@@ -1988,7 +1988,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
           tr.innerHTML = `
             <td class="py-3 px-4">
               <div class="font-bold text-slate-900">${s.empresa}</div>
-              <span class="text-[10px] font-mono text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">${s.tienda_oficial || '-'}</span>
+              <span class="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">${s.tienda_oficial || '-'}</span>
             </td>
             <td class="py-3 px-4">
               <span class="px-2 py-0.5 rounded-full text-[11px] font-bold border ${stInfo.cls}">${stInfo.label}</span>
@@ -2008,7 +2008,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
             <td class="py-3 px-4" onclick="event.stopPropagation()">
               <div class="flex items-center gap-1.5">
                 ${s.contacto_telefono ? `<a href="https://wa.me/${s.contacto_telefono.replace(/[^0-9]/g, '')}" target="_blank" class="px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[11px]">WhatsApp</a>` : ''}
-                ${s.contacto_linkedin ? `<a href="${s.contacto_linkedin}" target="_blank" class="px-2 py-1 rounded bg-blue-50 text-blue-700 border border-blue-200 font-bold text-[11px]">LinkedIn</a>` : ''}
+                ${s.contacto_linkedin ? `<a href="${s.contacto_linkedin}" target="_blank" class="px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[11px]">LinkedIn</a>` : ''}
               </div>
             </td>
             <td class="py-3 px-4 text-right">
@@ -2159,7 +2159,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
           <td class="p-2.5 font-medium text-slate-800">${c.prod}</td>
           <td class="p-2.5 text-right font-mono font-bold text-emerald-700">$${c.monto.toLocaleString('es-AR', {minimumFractionDigits: 2})}</td>
           <td class="p-2.5 text-right">
-            <a href="https://www.mercadolibre.com.ar/ventas/${c.id}/detalle" target="_blank" class="px-2.5 py-1 rounded bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold text-[11px]">Abrir en MeLi ↗</a>
+            <a href="https://www.mercadolibre.com.ar/ventas/${c.id}/detalle" target="_blank" class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-bold text-[11px]">Abrir en MeLi ↗</a>
           </td>
         `;
         tbody.appendChild(tr);
@@ -2208,10 +2208,10 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       if (activeSection) activeSection.classList.remove('hidden');
 
       const activeBtn = document.getElementById(`tabBtn-${viewName}`);
-      if (activeBtn) activeBtn.className = "tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-xs border border-slate-200/80 transition";
+      if (activeBtn) activeBtn.className = "tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-emerald-700 shadow-xs border border-slate-200/80 transition";
 
       const mobActiveBtn = document.getElementById(`mobTabBtn-${viewName}`);
-      if (mobActiveBtn) mobActiveBtn.className = "mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg bg-blue-50 text-blue-700 shrink-0";
+      if (mobActiveBtn) mobActiveBtn.className = "mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-50 text-emerald-700 shrink-0";
 
       lucide.createIcons();
     }
@@ -2237,7 +2237,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
         });
         const allBtn = document.getElementById('sopNav-all');
         if (allBtn) {
-          allBtn.className = "sop-nav-btn w-full text-center py-2 px-3 rounded-xl bg-blue-700 text-white font-bold text-xs transition";
+          allBtn.className = "sop-nav-btn w-full text-center py-2 px-3 rounded-xl bg-emerald-600 text-white font-bold text-xs transition";
         }
       } else {
         allIds.forEach(id => {
@@ -2254,7 +2254,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
         });
         const activeBtn = document.getElementById(`sopNav-${sopId}`);
         if (activeBtn) {
-          activeBtn.className = "sop-nav-btn w-full text-left p-2.5 rounded-2xl bg-blue-50 text-blue-800 border border-blue-200 flex items-center gap-3 transition";
+          activeBtn.className = "sop-nav-btn w-full text-left p-2.5 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-3 transition";
         }
       }
       lucide.createIcons();
