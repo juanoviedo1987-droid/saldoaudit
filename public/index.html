@@ -255,29 +255,64 @@
         </div>
       </div>
 
-      <!-- PAYWALL / BANNER DE DESBLOQUEO ($39.000 MERCADO PAGO) -->
-      <div id="unlockBanner" class="p-6 bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-950 rounded-3xl border-2 border-emerald-500/50 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-5 text-left">
-        <div class="space-y-1.5">
-          <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold uppercase tracking-wider">
-            <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400"></i>
-            <span>Vista Previa Protegida</span>
+      <!-- PAYWALL / ECUACIÓN DE RETORNO Y DESBLOQUEO ($39.000 MERCADO PAGO) -->
+      <div id="unlockBanner" class="p-6 sm:p-8 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/80 rounded-3xl border-2 border-emerald-500/50 shadow-2xl space-y-6 text-left">
+        
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-slate-800">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold uppercase tracking-wider mb-1.5">
+              <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>Auditoría Finalizada &bull; Informe Listo</span>
+            </div>
+            <h4 class="text-xl sm:text-2xl font-heading font-black text-white">
+              Ecuación de Recupero para tu Negocio
+            </h4>
           </div>
-          <h4 class="text-lg sm:text-xl font-heading font-extrabold text-white">
-            Desbloqueá el Informe Completo y los Argumentos Legales
-          </h4>
-          <p class="text-xs text-slate-300 max-w-xl leading-relaxed">
-            Liberá la planilla con los números de orden reales, los enlaces directos a soporte y el argumento legal redactado por cada siniestro para exigir tu dinero a Mercado Libre.
-          </p>
-          <div class="text-[11px] text-emerald-400 font-medium pt-1">
-            Fee único de diagnóstico: <strong>$39.000 ARS</strong> &bull; Cobro seguro con Mercado Pago (Tarjeta / Dinero en cuenta / Débito)
+          <span class="text-xs text-slate-400">Diagnóstico pericial sobre tus ventas reales</span>
+        </div>
+
+        <!-- Grilla de la ecuación financiera -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Item 1: Total Detectado -->
+          <div class="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-1">
+            <span class="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider block">1. Total Detectado a tu favor:</span>
+            <div id="roiTotalAmount" class="text-2xl font-heading font-black text-white font-mono">+$599.518</div>
+            <span class="text-[11px] text-slate-400 block">en siniestros con derecho a cobro</span>
+          </div>
+
+          <!-- Item 2: Fee de Auditoría -->
+          <div class="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-1">
+            <span class="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block">2. Auditoría Forense (Único pago):</span>
+            <div class="text-2xl font-heading font-black text-white font-mono">$39.000 <span class="text-xs text-slate-400 font-normal">ARS</span></div>
+            <span class="text-[11px] text-slate-400 block">Desbloquea informe, links y textos</span>
+          </div>
+
+          <!-- Item 3: Comisión a Éxito -->
+          <div class="p-4 bg-emerald-950/50 border border-emerald-500/40 rounded-2xl space-y-1">
+            <span class="text-[11px] font-semibold text-emerald-300 uppercase tracking-wider block">3. Comisión a Éxito:</span>
+            <div class="text-2xl font-heading font-black text-emerald-400 font-mono">20% <span class="text-xs font-normal">solo si cobrás</span></div>
+            <span class="text-[11px] text-emerald-200/80 block">Si MeLi no acredita, costo = $0</span>
           </div>
         </div>
-        <div class="shrink-0 w-full md:w-auto">
-          <a id="btnPayUnlock" href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target w-full md:w-auto px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-xs sm:text-sm rounded-xl transition shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2">
-            <i data-lucide="lock-open" class="w-4 h-4"></i>
-            <span>Desbloquear por $39.000</span>
-          </a>
+
+        <!-- Callout de Ganancia Limpia + Botón de Pago -->
+        <div class="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-5">
+          <div class="space-y-1 text-center md:text-left">
+            <div class="text-xs text-emerald-300 font-semibold">Tu Ganancia Neta Estimada para tu bolsillo:</div>
+            <div id="roiNetAmount" class="text-2xl sm:text-3xl font-heading font-black text-white font-mono">+$440.000+ ARS limpios</div>
+            <p class="text-[11px] text-slate-300 max-w-lg leading-relaxed">
+              Desbloqueá el informe para acceder al listado de órdenes ocultas, enlaces directos a mediaciones y el argumento legal redactado por peritos.
+            </p>
+          </div>
+
+          <div class="shrink-0 w-full md:w-auto">
+            <a id="btnPayUnlock" href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target w-full md:w-auto px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-sm sm:text-base rounded-xl transition shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2">
+              <i data-lucide="lock-open" class="w-5 h-5"></i>
+              <span>Desbloquear Informe ($39.000)</span>
+            </a>
+          </div>
         </div>
+
       </div>
 
       <!-- BANNER DE PAGO APROBADO -->
@@ -866,6 +901,15 @@ Número de Seguimiento: ${tracking}`;
       document.getElementById('kpiTotalAudited').textContent = `de ${auditSummary.totalSalesAudited.toLocaleString('es-AR')} operaciones analizadas`;
       document.getElementById('badgeCounter').textContent = `${auditSummary.totalDiscrepancies} casos`;
 
+      // Actualizar ecuación financiera ROI
+      const roiTotalAmount = document.getElementById('roiTotalAmount');
+      if (roiTotalAmount) roiTotalAmount.textContent = formatARS.format(auditSummary.totalAmountRecoverable);
+      const roiNetAmount = document.getElementById('roiNetAmount');
+      if (roiNetAmount) {
+        const netEstimated = Math.max(0, (auditSummary.totalAmountRecoverable * 0.8) - 39000);
+        roiNetAmount.textContent = `+${formatARS.format(netEstimated)} limpios`;
+      }
+
       const tbody = document.getElementById('discrepanciesTable');
       const mobileCards = document.getElementById('discrepanciesMobileCards');
       tbody.innerHTML = '';
@@ -877,7 +921,11 @@ Número de Seguimiento: ${tracking}`;
         return;
       }
 
-      auditSummary.records.forEach((item, index) => {
+      // Si no está desbloqueado, mostramos máximo 3 filas como prueba y aplicamos efecto cortina al resto
+      const maxPreviewCount = (!isUnlocked && auditSummary.records.length > 3) ? 3 : auditSummary.records.length;
+      const previewRecords = auditSummary.records.slice(0, maxPreviewCount);
+
+      previewRecords.forEach((item, index) => {
         // Enmascarar # de orden si no está desbloqueado
         const displayOrderId = isUnlocked ? item.orderId : `${item.orderId.slice(0, 8)}****** 🔒`;
 
@@ -896,7 +944,7 @@ Número de Seguimiento: ${tracking}`;
                 Dossier
               </button>
             ` : `
-              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1">
+              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
                 <span>🔒 Desbloquear</span>
               </a>
             `}
@@ -923,7 +971,7 @@ Número de Seguimiento: ${tracking}`;
                 Ver Argumento y Reclamar
               </button>
             ` : `
-              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1">
+              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1 shadow-2xs">
                 <span>🔒 Desbloquear Informe ($39.000)</span>
               </a>
             `}
@@ -931,6 +979,57 @@ Número de Seguimiento: ${tracking}`;
         `;
         mobileCards.appendChild(card);
       });
+
+      // EFECTO CORTINA: Si no pagó y hay más de 3 órdenes, bloquear el resto con candado persuasivo
+      if (!isUnlocked && auditSummary.records.length > 3) {
+        const remainingCount = auditSummary.records.length - 3;
+        const remainingAmount = auditSummary.records.slice(3).reduce((acc, r) => acc + r.amount, 0);
+
+        // Desktop Curtain Row
+        const curtainRow = document.createElement('tr');
+        curtainRow.innerHTML = `
+          <td colspan="6" class="p-8 text-center bg-gradient-to-b from-slate-50 via-slate-100 to-emerald-50/60 border-t-2 border-dashed border-emerald-400">
+            <div class="max-w-md mx-auto space-y-3">
+              <div class="w-12 h-12 mx-auto rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg shadow-xs">
+                <i data-lucide="lock" class="w-6 h-6 text-emerald-700"></i>
+              </div>
+              <strong class="text-base font-heading font-black text-slate-900 block">
+                + ${remainingCount} órdenes más detectadas con fondos retenidos
+              </strong>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Hay <strong>${formatARS.format(remainingAmount)}</strong> adicionales protegidos en esta vista previa. Desbloqueá el informe completo para acceder a todas las órdenes, productos y argumentos periciales.
+              </p>
+              <div class="pt-1">
+                <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-heading font-black transition shadow-lg shadow-emerald-600/25">
+                  <span>Desbloquear las ${auditSummary.records.length} Órdenes por $39.000</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(curtainRow);
+
+        // Mobile Curtain Card
+        const curtainCard = document.createElement('div');
+        curtainCard.className = "p-6 text-center bg-gradient-to-b from-slate-50 to-emerald-50/70 border-2 border-dashed border-emerald-400 rounded-3xl space-y-3";
+        curtainCard.innerHTML = `
+          <div class="w-10 h-10 mx-auto rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+            <i data-lucide="lock" class="w-5 h-5 text-emerald-700"></i>
+          </div>
+          <strong class="text-sm font-heading font-black text-slate-900 block">
+            + ${remainingCount} órdenes más con fondos retenidos
+          </strong>
+          <p class="text-xs text-slate-600">
+            Hay <strong>${formatARS.format(remainingAmount)}</strong> adicionales en esta vista previa.
+          </p>
+          <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-md">
+            <span>Desbloquear Todo ($39.000)</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+        `;
+        mobileCards.appendChild(curtainCard);
+      }
 
       lucide.createIcons();
     }
