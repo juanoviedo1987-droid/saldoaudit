@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SaldoAudit — Auditoría y Recupero en Mercado Libre Argentina</title>
+  <title>SaldoAudit — Auditoría Forense y Recupero en Mercado Libre Argentina</title>
   
   <meta name="description" content="Recuperá el dinero retenido por siniestros de correo, paquetes perdidos y devoluciones sin liquidar en Mercado Libre. Auditoría forense 100% privada en tu navegador.">
   
@@ -64,7 +64,7 @@
       overscroll-behavior: contain;
     }
     dialog::backdrop {
-      background-color: rgba(9, 13, 22, 0.7);
+      background-color: rgba(9, 13, 22, 0.75);
       backdrop-filter: blur(6px);
     }
   </style>
@@ -95,16 +95,16 @@
       </a>
 
       <!-- Navegación & CTA -->
-      <div class="flex items-center gap-3 sm:gap-6">
+      <div class="flex items-center gap-2 sm:gap-6">
         <a href="#dolores" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
           ¿Qué Detectamos?
         </a>
         <a href="#como-funciona" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
           ¿Cómo Funciona?
         </a>
-        <a href="#contacto" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-          Contacto
-        </a>
+        <button type="button" onclick="openFaqModal()" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+          Preguntas Frecuentes
+        </button>
         <a href="#auditar" class="touch-target inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition shadow-xs">
           <i data-lucide="scan-line" class="w-3.5 h-3.5"></i>
           <span>Auditar Gratis</span>
@@ -114,7 +114,7 @@
     </div>
   </header>
 
-  <!-- ================= HERO SECTION (AMABLE, DIRECTO, MERCADO LIBRE PROTAGONISTA) ================= -->
+  <!-- ================= 1. HERO SECTION (ALTO IMPACTO + MERCADO LIBRE PROTAGONISTA) ================= -->
   <section class="relative pt-12 pb-14 sm:pt-20 sm:pb-24 border-b border-slate-200 bg-gradient-to-b from-white via-slate-50/60 to-emerald-50/20 overflow-hidden">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
       
@@ -124,7 +124,7 @@
         <span>Auditoría Forense Independiente para Sellers</span>
       </div>
 
-      <!-- Título Principal Claro y Protagonista -->
+      <!-- Título Principal con Mercado Libre en grande -->
       <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-slate-900 tracking-tight leading-[1.12]">
         Recuperá el dinero retenido en tus ventas de <br class="hidden sm:inline">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-700">Mercado Libre</span>
@@ -135,7 +135,7 @@
         Detectá paquetes extraviados por el correo que nunca te pagaron, devoluciones fantasma y desfasajes en tus liquidaciones. Análisis 100% privado en tu navegador en 30 segundos.
       </p>
 
-      <!-- Botones de Acción Clave (Mobile-First) -->
+      <!-- Botones de Acción Clave -->
       <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
         <a href="#auditar" class="touch-target w-full sm:w-auto px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2">
           <i data-lucide="upload-cloud" class="w-4 h-4"></i>
@@ -149,15 +149,17 @@
 
       <!-- Garantías de Confianza y Seguridad -->
       <div class="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-500 font-semibold">
-        <span class="inline-flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> 100% Confidencial en tu Navegador</span>
-        <span class="inline-flex items-center gap-1.5"><i data-lucide="lock" class="w-4 h-4 text-emerald-600"></i> Cero Claves ni Acceso a tu Cuenta</span>
-        <span class="inline-flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Diagnóstico Inmediato</span>
+        <button type="button" onclick="openPrivacyModal()" class="inline-flex items-center gap-1.5 hover:text-emerald-700 transition">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> 100% Confidencial (Zero-Cloud)
+        </button>
+        <span class="inline-flex items-center gap-1.5"><i data-lucide="lock" class="w-4 h-4 text-emerald-600"></i> Cero Claves de tu Cuenta</span>
+        <span class="inline-flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Diagnóstico en 1 Clic</span>
       </div>
 
     </div>
   </section>
 
-  <!-- ================= SECCIÓN: LOS 3 PROBLEMAS QUE DETECTAMOS ================= -->
+  <!-- ================= 2. EL DOLOR (LOS 3 CASOS QUE DETECTAMOS) ================= -->
   <section id="dolores" class="py-14 sm:py-20 bg-white border-b border-slate-200">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
@@ -167,25 +169,25 @@
           Los 3 siniestros más comunes que no se reclaman
         </h2>
         <p class="text-sm text-slate-500 max-w-xl mx-auto">
-          En cuentas con cientos de ventas al mes, es imposible revisar operación por operación de forma manual.
+          En cuentas con cientos de ventas al mes, es humanamente imposible hacerle seguimiento manual a cada paquete devuelto o demorado.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <!-- Card 1 -->
-        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition">
+        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition shadow-2xs">
           <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100">
             <i data-lucide="package-x" class="w-6 h-6"></i>
           </div>
           <h3 class="text-base font-heading font-bold text-slate-900">1. Paquetes Extraviados</h3>
           <p class="text-xs text-slate-600 leading-relaxed">
-            El correo no entregó el producto o canceló el viaje por demoras. Si no se abre el reclamo formal dentro del plazo legal, Mercado Libre no te indemniza.
+            El correo no entregó el producto o canceló el envío por demoras. Si no se abre el reclamo formal dentro del plazo, Mercado Libre nunca te indemniza de oficio.
           </p>
         </div>
 
         <!-- Card 2 -->
-        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition">
+        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition shadow-2xs">
           <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
             <i data-lucide="refresh-cw" class="w-6 h-6"></i>
           </div>
@@ -196,13 +198,13 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition">
+        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition shadow-2xs">
           <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
             <i data-lucide="clock-alert" class="w-6 h-6"></i>
           </div>
           <h3 class="text-base font-heading font-bold text-slate-900">3. Ventana Crítica de 72 Horas</h3>
           <p class="text-xs text-slate-600 leading-relaxed">
-            Cuando te devuelven un producto roto, usado o una caja vacía, tenés solo 3 días para desconocer el estado antes de que la plataforma cierre el caso.
+            Cuando te devuelven un producto roto, usado o una caja vacía, tenés solo 3 días para desconocer el estado antes de que la plataforma cierre el caso definitivamente.
           </p>
         </div>
 
@@ -211,17 +213,17 @@
     </div>
   </section>
 
-  <!-- ================= SECCIÓN: CÓMO FUNCIONA EN 3 PASOS ================= -->
+  <!-- ================= 3. LA SOLUCIÓN EN 3 PASOS ================= -->
   <section id="como-funciona" class="py-14 sm:py-20 bg-slate-50 border-b border-slate-200">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       
       <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Simple y Rápido</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Proceso Ágil</span>
         <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
           ¿Cómo auditar tu cuenta en 3 pasos?
         </h2>
         <p class="text-sm text-slate-500 max-w-xl mx-auto">
-          Cero integraciones complejas. No necesitás darnos contraseñas ni acceso a tu cuenta.
+          Cero integraciones complejas. No necesitás darnos contraseñas ni conectar APIs con permisos sensibles.
         </p>
       </div>
 
@@ -235,6 +237,10 @@
           <p class="text-xs text-slate-500 leading-relaxed">
             Entrás a tu panel de Mercado Libre y exportás el Excel de tus ventas de los últimos 60 días.
           </p>
+          <button type="button" onclick="openGuideModal()" class="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1 pt-1">
+            <span>¿Dónde descargarlo? Ver guía</span>
+            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+          </button>
         </div>
 
         <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
@@ -243,8 +249,9 @@
           </div>
           <h3 class="text-sm font-heading font-bold text-slate-900">Lo Soltás en SaldoAudit</h3>
           <p class="text-xs text-slate-500 leading-relaxed">
-            El archivo se audita en tu propio navegador en segundos. Ningún dato sensible sale de tu máquina.
+            El archivo se audita en tu propio navegador en segundos. Ningún dato sensible viaja a ningún servidor externo.
           </p>
+          <span class="text-[11px] font-bold text-slate-400 inline-block pt-1">100% Confidencial</span>
         </div>
 
         <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
@@ -253,8 +260,9 @@
           </div>
           <h3 class="text-sm font-heading font-bold text-slate-900">Reclamás y Cobrás</h3>
           <p class="text-xs text-slate-500 leading-relaxed">
-            Obtenés la planilla con las órdenes siniestradas y el texto legal exacto para que te indemnicen.
+            Obtenés la planilla con las órdenes siniestradas y el texto legal exacto para que soporte de MeLi te indemnice.
           </p>
+          <span class="text-[11px] font-bold text-emerald-600 inline-block pt-1">Planilla Excel lista</span>
         </div>
 
       </div>
@@ -262,13 +270,16 @@
     </div>
   </section>
 
-  <!-- ================= SECCIÓN PRINCIPAL: CONSOLA DE AUDITORÍA ================= -->
+  <!-- ================= 4. LA CONSOLA DE AUDITORÍA EN VIVO ================= -->
   <section id="auditar" class="py-14 sm:py-20 max-w-5xl mx-auto px-4 sm:px-6 w-full">
     
     <div class="text-center space-y-2 mb-8">
-      <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Consola de Diagnóstico</span>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+        <span>Sello Zero-Cloud: Tus datos no tocan ningún servidor externo</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-        Comprobá cuánto dinero tenés para reclamar
+        Comprobá cuánto dinero tenés para reclamar hoy
       </h2>
       <p class="text-sm text-slate-500 max-w-xl mx-auto">
         Subí tu archivo de ventas o hacé una prueba inmediata con el caso de ejemplo precargado.
@@ -290,7 +301,7 @@
         Arrastrá tu reporte oficial de Ventas de Mercado Libre
       </h3>
       <p class="text-xs sm:text-sm text-slate-500 mb-6 max-w-md mx-auto">
-        Archivos <span class="font-semibold text-slate-700">.xlsx, .xls o .csv</span>. El análisis corre de forma 100% privada en tu navegador.
+        Archivos <span class="font-semibold text-slate-700">.xlsx, .xls o .csv</span>. El análisis corre de forma 100% privada en la memoria de tu navegador.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -310,6 +321,12 @@
           <i data-lucide="flask-conical" class="w-4 h-4 text-emerald-600"></i>
           <span>Cargar caso de prueba real</span>
         </button>
+      </div>
+
+      <div class="mt-4 flex items-center justify-center gap-4 text-[11px] text-slate-400">
+        <button type="button" onclick="openGuideModal()" class="hover:text-emerald-600 underline">¿Cómo descargar el reporte en MeLi?</button>
+        <span>&bull;</span>
+        <button type="button" onclick="openPrivacyModal()" class="hover:text-emerald-600 underline">Garantía de Privacidad</button>
       </div>
 
       <div id="fileInfo" class="mt-4 text-xs font-mono text-emerald-700 bg-emerald-50 inline-block px-3 py-1.5 rounded-lg border border-emerald-100 hidden"></div>
@@ -381,14 +398,286 @@
 
   </section>
 
-  <!-- ================= MODAL DOSSIER DE RECLAMO ================= -->
+  <!-- ================= FORMULARIO DE CONTACTO / ASISTENCIA DIRECTA ================= -->
+  <section id="contacto" class="py-14 sm:py-20 bg-slate-900 text-white border-t border-slate-800">
+    <div class="max-w-xl mx-auto px-4 sm:px-6 text-center space-y-6">
+      
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">Soporte y Cuentas de Alto Volumen</span>
+        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">
+          ¿Preferís que auditemos y gestionemos tu cuenta?
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-400">
+          Dejanos tus datos y un especialista revisa tu caso sin compromiso para tramitar el recupero de punta a punta.
+        </p>
+      </div>
+
+      <form id="leadContactForm" onsubmit="handleLeadSubmit(event)" class="bg-white/5 border border-white/10 p-6 sm:p-8 rounded-3xl text-left space-y-3.5 shadow-2xl">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre o Contacto</label>
+          <input type="text" id="leadNombre" required placeholder="Ej: Mariano López" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
+        </div>
+        
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre de tu Marca o Tienda Oficial</label>
+          <input type="text" id="leadEmpresa" required placeholder="Ej: Tienda Oficial Bazar" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp de Contacto</label>
+          <input type="tel" id="leadTelefono" required placeholder="+54 9 11 ..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Rubro de Productos</label>
+          <input type="text" id="leadRubro" placeholder="Bazar, Electro, Indumentaria, Autopartes..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
+        </div>
+
+        <button type="submit" id="btnSubmitLead" class="touch-target w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs sm:text-sm font-bold rounded-xl transition shadow-md flex items-center justify-center gap-2 mt-2">
+          <span>Solicitar Revisión Especializada</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+
+        <div id="leadSuccessMsg" class="hidden text-xs text-center text-emerald-400 font-semibold pt-2">
+          ✅ ¡Mensaje recibido! Nos comunicaremos por WhatsApp a la brevedad.
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER EJECUTIVO (3 COLUMNAS + LEGAL) ================= -->
+  <footer class="bg-slate-950 text-slate-400 py-14 border-t border-slate-800 text-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
+      
+      <!-- Grid de 3 Columnas -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, #059669 0%, #064E3B 100%);">
+              <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none">
+                <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
+                <path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+                <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/>
+                <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
+                <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/>
+              </svg>
+            </div>
+            <span class="font-heading font-extrabold text-lg text-white">
+              Saldo<span class="text-emerald-500">Audit</span>
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Solución tecnológica independiente para la auditoría contable y el recupero de indemnizaciones en Mercado Libre Argentina. Arquitectura 100% privada sin almacenamiento de bases de datos.
+          </p>
+          <div class="flex items-center gap-3 text-xs text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Canal oficial verificado: contacto@saldoaudit.com.ar</span>
+          </div>
+        </div>
+
+        <!-- Col 2: Recursos & Ayuda -->
+        <div class="space-y-3">
+          <h4 class="font-heading font-bold text-white text-xs uppercase tracking-wider">Recursos & Ayuda</h4>
+          <ul class="space-y-2">
+            <li><button type="button" onclick="openFaqModal()" class="hover:text-emerald-400 transition text-left">Preguntas Frecuentes (FAQ)</button></li>
+            <li><button type="button" onclick="openGuideModal()" class="hover:text-emerald-400 transition text-left">¿Cómo descargar el reporte en MeLi?</button></li>
+            <li><a href="#dolores" class="hover:text-emerald-400 transition">Problemas que Detectamos</a></li>
+            <li><a href="#como-funciona" class="hover:text-emerald-400 transition">Metodología en 3 Pasos</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Legal & Confidencialidad -->
+        <div class="space-y-3">
+          <h4 class="font-heading font-bold text-white text-xs uppercase tracking-wider">Legal & Seguridad</h4>
+          <ul class="space-y-2">
+            <li><button type="button" onclick="openPrivacyModal()" class="hover:text-emerald-400 transition text-left">Garantía de Confidencialidad</button></li>
+            <li><button type="button" onclick="openPrivacyModal()" class="hover:text-emerald-400 transition text-left">Política Zero-Cloud</button></li>
+            <li><a href="mailto:contacto@saldoaudit.com.ar" class="hover:text-emerald-400 transition">Contacto de Soporte</a></li>
+            <li><a href="app.html" class="hover:text-emerald-400 transition font-mono text-[11px] text-slate-500">Suite Operativa &rarr;</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Blindaje Legal Nominativo -->
+      <div class="pt-8 border-t border-slate-800/80 text-[11px] text-slate-500 leading-relaxed text-center sm:text-left space-y-2">
+        <p>
+          <strong>Aviso de Marca Registrada y Uso Nominativo:</strong> SaldoAudit es una herramienta de software independiente desarrollada para la auditoría contable y operativa de vendedores. Mercado Libre y Mercado Envíos son marcas registradas propiedad de MercadoLibre S.R.L. El uso de la denominación Mercado Libre en este sitio se realiza con fines exclusivamente descriptivos e informativos para indicar compatibilidad de servicios conforme a las pautas de Uso Nominativo Legítimo. SaldoAudit no mantiene relación comercial oficial, patrocinio, asociación ni aval de MercadoLibre Inc.
+        </p>
+        <p>© 2026 SaldoAudit Inc. · Buenos Aires, Argentina · Todos los derechos reservados.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= MODAL 1: PREGUNTAS FRECUENTES (FAQ) ================= -->
+  <dialog id="faqModal" class="rounded-3xl p-6 sm:p-8 bg-white max-w-2xl w-full border border-slate-200 shadow-2xl">
+    <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">?</div>
+        <h3 class="text-base font-heading font-extrabold text-slate-900">Preguntas Frecuentes</h3>
+      </div>
+      <button type="button" onclick="closeModal('faqModal')" class="text-slate-400 hover:text-slate-600 touch-target flex items-center justify-center">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="space-y-4 text-xs text-slate-600 max-h-[65vh] overflow-y-auto pr-1">
+      
+      <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+        <strong class="text-sm text-slate-900 block font-heading font-bold">¿Cómo garantizan la confidencialidad de mis ventas?</strong>
+        <p class="leading-relaxed">
+          SaldoAudit funciona con arquitectura <strong>Zero-Cloud</strong>. El archivo Excel se procesa directamente en la memoria RAM de tu propio navegador web mediante Web Workers y librerías cliente. Tus datos de facturación, clientes y montos nunca viajan a ningún servidor ni se guardan en bases de datos externas.
+        </p>
+      </div>
+
+      <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+        <strong class="text-sm text-slate-900 block font-heading font-bold">¿Tengo que compartir mi usuario o contraseña de Mercado Libre?</strong>
+        <p class="leading-relaxed">
+          <strong>No, jamás.</strong> SaldoAudit no requiere contraseñas, tokens de acceso ni permisos en tu cuenta de Mercado Libre. Solo necesitás descargar el reporte público de ventas que el propio Mercado Libre te permite exportar desde tu panel.
+        </p>
+      </div>
+
+      <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+        <strong class="text-sm text-slate-900 block font-heading font-bold">¿Cuánto tiempo tengo para reclamar un paquete extraviado?</strong>
+        <p class="leading-relaxed">
+          Conforme a las políticas de Mercado Envíos, los siniestros logísticos y demoras tienen un plazo límite de 60 días corridos para solicitar indemnización formal. Por su parte, las devoluciones en mano tienen una ventana crítica de <strong>72 horas</strong> desde su entrega.
+        </p>
+      </div>
+
+      <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+        <strong class="text-sm text-slate-900 block font-heading font-bold">¿Cuánto cuesta hacer el diagnóstico de mi cuenta?</strong>
+        <p class="leading-relaxed">
+          El diagnóstico inicial a través de la web es <strong>100% gratuito</strong>. Podés subir tu reporte y verificar en 30 segundos si tenés dinero retenido sin pagar nada.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="pt-4 border-t border-slate-100 flex justify-end">
+      <button type="button" onclick="closeModal('faqModal')" class="touch-target px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xs">
+        Cerrar
+      </button>
+    </div>
+  </dialog>
+
+  <!-- ================= MODAL 2: GARANTÍA DE CONFIDENCIALIDAD (PRIVACIDAD ZERO-CLOUD) ================= -->
+  <dialog id="privacyModal" class="rounded-3xl p-6 sm:p-8 bg-white max-w-xl w-full border border-slate-200 shadow-2xl">
+    <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+          <i data-lucide="shield-check" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-base font-heading font-extrabold text-slate-900">Política de Privacidad Zero-Cloud</h3>
+      </div>
+      <button type="button" onclick="closeModal('privacyModal')" class="text-slate-400 hover:text-slate-600 touch-target flex items-center justify-center">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="space-y-4 text-xs text-slate-600 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+      <p>
+        En <strong>SaldoAudit</strong> entendemos el valor estratégico de la información de tu negocio. Por eso, diseñamos nuestra tecnología bajo el principio de <strong>Privacidad por Diseño (Privacy by Design)</strong>:
+      </p>
+
+      <div class="space-y-2">
+        <div class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-[11px]">✓</span>
+          <div>
+            <strong class="text-slate-900 block font-semibold">Procesamiento Local en tu Computadora</strong>
+            Cuando soltás tu reporte Excel, la lectura y auditoría matemática de cada orden se ejecuta de forma aislada en tu navegador (Client-Side Memory).
+          </div>
+        </div>
+
+        <div class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-[11px]">✓</span>
+          <div>
+            <strong class="text-slate-900 block font-semibold">Cero Almacenamiento en Servidores</strong>
+            Tu lista de clientes, direcciones, teléfonos y precios unitarios nunca se envían por internet ni se almacenan en servidores externos.
+          </div>
+        </div>
+
+        <div class="flex items-start gap-2.5">
+          <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-[11px]">✓</span>
+          <div>
+            <strong class="text-slate-900 block font-semibold">Compatible con tu propia depuración</strong>
+            Si lo preferís, antes de arrastrar el archivo podés eliminar todas las columnas con datos personales de tus compradores. El motor solo necesita el <em># de venta</em>, el <em>estado</em> y el <em>monto</em> para auditar los siniestros.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-slate-100 flex justify-end">
+      <button type="button" onclick="closeModal('privacyModal')" class="touch-target px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs">
+        Entendido
+      </button>
+    </div>
+  </dialog>
+
+  <!-- ================= MODAL 3: GUÍA "¿DÓNDE DESCARGAR EL REPORTE EN MELI?" ================= -->
+  <dialog id="guideModal" class="rounded-3xl p-6 sm:p-8 bg-white max-w-xl w-full border border-slate-200 shadow-2xl">
+    <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+          <i data-lucide="download" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-base font-heading font-extrabold text-slate-900">¿Cómo descargar tu reporte en Mercado Libre?</h3>
+      </div>
+      <button type="button" onclick="closeModal('guideModal')" class="text-slate-400 hover:text-slate-600 touch-target flex items-center justify-center">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
+      <p>Descargar tu reporte oficial solo toma 30 segundos desde tu computadora:</p>
+
+      <ol class="space-y-3 pl-1">
+        <li class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-lg bg-slate-900 text-white font-bold flex items-center justify-center shrink-0 text-[11px]">1</span>
+          <div>
+            <strong class="text-slate-900 block font-semibold">Entrá a tu panel de Mercado Libre</strong>
+            Ingresá a tu cuenta y andá a la sección <strong>Ventas</strong> en el menú lateral.
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-lg bg-slate-900 text-white font-bold flex items-center justify-center shrink-0 text-[11px]">2</span>
+          <div>
+            <strong class="text-slate-900 block font-semibold">Hacé clic en "Exportar"</strong>
+            Arriba a la derecha de tu listado de ventas, hacé clic en el botón <strong>Exportar reporte</strong> (o en los 3 puntos &gt; Descargar reporte).
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-lg bg-slate-900 text-white font-bold flex items-center justify-center shrink-0 text-[11px]">3</span>
+          <div>
+            <strong class="text-slate-900 block font-semibold">Elegí últimos 60 días y formato Excel (.xlsx)</strong>
+            Seleccioná el rango de fechas máximo permitido (últimos 60 días) y descargá el archivo.
+          </div>
+        </li>
+      </ol>
+
+      <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100 text-emerald-800 text-[11px]">
+        💡 <strong>Tip Pro:</strong> Una vez descargado, arrastralo directamente a la caja de SaldoAudit para ver tus reclamos en segundos.
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-slate-100 flex justify-end">
+      <button type="button" onclick="closeModal('guideModal')" class="touch-target px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs">
+        Listo, voy a descargarlo
+      </button>
+    </div>
+  </dialog>
+
+  <!-- ================= MODAL 4: DOSSIER DE RECLAMO POR ORDEN ================= -->
   <dialog id="dossierModal" class="rounded-3xl p-6 sm:p-8 bg-white max-w-xl w-full border border-slate-200 shadow-2xl">
     <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
       <div>
         <h3 id="modalTitle" class="text-base font-heading font-bold text-slate-900">Orden #</h3>
         <p id="modalSubtitle" class="text-xs text-slate-500 truncate max-w-sm"></p>
       </div>
-      <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-slate-600 touch-target flex items-center justify-center">
+      <button type="button" onclick="closeModal('dossierModal')" class="text-slate-400 hover:text-slate-600 touch-target flex items-center justify-center">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
@@ -421,93 +710,6 @@
     </div>
   </dialog>
 
-  <!-- ================= FORMULARIO DE CONTACTO / ASISTENCIA DIRECTA ================= -->
-  <section id="contacto" class="py-14 sm:py-20 bg-slate-900 text-white border-t border-slate-800">
-    <div class="max-w-xl mx-auto px-4 sm:px-6 text-center space-y-6">
-      
-      <div class="space-y-2">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">Soporte y Gestión Delegada</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">
-          ¿Tenés alto volumen y preferís que lo gestionemos nosotros?
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-400">
-          Dejanos tus datos y un especialista revisa tu caso sin compromiso para tramitar el recupero de punta a punta.
-        </p>
-      </div>
-
-      <form id="leadContactForm" onsubmit="handleLeadSubmit(event)" class="bg-white/5 border border-white/10 p-6 sm:p-8 rounded-3xl text-left space-y-3.5 shadow-2xl">
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre o Contacto</label>
-          <input type="text" id="leadNombre" required placeholder="Ej: Mariano López" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
-        </div>
-        
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre de tu Marca o Tienda</label>
-          <input type="text" id="leadEmpresa" required placeholder="Ej: Tienda Oficial Bazar" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp de Contacto</label>
-          <input type="tel" id="leadTelefono" required placeholder="+54 9 11 ..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Rubro de Productos</label>
-          <input type="text" id="leadRubro" placeholder="Bazar, Electro, Indumentaria, Autopartes..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
-        </div>
-
-        <button type="submit" id="btnSubmitLead" class="touch-target w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs sm:text-sm font-bold rounded-xl transition shadow-md flex items-center justify-center gap-2 mt-2">
-          <span>Solicitar Revisión Especializada</span>
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </button>
-
-        <div id="leadSuccessMsg" class="hidden text-xs text-center text-emerald-400 font-semibold pt-2">
-          ✅ ¡Mensaje recibido! Nos comunicaremos por WhatsApp a la brevedad.
-        </div>
-      </form>
-
-    </div>
-  </section>
-
-  <!-- ================= FOOTER CORPORATIVO CON DISCLAIMER LEGAL ================= -->
-  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 text-xs">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
-      
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <!-- Logo -->
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, #059669 0%, #064E3B 100%);">
-            <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none">
-              <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
-              <path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
-              <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/>
-              <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
-              <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/>
-            </svg>
-          </div>
-          <span class="font-heading font-extrabold text-base text-white">
-            Saldo<span class="text-emerald-500">Audit</span>
-          </span>
-        </div>
-
-        <div class="flex items-center gap-6 text-slate-400 text-xs">
-          <a href="#dolores" class="hover:text-white transition">Problemas que Detectamos</a>
-          <a href="#como-funciona" class="hover:text-white transition">Cómo Funciona</a>
-          <a href="mailto:contacto@saldoaudit.com.ar" class="hover:text-emerald-400 transition">contacto@saldoaudit.com.ar</a>
-        </div>
-      </div>
-
-      <!-- Blindaje Legal Nominativo -->
-      <div class="pt-6 border-t border-slate-800/80 text-[11px] text-slate-400 leading-relaxed text-center sm:text-left space-y-2">
-        <p>
-          <strong>Aviso de Marca Registrada y Uso Nominativo:</strong> SaldoAudit es una herramienta de software independiente desarrollada para la auditoría contable y operativa de vendedores. Mercado Libre y Mercado Envíos son marcas registradas propiedad de MercadoLibre S.R.L. El uso de la denominación Mercado Libre en este sitio se realiza con fines exclusivamente descriptivos e informativos para indicar compatibilidad de servicios (Uso Nominativo Legítimo). SaldoAudit no mantiene relación comercial, patrocinio, asociación ni aval de MercadoLibre Inc.
-        </p>
-        <p>© 2026 SaldoAudit · Todos los derechos reservados · Buenos Aires, Argentina.</p>
-      </div>
-
-    </div>
-  </footer>
-
   <!-- ================= CLIENT-SIDE AUDIT LOGIC ================= -->
   <script>
     lucide.createIcons();
@@ -515,6 +717,12 @@
     let currentAuditSummary = null;
     let currentAuditRecords = [];
     let currentFileName = "reporte_ventas.xlsx";
+
+    // Modal Handlers
+    function openFaqModal() { document.getElementById('faqModal').showModal(); }
+    function openPrivacyModal() { document.getElementById('privacyModal').showModal(); }
+    function openGuideModal() { document.getElementById('guideModal').showModal(); }
+    function closeModal(id) { document.getElementById(id).close(); }
 
     function loadDemoAndScroll() {
       document.getElementById('btnSample').click();
@@ -791,7 +999,7 @@ Número de Seguimiento: ${tracking}`;
           <td class="px-6 py-3 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">${item.discrepancyType}</span></td>
           <td class="px-6 py-3 whitespace-nowrap"><span class="px-2 py-0.5 rounded-md text-[11px] font-bold ${item.isThreeDayWindow ? 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse' : 'bg-slate-100 text-slate-700'}">${item.isThreeDayWindow ? 'Urgente 72h' : 'Prioritaria'}</span></td>
           <td class="px-6 py-3 text-right whitespace-nowrap">
-            <button type="button" onclick="openModal(${index})" class="touch-target px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">
+            <button type="button" onclick="openDossierModal(${index})" class="touch-target px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">
               Dossier
             </button>
           </td>
@@ -812,7 +1020,7 @@ Número de Seguimiento: ${tracking}`;
             ${item.isThreeDayWindow ? '<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">🚨 Urgente 72h</span>' : ''}
           </div>
           <div class="pt-2 flex justify-end">
-            <button type="button" onclick="openModal(${index})" class="touch-target px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold">
+            <button type="button" onclick="openDossierModal(${index})" class="touch-target px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold">
               Ver Argumento y Reclamar
             </button>
           </div>
@@ -823,9 +1031,8 @@ Número de Seguimiento: ${tracking}`;
       lucide.createIcons();
     }
 
-    // Modal
-    const modal = document.getElementById('dossierModal');
-    function openModal(idx) {
+    // Dossier Modal
+    function openDossierModal(idx) {
       const item = currentAuditRecords[idx];
       if (!item) return;
 
@@ -844,11 +1051,7 @@ Número de Seguimiento: ${tracking}`;
         });
       };
 
-      modal.showModal();
-    }
-
-    function closeModal() {
-      modal.close();
+      document.getElementById('dossierModal').showModal();
     }
 
     // Export Excel
