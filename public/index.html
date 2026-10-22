@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SaldoAudit — Auditoría y Recupero de Fondos en Mercado Libre Argentina</title>
+  <title>SaldoAudit — Auditoría y Recupero en Mercado Libre Argentina</title>
   
   <meta name="description" content="Recuperá el dinero retenido por siniestros de correo, paquetes perdidos y devoluciones sin liquidar en Mercado Libre. Auditoría forense 100% privada en tu navegador.">
   
-  <!-- OpenGraph / WhatsApp / LinkedIn Preview Tags -->
+  <!-- OpenGraph Preview Tags -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="SaldoAudit — Auditoría de Fondos y Siniestros en Mercado Libre">
   <meta property="og:description" content="Detectá dinero retenido por paquetes perdidos del correo y devoluciones sin liquidar. Auditoría forense 100% privada en tu navegador.">
-  <meta property="og:image" content="https://juanoviedo1987-droid.github.io/saldoaudit/assets/og-image.png">
-  <meta property="og:url" content="https://juanoviedo1987-droid.github.io/saldoaudit/">
+  <meta property="og:image" content="https://saldoaudit.com.ar/assets/logo-saldoaudit-icon.png">
+  <meta property="og:url" content="https://saldoaudit.com.ar/">
   <meta name="twitter:card" content="summary_large_image">
   
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Crect width='32' height='32' rx='8' fill='%23059669'/%3E%3Ccircle cx='14.5' cy='14.5' r='8.5' stroke='%23ffffff' stroke-width='2.2'/%3E%3Cpath d='M21 21L27 27' stroke='%2334D399' stroke-width='3' stroke-linecap='round'/%3E%3Crect x='10.5' y='15' width='2.2' height='4' rx='1' fill='%23A7F3D0'/%3E%3Crect x='13.5' y='12' width='2.2' height='7' rx='1' fill='%23ffffff'/%3E%3Crect x='16.5' y='9.5' width='2.2' height='9.5' rx='1' fill='%23FBBF24'/%3E%3C/svg%3E">
@@ -24,7 +24,6 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- SheetJS para procesar localmente en el navegador -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <script>
@@ -50,46 +49,6 @@
         }
       }
     }
-    // Enviar Lead a Supabase de forma segura
-    async function handleLeadSubmit(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btnSubmitLead');
-      btn.disabled = true;
-      btn.innerHTML = `<span>Enviando...</span>`;
-
-      const payload = {
-        empresa: document.getElementById('leadEmpresa').value,
-        contacto_nombre: document.getElementById('leadNombre').value,
-        contacto_telefono: document.getElementById('leadTelefono').value,
-        rubro: document.getElementById('leadRubro').value || 'General',
-        estado_pipeline: 'lead_contactado',
-        notas: 'Lead ingresado a través del formulario web de SaldoAudit.'
-      };
-
-      try {
-        const SUPABASE_URL = 'https://wbcfmanuhotyevquiaht.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiY2ZtYW51aG90eWV2cXVpYWh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MjcyNzcsImV4cCI6MjEwNjIwMzI3N30.9Lx4mXOP3WIfmqJ5AGbqEOYTA2nZ_KeSnD54OFrR__g';
-        
-        await fetch(`${SUPABASE_URL}/rest/v1/saldoaudit_sellers`, {
-          method: 'POST',
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        document.getElementById('leadSuccessMsg').classList.remove('hidden');
-        document.getElementById('leadContactForm').reset();
-        btn.innerHTML = `<span>✅ Enviado con Éxito</span>`;
-      } catch (err) {
-        console.error('Error enviando lead:', err);
-        btn.disabled = false;
-        btn.innerHTML = `<span>Reintentar</span>`;
-      }
-    }
   </script>
 
   <style>
@@ -99,14 +58,14 @@
     }
     .dropzone-active {
       border-color: #059669 !important;
-      background-color: #eff6ff !important;
+      background-color: #f0fdf4 !important;
     }
     dialog:modal {
       overscroll-behavior: contain;
     }
     dialog::backdrop {
-      background-color: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
+      background-color: rgba(9, 13, 22, 0.7);
+      backdrop-filter: blur(6px);
     }
   </style>
 </head>
@@ -116,7 +75,7 @@
   <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 transition">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand Logo -->
+      <!-- Brand Logo con Radar Forense -->
       <a href="#" class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-xs shrink-0" style="background: linear-gradient(135deg, #059669 0%, #064E3B 100%);">
           <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none">
@@ -131,98 +90,192 @@
           <span class="font-heading font-extrabold text-xl text-slate-900 tracking-tight leading-none block">
             Saldo<span class="text-emerald-600">Audit</span>
           </span>
-          <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase block">Auditoría Mercado Libre</span>
+          <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase block">Auditoría Mercado Libre</span>
         </div>
       </a>
 
       <!-- Navegación & CTA -->
-      <div class="flex items-center gap-2 sm:gap-4">
+      <div class="flex items-center gap-3 sm:gap-6">
+        <a href="#dolores" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+          ¿Qué Detectamos?
+        </a>
         <a href="#como-funciona" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
           ¿Cómo Funciona?
         </a>
-        <a href="#precios" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-          Tarifas
+        <a href="#contacto" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+          Contacto
         </a>
-        <a href="#faq" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-          Preguntas Frecuentes
-        </a>
-        <a href="#auditar-ahora" class="touch-target inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition shadow-xs">
+        <a href="#auditar" class="touch-target inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition shadow-xs">
           <i data-lucide="scan-line" class="w-3.5 h-3.5"></i>
-          <span>Auditar Reporte</span>
+          <span>Auditar Gratis</span>
         </a>
       </div>
 
     </div>
   </header>
 
-  <!-- ================= HERO SECTION (ALTO IMPACTO) ================= -->
-  <section class="relative pt-10 pb-12 sm:pt-16 sm:pb-20 border-b border-slate-200 bg-gradient-to-b from-white via-slate-50/50 to-slate-100/60 overflow-hidden">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-6">
+  <!-- ================= HERO SECTION (AMABLE, DIRECTO, MERCADO LIBRE PROTAGONISTA) ================= -->
+  <section class="relative pt-12 pb-14 sm:pt-20 sm:pb-24 border-b border-slate-200 bg-gradient-to-b from-white via-slate-50/60 to-emerald-50/20 overflow-hidden">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
       
-      <!-- Pill de autoridad -->
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
+      <!-- Pill de contexto nominativo legítimo -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>Validado con más de $296M en ventas auditadas de Mercado Libre</span>
+        <span>Auditoría Forense Independiente para Sellers</span>
       </div>
 
-      <!-- Título Principal -->
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-slate-900 tracking-tight leading-[1.15]">
-        Recuperá el dinero que <br class="hidden sm:inline">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 to-teal-800">Mercado Libre nunca te avisa que perdiste</span>
+      <!-- Título Principal Claro y Protagonista -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-slate-900 tracking-tight leading-[1.12]">
+        Recuperá el dinero retenido en tus ventas de <br class="hidden sm:inline">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-700">Mercado Libre</span>
       </h1>
 
-      <!-- Bajada Comercial Directa -->
+      <!-- Subtítulo Amable y Sin Jerga Pesada -->
       <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
-        Auditoría forense sobre tus reportes de ventas para detectar paquetes extraviados por el correo, devoluciones trabadas en tránsito y plazos de 72 hs por vencer.
+        Detectá paquetes extraviados por el correo que nunca te pagaron, devoluciones fantasma y desfasajes en tus liquidaciones. Análisis 100% privado en tu navegador en 30 segundos.
       </p>
 
-      <!-- Garantía de Seguridad / Privacidad -->
-      <div class="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-500 font-semibold">
-        <span class="inline-flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> 100% Privado en tu Navegador</span>
-        <span class="inline-flex items-center gap-1.5"><i data-lucide="key" class="w-4 h-4 text-emerald-600"></i> Cero Claves ni Acceso a tu Cuenta</span>
-        <span class="inline-flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Diagnóstico en 10 Segundos</span>
+      <!-- Botones de Acción Clave (Mobile-First) -->
+      <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+        <a href="#auditar" class="touch-target w-full sm:w-auto px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2">
+          <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+          <span>Auditar mi Reporte Gratis</span>
+        </a>
+        <button type="button" onclick="loadDemoAndScroll()" class="touch-target w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-slate-100 text-slate-800 text-sm font-bold rounded-xl transition border border-slate-200 shadow-2xs flex items-center justify-center gap-2">
+          <i data-lucide="play-circle" class="w-4 h-4 text-emerald-600"></i>
+          <span>Ver Ejemplo en Vivo</span>
+        </button>
+      </div>
+
+      <!-- Garantías de Confianza y Seguridad -->
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-500 font-semibold">
+        <span class="inline-flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> 100% Confidencial en tu Navegador</span>
+        <span class="inline-flex items-center gap-1.5"><i data-lucide="lock" class="w-4 h-4 text-emerald-600"></i> Cero Claves ni Acceso a tu Cuenta</span>
+        <span class="inline-flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Diagnóstico Inmediato</span>
       </div>
 
     </div>
   </section>
 
-  <!-- ================= SECCIÓN PRUEBA SOCIAL / BENCHMARK ================= -->
-  <section class="py-8 bg-white border-b border-slate-200">
+  <!-- ================= SECCIÓN: LOS 3 PROBLEMAS QUE DETECTAMOS ================= -->
+  <section id="dolores" class="py-14 sm:py-20 bg-white border-b border-slate-200">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
-        <div class="p-3">
-          <div class="text-2xl sm:text-3xl font-heading font-black text-slate-900">$296.000.000+</div>
-          <span class="text-xs text-slate-500 font-medium">Volumen Bruto Auditado</span>
-        </div>
-        <div class="p-3">
-          <div class="text-2xl sm:text-3xl font-heading font-black text-emerald-600">$599.500+</div>
-          <span class="text-xs text-slate-500 font-medium">Recuperados por Cuenta Líder</span>
-        </div>
-        <div class="p-3">
-          <div class="text-2xl sm:text-3xl font-heading font-black text-slate-900">8.016</div>
-          <span class="text-xs text-slate-500 font-medium">Operaciones Analizadas</span>
-        </div>
-        <div class="p-3">
-          <div class="text-2xl sm:text-3xl font-heading font-black text-emerald-600">100%</div>
-          <span class="text-xs text-slate-500 font-medium">A Éxito (Sin Costo Fijo)</span>
-        </div>
+      
+      <div class="text-center space-y-2 mb-12">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">¿Por qué se pierde dinero?</span>
+        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+          Los 3 siniestros más comunes que no se reclaman
+        </h2>
+        <p class="text-sm text-slate-500 max-w-xl mx-auto">
+          En cuentas con cientos de ventas al mes, es imposible revisar operación por operación de forma manual.
+        </p>
       </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Card 1 -->
+        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition">
+          <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100">
+            <i data-lucide="package-x" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-base font-heading font-bold text-slate-900">1. Paquetes Extraviados</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            El correo no entregó el producto o canceló el viaje por demoras. Si no se abre el reclamo formal dentro del plazo legal, Mercado Libre no te indemniza.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition">
+          <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
+            <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-base font-heading font-bold text-slate-900">2. Devoluciones Fantasma</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            El comprador recibió el reembolso de su dinero pero el paquete de retorno nunca llegó de vuelta a tu depósito ni a los almacenes Full.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
+            <i data-lucide="clock-alert" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-base font-heading font-bold text-slate-900">3. Ventana Crítica de 72 Horas</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Cuando te devuelven un producto roto, usado o una caja vacía, tenés solo 3 días para desconocer el estado antes de que la plataforma cierre el caso.
+          </p>
+        </div>
+
+      </div>
+
     </div>
   </section>
 
-  <!-- ================= SECCIÓN PRINCIPAL: DROPZONE AUDITOR FORENSE ================= -->
-  <section id="auditar-ahora" class="py-12 sm:py-16 max-w-5xl mx-auto px-4 sm:px-6 w-full">
+  <!-- ================= SECCIÓN: CÓMO FUNCIONA EN 3 PASOS ================= -->
+  <section id="como-funciona" class="py-14 sm:py-20 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center space-y-2 mb-12">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Simple y Rápido</span>
+        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+          ¿Cómo auditar tu cuenta en 3 pasos?
+        </h2>
+        <p class="text-sm text-slate-500 max-w-xl mx-auto">
+          Cero integraciones complejas. No necesitás darnos contraseñas ni acceso a tu cuenta.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+        
+        <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
+          <div class="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
+            1
+          </div>
+          <h3 class="text-sm font-heading font-bold text-slate-900">Descargás tu Reporte</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Entrás a tu panel de Mercado Libre y exportás el Excel de tus ventas de los últimos 60 días.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
+          <div class="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
+            2
+          </div>
+          <h3 class="text-sm font-heading font-bold text-slate-900">Lo Soltás en SaldoAudit</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            El archivo se audita en tu propio navegador en segundos. Ningún dato sensible sale de tu máquina.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
+          <div class="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
+            3
+          </div>
+          <h3 class="text-sm font-heading font-bold text-slate-900">Reclamás y Cobrás</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Obtenés la planilla con las órdenes siniestradas y el texto legal exacto para que te indemnicen.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECCIÓN PRINCIPAL: CONSOLA DE AUDITORÍA ================= -->
+  <section id="auditar" class="py-14 sm:py-20 max-w-5xl mx-auto px-4 sm:px-6 w-full">
     
     <div class="text-center space-y-2 mb-8">
+      <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Consola de Diagnóstico</span>
       <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-        Comprobá cuánto dinero tenés para reclamar hoy
+        Comprobá cuánto dinero tenés para reclamar
       </h2>
       <p class="text-sm text-slate-500 max-w-xl mx-auto">
-        Descargá tu reporte de ventas de los últimos 60 días desde tu panel de Mercado Libre y arrastralo acá. Podés borrar antes todas las columnas de clientes si preferís por privacidad.
+        Subí tu archivo de ventas o hacé una prueba inmediata con el caso de ejemplo precargado.
       </p>
     </div>
 
-    <!-- Dropzone Area -->
+    <!-- Dropzone Area Amigable -->
     <div 
       id="dropzone" 
       class="border-2 border-dashed border-slate-300 hover:border-emerald-600 rounded-3xl p-6 sm:p-10 text-center bg-white hover:bg-emerald-50/20 transition-all cursor-pointer shadow-sm relative group"
@@ -237,7 +290,7 @@
         Arrastrá tu reporte oficial de Ventas de Mercado Libre
       </h3>
       <p class="text-xs sm:text-sm text-slate-500 mb-6 max-w-md mx-auto">
-        Archivos <span class="font-semibold text-slate-700">.xlsx, .xls o .csv</span> (últimos 60 días). El análisis corre de forma 100% local en tu navegador.
+        Archivos <span class="font-semibold text-slate-700">.xlsx, .xls o .csv</span>. El análisis corre de forma 100% privada en tu navegador.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -254,44 +307,28 @@
           id="btnSample" 
           class="touch-target w-full sm:w-auto px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl transition border border-slate-200 flex items-center justify-center gap-2"
         >
-          <i data-lucide="flask-conical" class="w-4 h-4 text-slate-500"></i>
+          <i data-lucide="flask-conical" class="w-4 h-4 text-emerald-600"></i>
           <span>Cargar caso de prueba real</span>
         </button>
       </div>
 
       <div id="fileInfo" class="mt-4 text-xs font-mono text-emerald-700 bg-emerald-50 inline-block px-3 py-1.5 rounded-lg border border-emerald-100 hidden"></div>
-
-      <!-- 3 Puntos Clave Auditados -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-8 pt-6 border-t border-slate-100 text-left">
-        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
-          <span class="text-xs font-bold text-rose-700 flex items-center gap-1.5"><i data-lucide="clock-alert" class="w-4 h-4"></i> 1. Ventana de 72 Horas</span>
-          <p class="text-xs text-slate-600">Devoluciones entregadas recientemente para revisar roturas o cajas vacías antes de que venza el plazo.</p>
-        </div>
-        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
-          <span class="text-xs font-bold text-amber-700 flex items-center gap-1.5"><i data-lucide="package-x" class="w-4 h-4"></i> 2. Extravíos & Siniestros</span>
-          <p class="text-xs text-slate-600">Paquetes perdidos o cancelados por demora del transporte donde Mercado Libre no liquidó la indemnización.</p>
-        </div>
-        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
-          <span class="text-xs font-bold text-emerald-700 flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4"></i> 3. Devoluciones Congeladas</span>
-          <p class="text-xs text-slate-600">Envíos de regreso que quedaron trabados en el correo y superan la fecha de entrega comprometida.</p>
-        </div>
-      </div>
     </div>
 
     <!-- ================= RESULTADOS DE AUDITORÍA ================= -->
     <div id="resultsSection" class="hidden mt-8 space-y-6">
       
       <!-- Toolbar Ejecutiva -->
-      <div class="bg-slate-900 text-white p-5 rounded-3xl shadow-md flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-xl flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-slate-800">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block mb-1">Diagnóstico Finalizado</span>
           <h3 class="text-xl sm:text-2xl font-heading font-black text-white">
             Total Reclamable: <span id="kpiAmount" class="text-emerald-400">$0</span>
           </h3>
-          <p class="text-xs text-slate-300 mt-0.5" id="kpiTotalAudited">de 0 operaciones analizadas</p>
+          <p class="text-xs text-slate-400 mt-0.5" id="kpiTotalAudited">de 0 operaciones analizadas</p>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" id="btnExportExcel" class="touch-target px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-xs">
+          <button type="button" id="btnExportExcel" class="touch-target px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-xs">
             <i data-lucide="download" class="w-4 h-4"></i>
             <span>Descargar Planilla de Reclamos (.xlsx)</span>
           </button>
@@ -309,8 +346,8 @@
           <span id="kpiCritical" class="text-xl font-heading font-extrabold text-rose-600">0</span>
         </div>
         <div class="bg-white p-4 rounded-2xl border border-slate-200 col-span-2 md:col-span-1">
-          <span class="text-xs text-slate-400 block">Cobertura Legal</span>
-          <span class="text-xl font-heading font-extrabold text-emerald-600">Plazos MeLi 72h / 60d</span>
+          <span class="text-xs text-slate-400 block">Plazos de Cobertura Legal</span>
+          <span class="text-xl font-heading font-extrabold text-emerald-600">MeLi 72h / 60d</span>
         </div>
       </div>
 
@@ -342,49 +379,6 @@
 
     </div>
 
-  </section>
-
-  <!-- ================= CÓMO FUNCIONA / METODOLOGÍA ================= -->
-  <section id="como-funciona" class="py-12 sm:py-16 bg-white border-t border-slate-200">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      
-      <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Proceso Quirúrgico</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-          ¿Por qué se pierde dinero en Mercado Libre?
-        </h2>
-        <p class="text-sm text-slate-500 max-w-xl mx-auto">
-          En operaciones de alto volumen, es imposible hacerle seguimiento manual a cada paquete devuelto o siniestrado.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">1</div>
-          <h3 class="text-base font-heading font-bold text-slate-900">Mercado Libre no notifica las pérdidas</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            Cuando un transportista extravía un paquete o cancela una entrega por demoras, el sistema no te envía una alerta de cobro. Si no abrís el reclamo dentro de los 60 días, el derecho a indemnización prescribe.
-          </p>
-        </div>
-
-        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">2</div>
-          <h3 class="text-base font-heading font-bold text-slate-900">La trampa de las 72 Horas</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            Si un comprador te devuelve un producto usado, roto o una caja vacía, tenés solo 3 días corridos para desconocer el estado. Pasado ese plazo, Mercado Libre le libera el dinero al comprador automáticamente.
-          </p>
-        </div>
-
-        <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center">3</div>
-          <h3 class="text-base font-heading font-bold text-slate-900">Flete cobrado indebidamente</h3>
-          <p class="text-xs text-slate-600 leading-relaxed">
-            En depósitos Full, muchas devoluciones son descartadas o calificadas como "con marcas de uso", pero el costo del envío se le factura al vendedor en vez de ser cubierto por el programa de protección.
-          </p>
-        </div>
-      </div>
-
-    </div>
   </section>
 
   <!-- ================= MODAL DOSSIER DE RECLAMO ================= -->
@@ -427,273 +421,144 @@
     </div>
   </dialog>
 
-  <!-- ================= TARIFARIO Y MODELO COMERCIAL ================= -->
-  <section id="precios" class="py-12 sm:py-16 bg-slate-100/70 border-t border-slate-200">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      
-      <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Modelo 100% a Éxito</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-          Tarifas transparentes: solo cobramos si hay dinero a favor
-        </h2>
-        <p class="text-sm text-slate-500 max-w-xl mx-auto">
-          Sin suscripciones ocultas ni abonos que te hagan perder plata. Si no encontramos reclamos, el costo es estrictamente cero.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        
-        <!-- Tarifa 1 -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-              Opción 1: Reporte en Mano
-            </div>
-            <div>
-              <div class="text-3xl font-heading font-black text-slate-900">10%</div>
-              <span class="text-xs text-slate-400 font-medium">sobre los fondos detectados para reclamar</span>
-            </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Ideal si contás con un equipo interno de atención o administración y solo necesitás la planilla lista con las órdenes y los links directos a soporte de MeLi.
-            </p>
-            <ul class="text-xs text-slate-600 space-y-2 pt-2">
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Si el reporte da $0 detectado, costo = <strong>$0</strong>.</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Dossier descargable en Excel con links a cada venta.</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> <strong>Garantía SaldoAudit:</strong> Si MeLi rechaza +50% por causas ajenas al seller, se acredita para el próximo mes.</li>
-            </ul>
-          </div>
-          <a href="#auditar-ahora" class="touch-target w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition text-center shadow-xs block">
-            Auditar mi Reporte Gratis
-          </a>
-        </div>
-
-        <!-- Tarifa 2 -->
-        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-xl space-y-5 flex flex-col justify-between relative overflow-hidden">
-          <div class="space-y-4">
-            <div class="inline-flex px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              Opción 2: Gestión Integral VIP
-            </div>
-            <div>
-              <div class="text-3xl font-heading font-black text-white">20%</div>
-              <span class="text-xs text-slate-400 font-medium">sobre lo efectivamente acreditado en Mercado Pago</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Nosotros nos encargamos de todo. Nos das de alta como <strong>Colaborador oficial de Mercado Libre</strong> (rol Reclamos/Posventa, sin acceso a dinero) y gestionamos los casos de punta a punta.
-            </p>
-            <ul class="text-xs text-slate-300 space-y-2 pt-2">
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Cero carga operativa para tu equipo.</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Seguimiento y apelación de mediaciones complejas.</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Liquidación mes vencido únicamente sobre dinero cobrado.</li>
-            </ul>
-          </div>
-          <a href="#contacto" class="touch-target w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition text-center shadow-xs block">
-            Solicitar Gestión Integral
-          </a>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= PREGUNTAS FRECUENTES (FAQ ACCORDION) ================= -->
-  <section id="faq" class="py-12 sm:py-16 bg-white border-t border-slate-200">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      
-      <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Resolvé tus Dudas</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-          Preguntas Frecuentes de Seguridad y Operatoria
-        </h2>
-      </div>
-
-      <div class="space-y-4 text-xs">
-        
-        <details class="group p-5 rounded-2xl bg-slate-50 border border-slate-200 open:bg-white open:shadow-xs transition">
-          <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between text-sm">
-            <span>¿Mercado Libre me puede sancionar o penalizar por usar SaldoAudit?</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
-          </summary>
-          <p class="text-slate-600 mt-3 leading-relaxed">
-            <strong>No, bajo ninguna circunstancia.</strong> SaldoAudit no utiliza bots, no hackea la plataforma ni interactúa por API externa. Lo único que hace es procesar el archivo Excel oficial que Mercado Libre te entrega en tu panel y avisarte qué reclamos tenés derecho a iniciar según los propios Términos y Condiciones de la plataforma.
-          </p>
-        </details>
-
-        <details class="group p-5 rounded-2xl bg-slate-50 border border-slate-200 open:bg-white open:shadow-xs transition">
-          <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between text-sm">
-            <span>¿Tienen acceso a mis claves, fondos o cuenta bancaria?</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
-          </summary>
-          <p class="text-slate-600 mt-3 leading-relaxed">
-            <strong>Nunca.</strong> En la Opción Reporte, el archivo se procesa 100% de forma local en tu propia computadora sin subirse a ningún servidor. Y en la Opción Gestión, el rol de "Colaborador" de Mercado Libre tiene bloqueado expresamente el acceso a Mercado Pago, transferencias y facturación.
-          </p>
-        </details>
-
-        <details class="group p-5 rounded-2xl bg-slate-50 border border-slate-200 open:bg-white open:shadow-xs transition">
-          <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between text-sm">
-            <span>¿Qué pasa con los datos personales de mis compradores?</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
-          </summary>
-          <p class="text-slate-600 mt-3 leading-relaxed">
-            Para auditar el reporte <strong>no precisamos datos de personas</strong>. Antes de cargar el archivo, podés borrar todas las columnas de Nombres, DNI, Teléfonos y Domicilios. El algoritmo solo necesita el número de orden, las fechas, los importes y las columnas de estado de envío.
-          </p>
-        </details>
-
-        <details class="group p-5 rounded-2xl bg-slate-50 border border-slate-200 open:bg-white open:shadow-xs transition">
-          <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between text-sm">
-            <span>¿Por qué Mercado Libre no me devuelve este dinero automáticamente?</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
-          </summary>
-          <p class="text-slate-600 mt-3 leading-relaxed">
-            En operaciones masivas, los transportistas cancelan o declaran siniestros que quedan en el limbo informático. Si el vendedor no abre un ticket formal citando el número de seguimiento dentro de los 60 días, el sistema asume la pérdida y el derecho a indemnización prescribe.
-          </p>
-        </details>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= FORMULARIO CAPTURA DIRECTA / CONTACTO ================= -->
-  <section id="contacto" class="py-12 sm:py-16 bg-slate-900 text-white border-t border-slate-800">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center space-y-6">
+  <!-- ================= FORMULARIO DE CONTACTO / ASISTENCIA DIRECTA ================= -->
+  <section id="contacto" class="py-14 sm:py-20 bg-slate-900 text-white border-t border-slate-800">
+    <div class="max-w-xl mx-auto px-4 sm:px-6 text-center space-y-6">
       
       <div class="space-y-2">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">Contacto Comercial</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">Soporte y Gestión Delegada</span>
         <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">
-          ¿Vendés más de 500 paquetes al mes en Mercado Libre?
+          ¿Tenés alto volumen y preferís que lo gestionemos nosotros?
         </h2>
-        <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">
-          Dejanos tus datos y te preparamos una auditoría express sin cargo de tus últimos 60 días para mostrarte cuánto dinero tenés a favor para cobrar.
+        <p class="text-xs sm:text-sm text-slate-400">
+          Dejanos tus datos y un especialista revisa tu caso sin compromiso para tramitar el recupero de punta a punta.
         </p>
       </div>
 
-      <form id="leadContactForm" onsubmit="handleLeadSubmit(event)" class="bg-white/5 border border-white/10 p-6 rounded-3xl text-left space-y-3">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div>
-            <label class="font-semibold text-slate-300 block mb-1">Nombre y Apellido *</label>
-            <input type="text" id="leadNombre" required placeholder="Tu nombre" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
-          </div>
-          <div>
-            <label class="font-semibold text-slate-300 block mb-1">Empresa / Tienda Oficial MeLi *</label>
-            <input type="text" id="leadEmpresa" required placeholder="Nombre de tu marca" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
-          </div>
+      <form id="leadContactForm" onsubmit="handleLeadSubmit(event)" class="bg-white/5 border border-white/10 p-6 sm:p-8 rounded-3xl text-left space-y-3.5 shadow-2xl">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre o Contacto</label>
+          <input type="text" id="leadNombre" required placeholder="Ej: Mariano López" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div>
-            <label class="font-semibold text-slate-300 block mb-1">WhatsApp de Contacto *</label>
-            <input type="tel" id="leadTelefono" required placeholder="+54 9 11 ..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
-          </div>
-          <div>
-            <label class="font-semibold text-slate-300 block mb-1">Rubro Principal</label>
-            <input type="text" id="leadRubro" placeholder="Bazar, Calzado, Autopartes..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
-          </div>
+        
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre de tu Marca o Tienda</label>
+          <input type="text" id="leadEmpresa" required placeholder="Ej: Tienda Oficial Bazar" class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
         </div>
-        <div class="pt-2">
-          <button type="submit" id="btnSubmitLead" class="touch-target w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs sm:text-sm font-bold rounded-xl transition shadow-md flex items-center justify-center gap-2">
-            <span>Solicitar Diagnóstico sin Cargo</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">WhatsApp de Contacto</label>
+          <input type="tel" id="leadTelefono" required placeholder="+54 9 11 ..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
         </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Rubro de Productos</label>
+          <input type="text" id="leadRubro" placeholder="Bazar, Electro, Indumentaria, Autopartes..." class="touch-target w-full px-3.5 py-2.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-xs sm:text-sm">
+        </div>
+
+        <button type="submit" id="btnSubmitLead" class="touch-target w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs sm:text-sm font-bold rounded-xl transition shadow-md flex items-center justify-center gap-2 mt-2">
+          <span>Solicitar Revisión Especializada</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+
         <div id="leadSuccessMsg" class="hidden text-xs text-center text-emerald-400 font-semibold pt-2">
-          ✅ ¡Solicitud recibida! Te escribiremos a la brevedad por WhatsApp.
+          ✅ ¡Mensaje recibido! Nos comunicaremos por WhatsApp a la brevedad.
         </div>
       </form>
 
     </div>
   </section>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-      <div class="flex items-center gap-2">
-        <span class="font-heading font-extrabold text-slate-900">Saldo<span class="text-emerald-600">Audit</span></span>
-        <span>&bull; Herramienta Independiente de Conciliación para Sellers</span>
+  <!-- ================= FOOTER CORPORATIVO CON DISCLAIMER LEGAL ================= -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 text-xs">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+      
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, #059669 0%, #064E3B 100%);">
+            <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none">
+              <circle cx="14.5" cy="14.5" r="8.5" stroke="#ffffff" stroke-width="2.2"/>
+              <path d="M21 21L27 27" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+              <rect x="10.5" y="15" width="2.2" height="4" rx="1" fill="#A7F3D0"/>
+              <rect x="13.5" y="12" width="2.2" height="7" rx="1" fill="#ffffff"/>
+              <rect x="16.5" y="9.5" width="2.2" height="9.5" rx="1" fill="#FBBF24"/>
+            </svg>
+          </div>
+          <span class="font-heading font-extrabold text-base text-white">
+            Saldo<span class="text-emerald-500">Audit</span>
+          </span>
+        </div>
+
+        <div class="flex items-center gap-6 text-slate-400 text-xs">
+          <a href="#dolores" class="hover:text-white transition">Problemas que Detectamos</a>
+          <a href="#como-funciona" class="hover:text-white transition">Cómo Funciona</a>
+          <a href="mailto:contacto@saldoaudit.com.ar" class="hover:text-emerald-400 transition">contacto@saldoaudit.com.ar</a>
+        </div>
       </div>
-      <div class="flex items-center gap-4">
-        <span>No afiliado oficialmente a Mercado Libre Inc.</span>
-        <span>&bull; Confidencialidad y Seguridad Garantizada</span>
+
+      <!-- Blindaje Legal Nominativo -->
+      <div class="pt-6 border-t border-slate-800/80 text-[11px] text-slate-400 leading-relaxed text-center sm:text-left space-y-2">
+        <p>
+          <strong>Aviso de Marca Registrada y Uso Nominativo:</strong> SaldoAudit es una herramienta de software independiente desarrollada para la auditoría contable y operativa de vendedores. Mercado Libre y Mercado Envíos son marcas registradas propiedad de MercadoLibre S.R.L. El uso de la denominación Mercado Libre en este sitio se realiza con fines exclusivamente descriptivos e informativos para indicar compatibilidad de servicios (Uso Nominativo Legítimo). SaldoAudit no mantiene relación comercial, patrocinio, asociación ni aval de MercadoLibre Inc.
+        </p>
+        <p>© 2026 SaldoAudit · Todos los derechos reservados · Buenos Aires, Argentina.</p>
       </div>
+
     </div>
   </footer>
 
-  <!-- ================= SCRIPTS DEL MOTOR FORENSE ================= -->
+  <!-- ================= CLIENT-SIDE AUDIT LOGIC ================= -->
   <script>
     lucide.createIcons();
 
-    // Estado global de la auditoría
     let currentAuditSummary = null;
     let currentAuditRecords = [];
-    let currentFileName = "ventas_meli";
+    let currentFileName = "reporte_ventas.xlsx";
 
-    // Aliases de columnas oficiales
+    function loadDemoAndScroll() {
+      document.getElementById('btnSample').click();
+      document.getElementById('auditar').scrollIntoView({ behavior: 'smooth' });
+    }
+
     const COLUMN_ALIASES = {
-      orderId: ["# de venta", "id de la venta", "nro. de venta", "número de venta", "orden", "order_id", "código de la venta", "id"],
-      tracking: ["número de seguimiento", "número de envío", "nro de envio", "tracking", "código de seguimiento", "shipping_id"],
-      itemTitle: ["título de la publicación", "producto", "item_title", "detalle", "descripción", "titulo"],
-      amount: ["total (ars)", "ingresos por productos (ars)", "monto", "precio unitario", "total", "importe", "amount"],
-      status: ["estado", "estado de la venta", "status", "situación"],
-      statusDesc: ["descripción del estado", "subestado"],
-      refundAmount: ["anulaciones y reembolsos (ars)"],
-      openClaim: ["reclamo abierto"],
-      closedClaim: ["reclamo cerrado"],
-      returnStatus: ["estado del envío de la devolución", "estado de devolución", "return_status"],
-      returnDate: ["fecha en camino", "fecha de despacho de devolución", "fecha de devolución", "fecha envio", "return_date", "fecha de admisión", "fecha de venta", "fecha"],
-      returnDeliveredDate: ["fecha entregado", "fecha de entrega de devolución", "fecha entregada", "fecha recibido"],
-      dueDate: ["fecha prometida", "fecha límite", "fecha limite", "fecha estimada de entrega", "fecha estimada", "due_date", "vencimiento", "fecha compromiso", "plazo de reclamo"],
-      isFull: ["tipo de logística", "logística", "full", "es_full", "canal de envío", "forma de entrega"]
+      orderId: ['# de venta', 'número de venta', 'id de venta', 'order id', 'venta #', 'número de la venta', 'orden de compra', 'id de la venta'],
+      date: ['fecha de venta', 'fecha', 'date', 'creation date', 'fecha de creación'],
+      amount: ['total (ars)', 'monto', 'total', 'precio', 'amount', 'total venta', 'ingresos por productos (ars)', 'ingresos por productos'],
+      status: ['estado', 'status', 'estado de la venta'],
+      statusDesc: ['descripción del estado', 'detalle de estado', 'status detail', 'subestado'],
+      carrierStatus: ['estado del envío', 'envío estado', 'shipping status', 'estado de mercado envíos'],
+      tracking: ['número de seguimiento', 'código de seguimiento', 'tracking', 'guía', 'tracking number'],
+      returnStatus: ['estado de la devolución', 'devolución', 'return status'],
+      returnDate: ['fecha de la devolución', 'fecha devolución', 'return date'],
+      isFull: ['almacenamiento', 'tipo de envío', 'fulfillment', 'full'],
+      itemTitle: ['título de la publicación', 'publicación', 'producto', 'item title', 'title'],
+      refundAmount: ['reembolso al comprador (ars)', 'reembolso', 'monto devuelto']
     };
 
-    const SPANISH_MONTHS = {
-      enero: 0, ene: 0, febrero: 1, feb: 1, marzo: 2, mar: 2, abril: 3, abr: 3, mayo: 4, may: 4, junio: 5, jun: 5,
-      julio: 6, jul: 6, agosto: 7, ago: 7, septiembre: 8, setiembre: 8, sep: 8, set: 8, octubre: 9, oct: 9,
-      noviembre: 10, nov: 10, diciembre: 11, dic: 11
-    };
-
-    function parseMeliDate(rawVal) {
-      if (rawVal === null || rawVal === undefined || rawVal === '') return null;
-      if (rawVal instanceof Date && !isNaN(rawVal.getTime())) return rawVal;
-
-      if (typeof rawVal === 'number' && rawVal > 25569 && rawVal < 70000) {
-        const utcDays = Math.floor(rawVal - 25569);
-        const utcValue = utcDays * 86400;
-        const dateInfo = new Date(utcValue * 1000);
-        const fractionalDay = rawVal - Math.floor(rawVal) + 0.0000001;
-        let totalSeconds = Math.floor(86400 * fractionalDay);
-        const seconds = totalSeconds % 60;
-        totalSeconds -= seconds;
-        const hours = Math.floor(totalSeconds / (60 * 60));
-        const minutes = Math.floor(totalSeconds / 60) % 60;
-        return new Date(Date.UTC(dateInfo.getUTCFullYear(), dateInfo.getUTCMonth(), dateInfo.getUTCDate(), hours, minutes, seconds));
+    function parseMeliDate(val) {
+      if (!val) return null;
+      if (val instanceof Date) return val;
+      const s = String(val).trim();
+      const iso = new Date(s);
+      if (!isNaN(iso.getTime()) && s.includes('-')) return iso;
+      const parts = s.split(/[\/\-\s]/);
+      if (parts.length >= 3) {
+        let d = parseInt(parts[0], 10);
+        let m = parseInt(parts[1], 10) - 1;
+        let y = parseInt(parts[2], 10);
+        if (y < 100) y += 2000;
+        const dt = new Date(y, m, d);
+        if (!isNaN(dt.getTime())) return dt;
       }
-
-      const s = String(rawVal).trim().toLowerCase();
-      const txtMatch = s.match(/(\d{1,2})\s+de\s+([a-z]+)(?:\s+de\s+(\d{4}))?(?:\s+(\d{1,2}):(\d{2}))?/);
-      if (txtMatch) {
-        const day = parseInt(txtMatch[1], 10);
-        const monthName = txtMatch[2];
-        const year = txtMatch[3] ? parseInt(txtMatch[3], 10) : new Date().getFullYear();
-        const hour = txtMatch[4] ? parseInt(txtMatch[4], 10) : 0;
-        const min = txtMatch[5] ? parseInt(txtMatch[5], 10) : 0;
-        if (SPANISH_MONTHS[monthName] !== undefined) {
-          return new Date(year, SPANISH_MONTHS[monthName], day, hour, min);
-        }
-      }
-
-      const ddmmyyyy = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
-      if (ddmmyyyy) {
-        return new Date(parseInt(ddmmyyyy[3], 10), parseInt(ddmmyyyy[2], 10) - 1, parseInt(ddmmyyyy[1], 10));
-      }
-
-      const d = new Date(rawVal);
-      return !isNaN(d.getTime()) ? d : null;
+      return null;
     }
 
     function parseMeliAmount(val) {
       if (typeof val === 'number') return Math.abs(val);
       if (!val) return 0;
-      let s = String(val).replace(/\$/g, '').trim();
-      if (s.includes(',') && s.includes('.')) {
+      let s = String(val).trim().replace('$', '').replace(/\s/g, '');
+      if (s.includes('.') && s.includes(',')) {
         s = s.replace(/\./g, '').replace(',', '.');
       } else if (s.includes(',')) {
         s = s.replace(',', '.');
@@ -733,7 +598,6 @@ Número de Seguimiento: ${tracking}`;
       return `Ingresá a Ventas > Venta #${orderId} > Ayuda > "Tengo un problema con el producto devuelto o el envío"`;
     }
 
-    // Motor Forense de Auditoría Calibrado
     function auditRecords(records, refDate = new Date()) {
       const discrepancies = [];
 
@@ -1085,7 +949,7 @@ Número de Seguimiento: ${tracking}`;
 
     // Caso demo
     document.getElementById('btnSample').addEventListener('click', () => {
-      currentFileName = "muestra_hudson_cocina";
+      currentFileName = "muestra_ventas_meli";
       const sample = [
         { "# de venta": "2000014877862237", "Título de la publicación": "Secaplatos Escurridor 2 Pisos Acero Inox", "Ingresos por productos (ARS)": 63040.3, "Estado": "No entregado", "Descripción del estado": "Detectamos un inconveniente en el envío y no podremos entregar tu producto." },
         { "# de venta": "2000015081947637", "Título de la publicación": "Vaso Térmico Friends Acero Inoxidable 350ml", "Ingresos por productos (ARS)": 40693, "Estado": "Cancelada. Tu transportista debe devolverte el paquete", "Descripción del estado": "La persona que compró canceló porque no podia esperar al producto." },
@@ -1094,7 +958,8 @@ Número de Seguimiento: ${tracking}`;
       ];
       renderResults(auditRecords(sample));
     });
-    // Enviar Lead a Supabase de forma segura
+
+    // Enviar Lead a Supabase
     async function handleLeadSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmitLead');
@@ -1107,7 +972,7 @@ Número de Seguimiento: ${tracking}`;
         contacto_telefono: document.getElementById('leadTelefono').value,
         rubro: document.getElementById('leadRubro').value || 'General',
         estado_pipeline: 'lead_contactado',
-        notas: 'Lead ingresado a través del formulario web de SaldoAudit.'
+        notas: 'Lead ingresado a través de la landing simplificada de SaldoAudit.'
       };
 
       try {
