@@ -185,6 +185,20 @@
         <button type="button" onclick="openGuideModal()" class="text-emerald-700 font-bold underline hover:text-emerald-800">Ver cómo descargarlo</button>
       </div>
 
+      <!-- Alerta de Archivo Incompatible -->
+      <div id="wrongFileAlert" class="hidden mt-4 p-4 bg-amber-50 border border-amber-200 rounded-2xl text-amber-900 text-xs text-left space-y-2">
+        <div class="flex items-center gap-2 font-bold text-sm text-amber-950">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i>
+          <span>Archivo no reconocido como Reporte de Ventas</span>
+        </div>
+        <p class="leading-relaxed">
+          No encontramos las columnas de ventas oficiales (como <em># de venta</em> o <em>id de venta</em>). Para auditar siniestros necesitás descargar el reporte desde la sección <strong>Ventas</strong> de tu panel de Mercado Libre (no desde Facturación ni Mercado Pago).
+        </p>
+        <button type="button" onclick="openGuideModal()" class="touch-target px-3 py-1.5 bg-amber-200 hover:bg-amber-300 rounded-xl font-bold text-amber-950 transition text-[11px]">
+          Ver guía de descarga en 3 pasos &rarr;
+        </button>
+      </div>
+
       <div id="fileInfo" class="mt-3 text-xs font-mono text-emerald-700 bg-emerald-50 inline-block px-3 py-1.5 rounded-lg border border-emerald-100 hidden"></div>
     </div>
 
@@ -236,8 +250,44 @@
         <div class="flex items-center gap-2">
           <button type="button" id="btnExportExcel" class="touch-target px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-xs">
             <i data-lucide="download" class="w-4 h-4"></i>
-            <span>Descargar Planilla de Reclamos (.xlsx)</span>
+            <span id="btnExportText">Descargar Planilla de Reclamos (.xlsx)</span>
           </button>
+        </div>
+      </div>
+
+      <!-- PAYWALL / BANNER DE DESBLOQUEO ($39.000 MERCADO PAGO) -->
+      <div id="unlockBanner" class="p-6 bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-950 rounded-3xl border-2 border-emerald-500/50 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-5 text-left">
+        <div class="space-y-1.5">
+          <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold uppercase tracking-wider">
+            <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Vista Previa Protegida</span>
+          </div>
+          <h4 class="text-lg sm:text-xl font-heading font-extrabold text-white">
+            Desbloqueá el Informe Completo y los Argumentos Legales
+          </h4>
+          <p class="text-xs text-slate-300 max-w-xl leading-relaxed">
+            Liberá la planilla con los números de orden reales, los enlaces directos a soporte y el argumento legal redactado por cada siniestro para exigir tu dinero a Mercado Libre.
+          </p>
+          <div class="text-[11px] text-emerald-400 font-medium pt-1">
+            Fee único de diagnóstico: <strong>$39.000 ARS</strong> &bull; Cobro seguro con Mercado Pago (Tarjeta / Dinero en cuenta / Débito)
+          </div>
+        </div>
+        <div class="shrink-0 w-full md:w-auto">
+          <a id="btnPayUnlock" href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target w-full md:w-auto px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-xs sm:text-sm rounded-xl transition shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2">
+            <i data-lucide="lock-open" class="w-4 h-4"></i>
+            <span>Desbloquear por $39.000</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- BANNER DE PAGO APROBADO -->
+      <div id="unlockedSuccessBanner" class="hidden p-5 bg-emerald-950/70 border border-emerald-500/50 rounded-3xl text-white flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="w-9 h-9 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-base shrink-0">✓</span>
+          <div>
+            <strong class="text-sm font-heading font-bold text-white block">¡Informe Pericial 100% Desbloqueado!</strong>
+            <span class="text-xs text-emerald-300">Todas las órdenes, enlaces y argumentos legales están habilitados para descargar.</span>
+          </div>
         </div>
       </div>
 
@@ -778,11 +828,36 @@ Número de Seguimiento: ${tracking}`;
       };
     }
 
+    // Chequeo de Estado Desbloqueado (Mercado Pago Checkout)
+    function checkIsUnlocked() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isApproved = urlParams.get('status') === 'approved' || urlParams.get('pago') === 'aprobado' || urlParams.get('collection_status') === 'approved';
+      if (isApproved) {
+        localStorage.setItem('saldoaudit_unlocked', 'true');
+      }
+      return localStorage.getItem('saldoaudit_unlocked') === 'true';
+    }
+
     function renderResults(auditSummary) {
       currentAuditSummary = auditSummary;
       currentAuditRecords = auditSummary.records;
 
       document.getElementById('resultsSection').classList.remove('hidden');
+
+      const isUnlocked = checkIsUnlocked();
+      const unlockBanner = document.getElementById('unlockBanner');
+      const unlockedSuccessBanner = document.getElementById('unlockedSuccessBanner');
+      const btnExportText = document.getElementById('btnExportText');
+
+      if (isUnlocked) {
+        if (unlockBanner) unlockBanner.classList.add('hidden');
+        if (unlockedSuccessBanner) unlockedSuccessBanner.classList.remove('hidden');
+        if (btnExportText) btnExportText.textContent = "Descargar Planilla de Reclamos (.xlsx)";
+      } else {
+        if (unlockBanner) unlockBanner.classList.remove('hidden');
+        if (unlockedSuccessBanner) unlockedSuccessBanner.classList.add('hidden');
+        if (btnExportText) btnExportText.textContent = "Desbloquear Planilla Completa ($39.000)";
+      }
 
       const formatARS = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
       document.getElementById('kpiAmount').textContent = formatARS.format(auditSummary.totalAmountRecoverable);
@@ -803,19 +878,28 @@ Número de Seguimiento: ${tracking}`;
       }
 
       auditSummary.records.forEach((item, index) => {
+        // Enmascarar # de orden si no está desbloqueado
+        const displayOrderId = isUnlocked ? item.orderId : `${item.orderId.slice(0, 8)}****** 🔒`;
+
         // Desktop
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50/70 transition";
         tr.innerHTML = `
-          <td class="px-6 py-3 font-mono font-bold text-slate-900">${item.orderId}</td>
+          <td class="px-6 py-3 font-mono font-bold text-slate-900">${displayOrderId}</td>
           <td class="px-6 py-3 max-w-xs truncate" title="${item.itemTitle}">${item.itemTitle}</td>
           <td class="px-6 py-3 font-extrabold text-slate-900 whitespace-nowrap">${formatARS.format(item.amount)}</td>
           <td class="px-6 py-3 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">${item.discrepancyType}</span></td>
           <td class="px-6 py-3 whitespace-nowrap"><span class="px-2 py-0.5 rounded-md text-[11px] font-bold ${item.isThreeDayWindow ? 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse' : 'bg-slate-100 text-slate-700'}">${item.isThreeDayWindow ? 'Urgente 72h' : 'Prioritaria'}</span></td>
           <td class="px-6 py-3 text-right whitespace-nowrap">
-            <button type="button" onclick="openDossierModal(${index})" class="touch-target px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">
-              Dossier
-            </button>
+            ${isUnlocked ? `
+              <button type="button" onclick="openDossierModal(${index})" class="touch-target px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">
+                Dossier
+              </button>
+            ` : `
+              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1">
+                <span>🔒 Desbloquear</span>
+              </a>
+            `}
           </td>
         `;
         tbody.appendChild(tr);
@@ -825,7 +909,7 @@ Número de Seguimiento: ${tracking}`;
         card.className = "bg-white p-4 rounded-2xl border border-slate-200 space-y-2.5 shadow-2xs";
         card.innerHTML = `
           <div class="flex items-start justify-between">
-            <span class="font-mono font-bold text-slate-900 text-xs">#${item.orderId}</span>
+            <span class="font-mono font-bold text-slate-900 text-xs">#${displayOrderId}</span>
             <span class="font-extrabold text-slate-900 text-sm">${formatARS.format(item.amount)}</span>
           </div>
           <div class="text-xs font-semibold text-slate-800 line-clamp-2">${item.itemTitle}</div>
@@ -834,9 +918,15 @@ Número de Seguimiento: ${tracking}`;
             ${item.isThreeDayWindow ? '<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">🚨 Urgente 72h</span>' : ''}
           </div>
           <div class="pt-2 flex justify-end">
-            <button type="button" onclick="openDossierModal(${index})" class="touch-target px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold">
-              Ver Argumento y Reclamar
-            </button>
+            ${isUnlocked ? `
+              <button type="button" onclick="openDossierModal(${index})" class="touch-target px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold">
+                Ver Argumento y Reclamar
+              </button>
+            ` : `
+              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1">
+                <span>🔒 Desbloquear Informe ($39.000)</span>
+              </a>
+            `}
           </div>
         `;
         mobileCards.appendChild(card);
@@ -871,6 +961,13 @@ Número de Seguimiento: ${tracking}`;
     // Export Excel
     document.getElementById('btnExportExcel').addEventListener('click', () => {
       if (!currentAuditRecords || currentAuditRecords.length === 0) return;
+
+      const isUnlocked = checkIsUnlocked();
+      if (!isUnlocked) {
+        window.location.href = "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8";
+        return;
+      }
+
       const exportRows = currentAuditRecords.map(r => ({
         "# Orden": r.orderId,
         "Producto": r.itemTitle,
@@ -901,7 +998,7 @@ Número de Seguimiento: ${tracking}`;
         const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
         const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: '' });
 
-        let headerRowIndex = 0;
+        let headerRowIndex = -1;
         for (let i = 0; i < Math.min(25, rows.length); i++) {
           const row = rows[i];
           if (Array.isArray(row)) {
@@ -911,6 +1008,17 @@ Número de Seguimiento: ${tracking}`;
               break;
             }
           }
+        }
+
+        // Si no se encontró la fila de encabezado de ventas
+        if (headerRowIndex === -1) {
+          document.getElementById('wrongFileAlert').classList.remove('hidden');
+          document.getElementById('resultsSection').classList.add('hidden');
+          document.getElementById('fileInfo').classList.add('hidden');
+          lucide.createIcons();
+          return;
+        } else {
+          document.getElementById('wrongFileAlert').classList.add('hidden');
         }
 
         const seenHeaders = {};
