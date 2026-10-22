@@ -239,16 +239,20 @@
     <div id="resultsSection" class="hidden space-y-6 pt-4">
       
       <!-- Toolbar Ejecutiva -->
-      <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-xl flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-slate-800">
+      <div class="bg-slate-900 text-white p-5 sm:p-6 rounded-3xl shadow-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border border-slate-800">
         <div>
-          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block mb-1">Diagnóstico Finalizado</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block mb-0.5">Diagnóstico Pericial Finalizado</span>
           <h3 class="text-xl sm:text-2xl font-heading font-black text-white">
             Total Reclamable: <span id="kpiAmount" class="text-emerald-400">$0</span>
           </h3>
           <p class="text-xs text-slate-400 mt-0.5" id="kpiTotalAudited">de 0 operaciones analizadas</p>
         </div>
-        <div class="flex items-center gap-2">
-          <button type="button" id="btnExportExcel" class="touch-target px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-xs">
+        <div id="toolbarActionContainer" class="flex items-center gap-2">
+          <div id="toolbarLockedBadge" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 text-emerald-300 text-xs font-bold border border-emerald-500/20">
+            <i data-lucide="lock" class="w-4 h-4 text-emerald-400"></i>
+            <span>Vista Previa Protegida</span>
+          </div>
+          <button type="button" id="btnExportExcel" class="hidden touch-target px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-xs">
             <i data-lucide="download" class="w-4 h-4"></i>
             <span id="btnExportText">Descargar Planilla de Reclamos (.xlsx)</span>
           </button>
@@ -272,11 +276,11 @@
         </div>
 
         <!-- Grilla de la ecuación financiera -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
           <!-- Item 1: Total Detectado -->
           <div class="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-1">
             <span class="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider block">1. Total Detectado a tu favor:</span>
-            <div id="roiTotalAmount" class="text-2xl font-heading font-black text-white font-mono">+$599.518</div>
+            <div id="roiTotalAmount" class="text-2xl font-heading font-black text-white font-mono">+$640.653</div>
             <span class="text-[11px] text-slate-400 block">en siniestros con derecho a cobro</span>
           </div>
 
@@ -290,23 +294,23 @@
           <!-- Item 3: Comisión a Éxito -->
           <div class="p-4 bg-emerald-950/50 border border-emerald-500/40 rounded-2xl space-y-1">
             <span class="text-[11px] font-semibold text-emerald-300 uppercase tracking-wider block">3. Comisión a Éxito (20%):</span>
-            <div id="roiSuccessFee" class="text-2xl font-heading font-black text-emerald-400 font-mono">$119.904 <span class="text-xs font-normal">ARS</span></div>
+            <div id="roiSuccessFee" class="text-2xl font-heading font-black text-emerald-400 font-mono">$128.130 <span class="text-xs font-normal">ARS</span></div>
             <span class="text-[11px] text-emerald-200/80 block">Solo se abona si MeLi te acredita el dinero</span>
           </div>
         </div>
 
         <!-- Callout de Ganancia Limpia + Botón de Pago -->
-        <div class="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-5">
-          <div class="space-y-1.5 text-center md:text-left">
+        <div class="p-5 sm:p-6 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-5">
+          <div class="space-y-1.5 text-center sm:text-left">
             <div class="text-xs text-emerald-300 font-semibold uppercase tracking-wider">Tu Ganancia Neta Estimada en tu bolsillo:</div>
-            <div id="roiNetAmount" class="text-2xl sm:text-3xl font-heading font-black text-white font-mono">+$440.614 ARS limpios</div>
+            <div id="roiNetAmount" class="text-2xl sm:text-3xl font-heading font-black text-white font-mono">+$473.523 ARS limpios</div>
             <p id="roiNetDetail" class="text-[11px] text-slate-300 max-w-xl leading-relaxed">
-              Recuperás $599.518 &minus; $39.000 (auditoría) &minus; $119.904 (20% éxito si cobrás). Si MeLi rechaza o no acredita algún caso, la comisión de ese caso es $0.
+              Recuperás $640.653 &minus; $39.000 (auditoría) &minus; $128.130 (20% éxito si cobrás). Si MeLi rechaza o no acredita algún caso, la comisión de ese caso es $0.
             </p>
           </div>
 
-          <div class="shrink-0 w-full md:w-auto">
-            <a id="btnPayUnlock" href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target w-full md:w-auto px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-sm sm:text-base rounded-xl transition shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2">
+          <div class="shrink-0 w-full xl:w-auto flex justify-center">
+            <a id="btnPayUnlock" href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target w-full sm:w-auto px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-sm sm:text-base rounded-xl transition shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 whitespace-nowrap">
               <i data-lucide="lock-open" class="w-5 h-5"></i>
               <span>Desbloquear Informe ($39.000)</span>
             </a>
@@ -614,13 +618,35 @@
     function closeModal(id) { document.getElementById(id).close(); }
 
     function triggerSampleAudit() {
-      currentFileName = "muestra_ventas_meli";
+      currentFileName = "auditoria_forense_muestra_ventas_meli";
       const sample = [
         { "# de venta": "2000014877862237", "Título de la publicación": "Secaplatos Escurridor 2 Pisos Acero Inox", "Ingresos por productos (ARS)": 63040.3, "Estado": "No entregado", "Descripción del estado": "Detectamos un inconveniente en el envío y no podremos entregar tu producto." },
-        { "# de venta": "2000015081947637", "Título de la publicación": "Vaso Térmico Friends Acero Inoxidable 350ml", "Ingresos por productos (ARS)": 40693, "Estado": "Cancelada. Tu transportista debe devolverte el paquete", "Descripción del estado": "La persona que compró canceló porque no podia esperar al producto." },
-        { "# de venta": "2000014850779529", "Título de la publicación": "Pava Total Black 1.5lts Pico Matero", "Ingresos por productos (ARS)": 35342, "Estado": "Devolución revisada. Solicitá el retiro del producto", "Descripción del estado": "Validamos que el producto tiene marcas de uso y le reembolsamos el dinero." },
-        { "# de venta": "2000015313954665", "Título de la publicación": "Cafetera Hudson 6 Tazas Manual Italiana", "Ingresos por productos (ARS)": 33071.19, "Estado": "Devolución para revisar hasta el jueves", "Descripción del estado": "Si no nos avisás dentro del plazo cómo llegó el producto, asumiremos que lo recibiste como esperabas." }
+        { "# de venta": "2000015313954665", "Título de la publicación": "Cafetera Hudson 6 Tazas Manual Italiana", "Ingresos por productos (ARS)": 33071.19, "Estado": "Devolución para revisar hasta el jueves", "Descripción del estado": "Si no nos avisás dentro del plazo cómo llegó el producto, asumiremos que lo recibiste como esperabas." },
+        { "# de venta": "2000014850779529", "Título de la publicación": "Pava Total Black 1.5lts Pico Matero", "Ingresos por productos (ARS)": 35342.0, "Estado": "Devolución revisada. Solicitá el retiro del producto", "Descripción del estado": "Validamos que el producto tiene marcas de uso y le reembolsamos el dinero." },
+        { "# de venta": "2000015081947637", "Título de la publicación": "Batería de Cocina Cerámica Antiadherente 5 Piezas", "Ingresos por productos (ARS)": 84500.0, "Estado": "Cancelada. Tu transportista debe devolverte el paquete", "Descripción del estado": "La persona que compró canceló porque no podía esperar al producto." },
+        { "# de venta": "2000015099812441", "Título de la publicación": "Set Ollas Granito Inducción Masterchef 7 Pzas", "Ingresos por productos (ARS)": 96200.0, "Estado": "No entregado", "Descripción del estado": "El paquete sufrió rotura durante el traslado postal y no pudo entregarse." },
+        { "# de venta": "2000015112048992", "Título de la publicación": "Freidora de Aire Digital Sin Aceite 4.2L", "Ingresos por productos (ARS)": 58900.0, "Estado": "Devolución para revisar hasta el lunes", "Descripción del estado": "El paquete llegó a tu depósito. Verificá el estado del producto antes del cierre." },
+        { "# de venta": "2000015134789120", "Título de la publicación": "Cacerola 24cm Triple Fondo Hudson", "Ingresos por productos (ARS)": 41800.0, "Estado": "En camino", "Estado de la devolución": "en camino", "Descripción del estado": "El envío de la devolución presenta demora prolongada superior a 25 días." },
+        { "# de venta": "2000015148902341", "Título de la publicación": "Wok Antiadherente 28cm Mango Silicona", "Ingresos por productos (ARS)": 38400.0, "Estado": "Cancelada. Tu transportista debe devolverte el paquete", "Descripción del estado": "Envío cancelado en trayecto sin constancia de restitución al remitente." },
+        { "# de venta": "2000015177890123", "Título de la publicación": "Pava Eléctrica Control de Temperatura Acero", "Ingresos por productos (ARS)": 47500.0, "Estado": "Devolución revisada. Solicitá el retiro del producto", "Descripción del estado": "Comprador reportó falla técnica y se emitió reintegro automático." },
+        { "# de venta": "2000015199045112", "Título de la publicación": "Sartén Grill Cuadrada Estriada 26cm", "Ingresos por productos (ARS)": 32900.0, "Estado": "No entregado", "Descripción del estado": "Siniestro declarado en centro logístico de distribución." },
+        { "# de venta": "2000015220193488", "Título de la publicación": "Jarra Térmica Acero Inox Doble Pared 1.5L", "Ingresos por productos (ARS)": 29600.0, "Estado": "Devolución para revisar hasta el viernes", "Descripción del estado": "Plazo de 72 horas para ratificar o rectificar conformidad de lo recibido." },
+        { "# de venta": "2000015243390122", "Título de la publicación": "Tortera Desmontable Teflón 26cm Pack x2", "Ingresos por productos (ARS)": 27300.0, "Estado": "Cancelada. Tu transportista debe devolverte el paquete", "Descripción del estado": "Paquete devuelto al centro de acopio sin entrega efectiva al seller." },
+        { "# de venta": "2000015267891001", "Título de la publicación": "Juego Cuchillos Chef Acero Alemán 6 Pzas", "Ingresos por productos (ARS)": 52100.0, "Estado": "En camino", "Estado de la devolución": "en camino", "Descripción del estado": "Demora logística de devolución excedida según SLA oficial." },
+        { "# de venta": "2000015289901144", "Título de la publicación": "Procesadora Manual Picador de Verduras", "Ingresos por productos (ARS)": 20000.0, "Estado": "No entregado", "Descripción del estado": "Envío no entregado por extravío de paquetería postal." }
       ];
+
+      // Añadimos 226 ventas normales entregadas para simular el lote real auditado de 240 operaciones
+      for (let i = 0; i < 226; i++) {
+        sample.push({
+          "# de venta": `20000148${100000 + i}`,
+          "Título de la publicación": "Producto de Bazar y Cocina Hudson",
+          "Ingresos por productos (ARS)": 28500 + (i * 120),
+          "Estado": "Entregado",
+          "Descripción del estado": "Entregado al comprador sin inconvenientes."
+        });
+      }
+
       renderResults(auditRecords(sample));
       document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
     }
@@ -878,16 +904,19 @@ Número de Seguimiento: ${tracking}`;
       const isUnlocked = checkIsUnlocked();
       const unlockBanner = document.getElementById('unlockBanner');
       const unlockedSuccessBanner = document.getElementById('unlockedSuccessBanner');
-      const btnExportText = document.getElementById('btnExportText');
+      const lockedBadge = document.getElementById('toolbarLockedBadge');
+      const btnExportExcel = document.getElementById('btnExportExcel');
 
       if (isUnlocked) {
         if (unlockBanner) unlockBanner.classList.add('hidden');
         if (unlockedSuccessBanner) unlockedSuccessBanner.classList.remove('hidden');
-        if (btnExportText) btnExportText.textContent = "Descargar Planilla de Reclamos (.xlsx)";
+        if (lockedBadge) lockedBadge.classList.add('hidden');
+        if (btnExportExcel) btnExportExcel.classList.remove('hidden');
       } else {
         if (unlockBanner) unlockBanner.classList.remove('hidden');
         if (unlockedSuccessBanner) unlockedSuccessBanner.classList.add('hidden');
-        if (btnExportText) btnExportText.textContent = "Desbloquear Planilla Completa ($39.000)";
+        if (lockedBadge) lockedBadge.classList.remove('hidden');
+        if (btnExportExcel) btnExportExcel.classList.add('hidden');
       }
 
       const formatARS = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
