@@ -320,51 +320,63 @@
           </div>
         </div>
 
-        <!-- SUB-VISTA 1A: TABLERO KANBAN DE 4 COLUMNAS -->
-        <div id="crmKanbanView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+        <!-- SUB-VISTA 1A: TABLERO KANBAN DE 5 COLUMNAS -->
+        <div id="crmKanbanView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 items-start">
           
-          <!-- Columna 1: Prospectos / Outbound -->
+          <!-- Columna 1: Por Contactar (Backlog) -->
           <div class="bg-slate-200/70 rounded-2xl p-3 border border-slate-300/80 space-y-3">
             <div class="flex items-center justify-between px-1">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-slate-500"></span>
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-800">1. Leads & Outbound</h3>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-800">1. Por Contactar</h3>
               </div>
-              <span id="count-lead_contactado" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-slate-700 border border-slate-300">0</span>
+              <span id="count-lead_detectado" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-slate-700 border border-slate-300">0</span>
+            </div>
+            <div id="col-lead_detectado" class="space-y-2.5 min-h-[120px]"></div>
+          </div>
+
+          <!-- Columna 2: Contactado (En Seguimiento) -->
+          <div class="bg-sky-50/70 rounded-2xl p-3 border border-sky-200/80 space-y-3">
+            <div class="flex items-center justify-between px-1">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-sky-950">2. Contactado</h3>
+              </div>
+              <span id="count-lead_contactado" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-sky-700 border border-sky-200">0</span>
             </div>
             <div id="col-lead_contactado" class="space-y-2.5 min-h-[120px]"></div>
           </div>
 
-          <!-- Columna 2: Planilla en Auditoría -->
-          <div class="bg-emerald-50/70 rounded-2xl p-3 border border-emerald-200/80 space-y-3">
-            <div class="flex items-center justify-between px-1">
-              <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-emerald-950">2. En Auditoría (Excel)</h3>
-              </div>
-              <span id="count-en_auditoria" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-emerald-700 border border-emerald-200">0</span>
-            </div>
-            <div id="col-en_auditoria" class="space-y-2.5 min-h-[120px]"></div>
-          </div>
-
-          <!-- Columna 3: Informe Entregado -->
+          <!-- Columna 3: Planilla en Auditoría -->
           <div class="bg-amber-50/70 rounded-2xl p-3 border border-amber-200/80 space-y-3">
             <div class="flex items-center justify-between px-1">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-amber-950">3. Informe Entregado</h3>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-amber-950">3. En Auditoría (Excel)</h3>
               </div>
-              <span id="count-informe_entregado" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-amber-800 border border-amber-200">0</span>
+              <span id="count-en_auditoria" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-amber-800 border border-amber-200">0</span>
+            </div>
+            <div id="col-en_auditoria" class="space-y-2.5 min-h-[120px]"></div>
+          </div>
+
+          <!-- Columna 4: Informe Entregado -->
+          <div class="bg-indigo-50/70 rounded-2xl p-3 border border-indigo-200/80 space-y-3">
+            <div class="flex items-center justify-between px-1">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-indigo-950">4. Informe Entregado</h3>
+              </div>
+              <span id="count-informe_entregado" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-indigo-800 border border-indigo-200">0</span>
             </div>
             <div id="col-informe_entregado" class="space-y-2.5 min-h-[120px]"></div>
           </div>
 
-          <!-- Columna 4: Cliente Activo / Cobro -->
+          <!-- Columna 5: Cliente Activo / Cobro -->
           <div class="bg-emerald-50/70 rounded-2xl p-3 border border-emerald-200/80 space-y-3">
             <div class="flex items-center justify-between px-1">
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-emerald-950">4. Cliente / En Reclamo</h3>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-emerald-950">5. Cliente Activo</h3>
               </div>
               <span id="count-cliente_activo" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-emerald-800 border border-emerald-200">0</span>
             </div>
@@ -1461,10 +1473,11 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
           <div>
             <label class="block text-[11px] font-bold text-slate-700 mb-1">Columna Kanban (Etapa)</label>
             <select id="editEstadoPipeline" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-semibold">
-              <option value="lead_contactado">1. Leads & Outbound</option>
-              <option value="en_auditoria">2. En Auditoría (Excel)</option>
-              <option value="informe_entregado">3. Informe Entregado</option>
-              <option value="cliente_activo">4. Cliente / En Reclamo</option>
+              <option value="lead_detectado">1. Por Contactar (Lead frío)</option>
+              <option value="lead_contactado">2. Contactado (En seguimiento)</option>
+              <option value="en_auditoria">3. En Auditoría (Excel)</option>
+              <option value="informe_entregado">4. Informe Entregado</option>
+              <option value="cliente_activo">5. Cliente Activo / En Reclamo</option>
             </select>
           </div>
           <div>
@@ -1595,10 +1608,11 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
         <div>
           <label class="font-semibold text-slate-700 block mb-1">Etapa Inicial</label>
           <select id="inputEtapa" class="touch-target w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold">
-            <option value="lead_contactado">1. Leads & Outbound</option>
-            <option value="en_auditoria">2. En Auditoría (Excel)</option>
-            <option value="informe_entregado">3. Informe Entregado</option>
-            <option value="cliente_activo">4. Cliente / En Reclamo</option>
+            <option value="lead_detectado">1. Por Contactar (Lead frío)</option>
+            <option value="lead_contactado">2. Contactado (En seguimiento)</option>
+            <option value="en_auditoria">3. En Auditoría (Excel)</option>
+            <option value="informe_entregado">4. Informe Entregado</option>
+            <option value="cliente_activo">5. Cliente Activo / En Reclamo</option>
           </select>
         </div>
       </div>
@@ -1827,12 +1841,14 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
 
     function getStageLabel(stage) {
       const map = {
-        'lead_contactado': { label: 'Lead / Outbound', cls: 'bg-slate-100 text-slate-700 border-slate-300' },
-        'en_auditoria': { label: 'En Auditoría', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-        'informe_entregado': { label: 'Informe Entregado', cls: 'bg-amber-50 text-amber-800 border-amber-200' },
+        'lead_detectado': { label: 'Por Contactar', cls: 'bg-slate-100 text-slate-700 border-slate-300' },
+        'lead_contactado': { label: 'Contactado', cls: 'bg-sky-50 text-sky-700 border-sky-200' },
+        'en_auditoria': { label: 'En Auditoría', cls: 'bg-amber-50 text-amber-800 border-amber-200' },
+        'informe_entregado': { label: 'Informe Entregado', cls: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+        'auditado_enviado': { label: 'Informe Entregado', cls: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
         'cliente_activo': { label: 'Cliente Activo', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' }
       };
-      return map[stage] || map['lead_contactado'];
+      return map[stage] || map['lead_detectado'];
     }
 
     function renderCRM() {
@@ -1849,15 +1865,19 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
         return matchesPrio && matchesQuery;
       });
 
-      // 1. Renderizar Kanban
-      const stages = ['lead_contactado', 'en_auditoria', 'informe_entregado', 'cliente_activo'];
+      // 1. Renderizar Kanban (5 Columnas)
+      const stages = ['lead_detectado', 'lead_contactado', 'en_auditoria', 'informe_entregado', 'cliente_activo'];
       stages.forEach(st => {
         const col = document.getElementById(`col-${st}`);
         const countEl = document.getElementById(`count-${st}`);
         if (!col) return;
         col.innerHTML = '';
 
-        const items = filtered.filter(s => (s.estado_pipeline || 'lead_contactado') === st);
+        const items = filtered.filter(s => {
+          let stNorm = s.estado_pipeline || 'lead_detectado';
+          if (stNorm === 'auditado_enviado') stNorm = 'informe_entregado';
+          return stNorm === st;
+        });
         if (countEl) countEl.textContent = items.length;
 
         if (items.length === 0) {
@@ -1976,7 +1996,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       document.getElementById('detailEmpresaTitle').textContent = s.empresa;
       document.getElementById('detailRubroSub').textContent = s.rubro || '';
 
-      document.getElementById('editEstadoPipeline').value = s.estado_pipeline || 'lead_contactado';
+      document.getElementById('editEstadoPipeline').value = s.estado_pipeline || 'lead_detectado';
       document.getElementById('editPrioridad').value = s.prioridad || 'B';
       document.getElementById('editTotalRecuperable').value = s.total_recuperable || 0;
       document.getElementById('editProximaAccion').value = s.proxima_accion || '';
@@ -2292,7 +2312,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       const newS = {
         id: String(Date.now()),
         empresa: document.getElementById('inputEmpresa').value,
-        estado_pipeline: document.getElementById('inputEtapa').value || 'lead_contactado',
+        estado_pipeline: document.getElementById('inputEtapa').value || 'lead_detectado',
         rubro: document.getElementById('inputRubro').value || 'General',
         tienda_oficial: document.getElementById('inputTienda').value || '-',
         contacto_nombre: document.getElementById('inputContacto').value || 'Sin Asignar',
