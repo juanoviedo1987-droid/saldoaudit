@@ -314,7 +314,7 @@
             </button>
 
             <!-- Sincronizar Supabase -->
-            <button type="button" onclick="loadSellersFromSupabase(true)" class="p-2 rounded-xl bg-white hover:bg-slate-50 text-slate-600 border border-slate-300 transition shadow-2xs" title="Refrescar desde Supabase Cloud">
+            <button type="button" onclick="loadSellersFromSupabase(true)" id="btnSyncCloud" class="p-2 rounded-xl bg-white hover:bg-slate-50 text-slate-600 border border-slate-300 transition shadow-2xs flex items-center justify-center" title="Refrescar desde Supabase Cloud">
               <i data-lucide="refresh-cw" id="syncIcon" class="w-4 h-4"></i>
             </button>
           </div>
@@ -2363,8 +2363,13 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
 
     // Sincronización con Supabase / Dataset SaldoAudit
     async function loadSellersFromSupabase(animate) {
+      const btn = document.getElementById('btnSyncCloud');
       const icon = document.getElementById('syncIcon');
-      if (animate && icon) icon.classList.add('animate-spin');
+      if (animate) {
+        if (icon) icon.classList.add('animate-spin');
+        if (btn) btn.classList.add('pointer-events-none', 'opacity-70');
+      }
+
       try {
         const { data, error } = await supabaseClient
           .from('saldoaudit_sellers')
@@ -2373,11 +2378,22 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
 
         if (!error && data && data.length > 0) {
           sellersData = data;
+          console.log(`[SaldoAudit] Sincronizados ${data.length} sellers desde Supabase.`);
+        } else if (error) {
+          console.warn('[SaldoAudit] Consulta Supabase retornó error, manteniendo dataset local:', error.message);
+        } else {
+          console.info('[SaldoAudit] Dataset local en uso (29 cuentas).');
         }
       } catch (err) {
-        console.warn('Usando base local:', err);
+        console.warn('[SaldoAudit] Usando dataset local:', err);
       } finally {
-        if (animate && icon) setTimeout(() => icon.classList.remove('animate-spin'), 500);
+        if (animate) {
+          setTimeout(() => {
+            const currentIcon = document.getElementById('syncIcon');
+            if (currentIcon) currentIcon.classList.remove('animate-spin');
+            if (btn) btn.classList.remove('pointer-events-none', 'opacity-70');
+          }, 400);
+        }
         updateKpis();
         renderCRM();
       }
