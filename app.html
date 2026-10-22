@@ -158,7 +158,7 @@
         </div>
       </div>
 
-      <!-- Las 6 Pestañas Maestras de Navegación -->
+      <!-- Las 5 Pestañas Maestras de Navegación -->
       <nav class="hidden lg:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold">
         <button type="button" onclick="switchView('pipeline')" id="tabBtn-pipeline" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-emerald-800 shadow-xs border border-slate-200/80 transition">
           <i data-lucide="kanban" class="w-3.5 h-3.5 text-emerald-600"></i>
@@ -168,9 +168,9 @@
           <i data-lucide="book-open" class="w-3.5 h-3.5 text-slate-500"></i>
           <span>2. Procedimientos SOPs</span>
         </button>
-        <button type="button" onclick="switchView('business')" id="tabBtn-business" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
-          <i data-lucide="trending-up" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span>3. Business Plan & Pricing</span>
+        <button type="button" onclick="switchView('comercial')" id="tabBtn-comercial" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
+          <i data-lucide="file-check" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>3. Modelo Comercial & NDA</span>
         </button>
         <button type="button" onclick="switchView('brand')" id="tabBtn-brand" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
           <i data-lucide="palette" class="w-3.5 h-3.5 text-slate-500"></i>
@@ -179,10 +179,6 @@
         <button type="button" onclick="switchView('firmas')" id="tabBtn-firmas" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
           <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-500"></i>
           <span>5. Firmas</span>
-        </button>
-        <button type="button" onclick="switchView('acuerdo')" id="tabBtn-acuerdo" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-white/60 transition">
-          <i data-lucide="file-check" class="w-3.5 h-3.5 text-slate-500"></i>
-          <span>6. Tarifas & NDA</span>
         </button>
       </nav>
 
@@ -212,9 +208,9 @@
         <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
         <span>2. SOPs</span>
       </button>
-      <button type="button" onclick="switchView('business')" id="mobTabBtn-business" class="mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-slate-600 shrink-0">
-        <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-        <span>3. Business Plan</span>
+      <button type="button" onclick="switchView('comercial')" id="mobTabBtn-comercial" class="mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-slate-600 shrink-0">
+        <i data-lucide="file-check" class="w-3.5 h-3.5"></i>
+        <span>3. Modelo & NDA</span>
       </button>
       <button type="button" onclick="switchView('brand')" id="mobTabBtn-brand" class="mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-slate-600 shrink-0">
         <i data-lucide="palette" class="w-3.5 h-3.5"></i>
@@ -223,10 +219,6 @@
       <button type="button" onclick="switchView('firmas')" id="mobTabBtn-firmas" class="mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-slate-600 shrink-0">
         <i data-lucide="mail" class="w-3.5 h-3.5"></i>
         <span>5. Firmas</span>
-      </button>
-      <button type="button" onclick="switchView('acuerdo')" id="mobTabBtn-acuerdo" class="mob-tab-btn flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-slate-600 shrink-0">
-        <i data-lucide="file-check" class="w-3.5 h-3.5"></i>
-        <span>6. Tarifas & NDA</span>
       </button>
     </div>
 
@@ -974,41 +966,42 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
       </section>
 
       <!-- ========================================================================= -->
-      <!-- MÓDULO 3: BUSINESS PLAN, UNIT ECONOMICS & PLAYBOOK OUTBOUND               -->
+      <!-- MÓDULO 3: MODELO COMERCIAL, TARIFARIO OFICIAL & ACUERDO LEGAL (NDA)         -->
       <!-- ========================================================================= -->
-      <section id="view-business" class="hidden space-y-6">
+      <section id="view-comercial" class="hidden space-y-6">
         
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
-              Modelo de Negocio Híbrido & Estrategia Comercial B2B
+              Marco Comercial, Tarifario & Confidencialidad (Ley 25.326)
             </div>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Business Plan: Modelo Híbrido (Asesoramiento + Éxito)</h2>
-            <p class="text-xs text-slate-500 mt-1">Fee fijo por consultoría forense y protocolo de depósito + Success fee sobre recupero líquido efectivo.</p>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Modelo Comercial, Tarifario Oficial & Acuerdo Legal</h2>
+            <p class="text-xs text-slate-500 mt-1">Fee de activación accesible + Success Fee automático sobre Certeza MeLi y Contrato NDA listo.</p>
           </div>
-          <span class="px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold">
-            Flujo de Caja Inmediato + Éxito
-          </span>
+          <button type="button" onclick="copyAcuerdoText()" id="btnCopyAcuerdo" class="touch-target px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs transition self-start sm:self-center">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>Copiar Contrato NDA</span>
+          </button>
         </div>
 
         <!-- Tesis Híbrida & Las 2 Fuentes de Ingreso -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <span class="font-bold text-emerald-700 uppercase tracking-wider block">1. Fee de Setup / Asesoramiento Accesible</span>
+            <span class="font-bold text-emerald-700 uppercase tracking-wider block">1. Setup Accesible ($39.000 ARS)</span>
             <p class="text-slate-600 leading-relaxed">
-              Mantenemos un <strong>fee de entrada bajo ($40.000 a $60.000 ARS)</strong>. No funciona como barrera sino como compromiso operativo: cubre el procesamiento forense inicial, la entrega del protocolo para el jefe de depósito (72hs) y la matriz de fleteros Flex. Cierre rápido sin trabas burocráticas en finanzas.
+              Precio de activación accesible que destraba la decisión en 5 minutos. Cubre el procesamiento forense inicial, el protocolo de 72hs para el depósito y la matriz para fleteros Flex. Cero trabas burocráticas en finanzas.
             </p>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <span class="font-bold text-amber-700 uppercase tracking-wider block">2. Success Fee (El Motor Principal: 20% a 25%)</span>
+            <span class="font-bold text-amber-700 uppercase tracking-wider block">2. 20% Automático sobre Certeza MeLi</span>
             <p class="text-slate-600 leading-relaxed">
-              El verdadero negocio de volumen y escala: cobramos un <strong>20% a 25% exclusivamente sobre el dinero líquido acreditado</strong> en Mercado Pago (siniestros Andreani/Colecta, fletes bonificados y compensaciones Full). El seller lo abona con total satisfacción porque es dinero 100% rescatado que no esperaba cobrar.
+              Cobrado <strong>en el momento de la entrega del reporte</strong> sobre las órdenes con <strong>100% de certeza de cobro seguro</strong> (siniestros oficiales reconocidos por correo de MeLi). El cliente recupera su inversión en 48hs y SaldoAudit tiene cero riesgo de morosidad.
             </p>
           </div>
           <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-md space-y-2">
             <span class="font-bold text-emerald-400 uppercase tracking-wider block">3. Caso Testigo Validado (Hudson Cocina)</span>
             <p class="text-slate-300 leading-relaxed">
-              Sobre <strong>8.016 ventas</strong>, detectamos <strong>$599.518,74 ARS</strong> en riesgo. Con un setup accesible y comisión sobre recupero real de MeLi, Hudson recupera liquidez inmediata y ordena su depósito con un ROI masivo y cero riesgo.
+              Sobre <strong>8.016 ventas</strong>, detectamos <strong>$599.518,74 ARS</strong> en riesgo. Hudson abona $39.000 de setup + $18.175 (20% sobre $90.879 de certeza MeLi) = <strong>$57.175 ARS</strong> en el acto, recuperando $90.879 en mano y salvando $200.000 en mercadería.
             </p>
           </div>
         </div>
@@ -1020,32 +1013,32 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
           </h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div class="p-3.5 bg-emerald-50/60 rounded-xl border border-emerald-200 space-y-1">
-              <span class="font-bold text-emerald-900 block">🟢 Recupero MeLi Líquido</span>
-              <p class="text-slate-600 text-[11px] leading-relaxed">Siniestros oficiales Andreani/Correo. Reclamo con dossier para cobro directo en Mercado Pago.</p>
+              <span class="font-bold text-emerald-900 block">🟢 1. Recupero MeLi Líquido</span>
+              <p class="text-slate-600 text-[11px] leading-relaxed">Siniestros oficiales reconocidos por correo (Andreani/Colecta). Cobro 100% seguro con acreditación directa en Mercado Pago.</p>
             </div>
-            <div class="p-3.5 bg-amber-50/60 rounded-xl border border-amber-200 space-y-1">
-              <span class="font-bold text-amber-900 block">🟡 Alerta Depósito (72hs)</span>
-              <p class="text-slate-600 text-[11px] leading-relaxed">Inspección de bultos devueltos al depósito. Si llegó roto, se suben fotos antes de que prescriba el plazo fatal.</p>
+            <div class="p-3.5 bg-rose-50/60 rounded-xl border border-rose-200 space-y-1">
+              <span class="font-bold text-rose-900 block">🔴 2. Alerta Depósito (72hs)</span>
+              <p class="text-slate-600 text-[11px] leading-relaxed">Inspección de bultos devueltos al depósito. Si llegó roto o usado, se suben fotos antes de que prescriba el plazo fatal.</p>
             </div>
             <div class="p-3.5 bg-blue-50/60 rounded-xl border border-blue-200 space-y-1">
-              <span class="font-bold text-blue-900 block">🔵 Rendición Transporte Flex</span>
+              <span class="font-bold text-blue-900 block">🔵 3. Rendición Transporte Flex</span>
               <p class="text-slate-600 text-[11px] leading-relaxed">Control de canceladas en reparto. Se intima al fletero privado a devolver el paquete o debitarlo de su factura.</p>
             </div>
             <div class="p-3.5 bg-purple-50/60 rounded-xl border border-purple-200 space-y-1">
-              <span class="font-bold text-purple-900 block">🟣 Disputas Full & Fletes</span>
-              <p class="text-slate-600 text-[11px] leading-relaxed">Impugnación de devoluciones usadas aceptadas indebidamente por Full y recupero de costos de envío.</p>
+              <span class="font-bold text-purple-900 block">🟣 4. Disputas Full & Fletes</span>
+              <p class="text-slate-600 text-[11px] leading-relaxed">Impugnación de devoluciones usadas aceptadas indebidamente por Full y recupero de costos de envío debitados.</p>
             </div>
           </div>
         </div>
 
-        <!-- Estructura de Precios Oficial & Modelo Comercial -->
+        <!-- Estructura de Precios Oficial & Mecanismo de Cobro en el Acto -->
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <i data-lucide="tag" class="w-4 h-4 text-emerald-600"></i> Estructura de Precios Oficial — SaldoAudit
+              <i data-lucide="tag" class="w-4 h-4 text-emerald-600"></i> Estructura de Precios Oficial & Cobro Inmediato
             </h3>
             <span class="px-2.5 py-1 bg-emerald-50 text-emerald-800 text-[11px] font-bold rounded-lg border border-emerald-200">
-              Modelo Híbrido: Setup Accesible + Success Fee de Escala
+              Setup Accesible + Éxito sobre Certeza
             </span>
           </div>
 
@@ -1057,7 +1050,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
                   <span class="font-bold text-emerald-800 uppercase tracking-wider text-[11px]">1. Fee de Setup & Auditoría Forense</span>
                   <span class="px-2 py-0.5 bg-emerald-600 text-white font-extrabold text-[10px] rounded-md">Pago Único</span>
                 </div>
-                <div class="text-2xl font-black text-slate-900 mono my-2">$ 49.000 <span class="text-xs font-semibold text-slate-500">ARS</span></div>
+                <div class="text-2xl font-black text-slate-900 mono my-2">$ 39.000 <span class="text-xs font-semibold text-slate-500">ARS</span></div>
                 <p class="text-slate-600 leading-relaxed text-[11px]">
                   Costo de activación y compromiso operativo. Precio accesible que destraba la decisión sin trámites burocráticos.
                 </p>
@@ -1065,37 +1058,63 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
                   <li class="flex items-center gap-1.5">✓ Diagnóstico forense completo de los últimos 60 días de ventas.</li>
                   <li class="flex items-center gap-1.5">✓ Protocolo de recepción para el jefe de depósito (ventana crítica de 72 hs).</li>
                   <li class="flex items-center gap-1.5">✓ Matriz de rendición y débito para fleteros Flex.</li>
-                  <li class="flex items-center gap-1.5">✓ Planilla de Reclamos y Plan de Acción ordenado en 2 pestañas.</li>
+                  <li class="flex items-center gap-1.5">✓ Planilla de Reclamos y Plan de Acción ordenado en 2 pestañas con 9 columnas.</li>
                 </ul>
               </div>
               <div class="pt-3 border-t border-emerald-200/60 text-[11px] font-bold text-emerald-800">
-                Garantiza flujo de caja inicial inmediato para SaldoAudit.
+                Garantiza flujo de caja inicial inmediato en el día cero.
               </div>
             </div>
 
-            <!-- Plan Success Fee -->
+            <!-- Plan Success Fee sobre Certeza -->
             <div class="p-5 rounded-2xl border-2 border-slate-900 bg-slate-900 text-white space-y-3 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-1">
-                  <span class="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">2. Success Fee (El Motor Principal)</span>
-                  <span class="px-2 py-0.5 bg-emerald-500 text-slate-950 font-extrabold text-[10px] rounded-md">A Resultado</span>
+                  <span class="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">2. Success Fee sobre Certeza (Cobro en el Acto)</span>
+                  <span class="px-2 py-0.5 bg-emerald-500 text-slate-950 font-extrabold text-[10px] rounded-md">Al Desbloquear</span>
                 </div>
-                <div class="text-2xl font-black text-white mono my-2">20% <span class="text-xs font-semibold text-slate-400">sobre recupero real</span></div>
+                <div class="text-2xl font-black text-white mono my-2">20% <span class="text-xs font-semibold text-slate-400">sobre recupero con Certeza 100%</span></div>
                 <p class="text-slate-300 leading-relaxed text-[11px]">
-                  Cobrado <strong class="text-white">exclusivamente sobre el dinero líquido acreditado</strong> en Mercado Pago o cuenta bancaria.
+                  Se aplica <strong class="text-white">exclusivamente sobre las órdenes de cobro seguro reconocidas por correo</strong> y se cobra en el momento para entregar el reporte desbloqueado.
                 </p>
                 <ul class="space-y-1.5 mt-3 text-slate-300 text-[11px]">
                   <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Siniestros oficiales reconocidos por correo (Andreani/Colecta).</li>
-                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Reintegros de costos de flete debitados indebidamente.</li>
-                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Indemnizaciones de Full por productos dañados o retenidos.</li>
-                  <li class="flex items-center gap-1.5 text-slate-400">✗ $0 sobre mercadería sana que reingresa al stock del seller.</li>
+                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> <strong>Garantía 100%:</strong> Si MeLi no acredita un caso con certeza, se reintegra el 20% de inmediato.</li>
+                  <li class="flex items-center gap-1.5 text-slate-400">✗ $0 de comisión sobre mercadería que ingresa al stock del depósito.</li>
+                  <li class="flex items-center gap-1.5 text-slate-400">✗ $0 de comisión sobre paquetes devueltos por fleteros Flex.</li>
                 </ul>
               </div>
               <div class="pt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
-                Incentivo 100% alineado con el cliente; escala sin techo con el volumen de ventas.
+                Cero riesgo de morosidad: cobro simultáneo con valor neto positivo para el cliente.
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Acuerdo Legal de Confidencialidad (NDA) y Términos de Servicio -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">Acuerdo de Confidencialidad (NDA) y Locación de Servicios</span>
+            <button type="button" onclick="copyAcuerdoText()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg flex items-center gap-1 text-xs transition">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Contrato
+            </button>
+          </div>
+          <textarea id="acuerdoTexto" readonly class="w-full h-56 p-3.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">ACUERDO DE PRESTACIÓN DE SERVICIOS FORENSES DE AUDITORÍA Y CONFIDENCIALIDAD
+
+Entre SALDOAUDIT (en adelante "El Auditor"), representado por Juan Manuel Oviedo, y [EMPRESA / RAZÓN SOCIAL DEL SELLER] (en adelante "El Cliente"), se conviene lo siguiente:
+
+PRIMERA (OBJETO): El Auditor realizará el relevamiento y análisis de reportes de ventas de la cuenta de Mercado Libre de El Cliente correspondientes a los últimos 60 días, con el fin de detectar reclamos pendientes, siniestros de envíos pasibles de indemnización, y emitir el protocolo de blindaje de recepción física en depósito (72 hs) y control de logística Flex.
+
+SEGUNDA (CONFIDENCIALIDAD Y PROTECCIÓN DE DATOS - LEY 25.326): Toda información provista por El Cliente será tratada bajo estricto secreto profesional. El Auditor procesa los archivos en memoria local en el navegador, sin almacenar datos personales de compradores ni transferir información a terceros bajo apercibimiento de ley.
+
+TERCERA (HONORARIOS Y CONDICIONES DE PAGO): 
+1. Fee de Setup y Auditoría Inicial: $ 39.000 ARS (pago único contra entrega del diagnóstico).
+2. Success Fee sobre Siniestros con Certeza: 20% (veinte por ciento) calculado exclusivamente sobre el monto total de las órdenes catalogadas con 'Certeza de Cobro Seguro' (siniestros oficiales reconocidos por Mercado Envíos / Correo), abonado en el momento de la entrega del reporte con los dossiers de reclamo y números de venta desbloqueados.
+3. Rescate Físico: $0 de comisión sobre mercadería reingresada a stock o paquetes restituidos por empresas de logística Flex.
+
+CUARTA (GARANTÍA INCONDICIONAL DE CERTEZA): Si Mercado Libre desestimare formalmente alguno de los casos catalogados con 'Certeza de Cobro Seguro' presentados conforme a los dossiers provistos, El Auditor reintegrará el importe equivalente al veinte por ciento (20%) percibido por dicho caso o lo acreditará a favor de El Cliente en su próxima auditoría.
+
+En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes de _________ de 2026.</textarea>
         </div>
       </section>
 
@@ -1379,70 +1398,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
         </div>
       </section>
 
-      <!-- ========================================================================= -->
-      <!-- MÓDULO 6: TARIFAS & ACUERDO LEGAL (NDA)                                   -->
-      <!-- ========================================================================= -->
-      <section id="view-acuerdo" class="hidden space-y-6">
-        
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
-              Marco Comercial & Confidencialidad (Ley 25.326)
-            </div>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Tarifario Oficial & Acuerdo Legal (NDA)</h2>
-            <p class="text-xs text-slate-500 mt-1">Esquema 100% alineado a resultados y contrato de confidencialidad listo para enviar.</p>
-          </div>
-          <button type="button" onclick="copyAcuerdoText()" id="btnCopyAcuerdo" class="touch-target px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs transition">
-            <i data-lucide="copy" class="w-4 h-4"></i>
-            <span>Copiar Contrato NDA</span>
-          </button>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-5 rounded-2xl border-2 border-emerald-500/30 bg-emerald-50/20 space-y-3">
-            <span class="text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-emerald-600 text-white inline-block">Modalidad 1: Reporte en Mano</span>
-            <div class="text-2xl font-heading font-extrabold text-slate-900">10% <span class="text-xs font-medium text-slate-500 font-sans">sobre el monto detectado</span></div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Entrega inmediata de la planilla de auditoría con las órdenes filtradas por prioridad, el motivo técnico y los links directos a soporte de MeLi para que el equipo interno del seller abra los reclamos.
-            </p>
-            <ul class="text-xs text-slate-600 space-y-1.5 pt-1">
-              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i> Si no detectamos saldo recuperable, el costo es <strong>$0</strong>.</li>
-              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0"></i> <strong>Garantía 100%:</strong> Si MeLi rechaza +50% de los casos en plazo, queda bonificada la próxima auditoría.</li>
-            </ul>
-          </div>
-
-          <div class="p-5 rounded-2xl border-2 border-slate-900 bg-slate-900 text-white space-y-3 shadow-md">
-            <span class="text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-emerald-500 text-slate-950 inline-block">Modalidad 2: Gestión Integral (VIP)</span>
-            <div class="text-2xl font-heading font-extrabold text-white">20% <span class="text-xs font-medium text-slate-300 font-sans">sobre lo efectivamente acreditado</span></div>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Llave en mano: el seller nos habilita como <strong>Colaborador oficial de Mercado Libre</strong> (permiso exclusivo de Posventa/Reclamos, sin acceso a Mercado Pago) y nuestro equipo abre y defiende cada expediente.
-            </p>
-            <ul class="text-xs text-slate-300 space-y-1.5 pt-1">
-              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Cero carga operativa para el equipo del cliente.</li>
-              <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i> Liquidación a mes vencido únicamente sobre dinero ya acreditado en cuenta.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
-          <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">Acuerdo de Confidencialidad (NDA) y Locación de Servicios a Éxito</span>
-          <textarea id="acuerdoTexto" readonly class="w-full h-48 p-3.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">ACUERDO DE PRESTACIÓN DE SERVICIOS FORENSES DE AUDITORÍA Y CONFIDENCIALIDAD
-
-Entre SALDOAUDIT (en adelante "El Auditor"), representado por Juan Manuel Oviedo, y [EMPRESA / RAZÓN SOCIAL DEL SELLER] (en adelante "El Cliente"), se conviene lo siguiente:
-
-PRIMERA (OBJETO): El Auditor realizará el relevamiento y análisis de reportes de ventas de la cuenta de Mercado Libre de El Cliente correspondientes a los últimos 60 días, con el fin de detectar reclamos pendientes, devoluciones sin liquidar y siniestros de envíos pasibles de indemnización.
-
-SEGUNDA (CONFIDENCIALIDAD Y PROTECCIÓN DE DATOS - LEY 25.326): Toda información comercial provista por El Cliente será tratada bajo estricto secreto profesional. El Auditor procesa los archivos en memoria local, sin almacenar datos personales de compradores ni divulgar información a terceros.
-
-TERCERA (HONORARIOS A RESULTADO): 
-- Opción 1 (Reporte en Mano): 10% sobre el monto bruto recuperable identificado en el informe de auditoría.
-- Opción 2 (Gestión Integral Colaborador): 20% sobre los fondos efectivamente recuperados y acreditados por Mercado Libre en la cuenta de Mercado Pago de El Cliente.
-
-CUARTA (GARANTÍA DE EFECTIVIDAD): En la Modalidad Reporte, si Mercado Libre desestimare formalmente más del cincuenta por ciento (50%) de los casos presentados en tiempo y forma, El Auditor otorgará un crédito del 100% de lo abonado para futuras auditorías.
-
-En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes de _________ de 2026.</textarea>
-        </div>
-      </section>
 
     </main>
 
@@ -2178,7 +2134,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
 
     // Selector de Vistas de la Suite
     function switchView(viewName) {
-      const views = ['pipeline', 'sops', 'business', 'brand', 'firmas', 'acuerdo'];
+      const views = ['pipeline', 'sops', 'comercial', 'brand', 'firmas'];
       views.forEach(v => {
         const el = document.getElementById(`view-${v}`);
         if (el) el.classList.add('hidden');
