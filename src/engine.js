@@ -222,7 +222,20 @@ class ReclaMeliEngine {
       }
 
       const rawFull = findKey(row, COLUMN_ALIASES.isFull);
-      const isFull = rawFull ? String(rawFull).toLowerCase().includes('full') : false;
+      const deliveryMethod = String(row['Forma de entrega'] || row['Canal de envío'] || rawFull || '').trim();
+      const carrier = String(row['Transportista'] || row['Transportista_2'] || '').trim();
+      const returnCarrier = String(row['Transportista_2'] || '').trim();
+      const shippingCost = parseMeliAmount(row['Costos de envío (ARS)'] || row['Costos de envío']);
+      
+      const isFull = deliveryMethod.toLowerCase().includes('full') ||
+        String(rawFull || '').toLowerCase().includes('full') ||
+        String(row['Revisado por Mercado Libre'] || '').toLowerCase().includes('sí') ||
+        String(row['Destino'] || '').toLowerCase().includes('vendedor');
+
+      const isFlex = deliveryMethod.toLowerCase().includes('flex') ||
+        carrier.toLowerCase().includes('flex') ||
+        carrier.toLowerCase().includes('marketing') ||
+        carrier.toLowerCase().includes('generation');
 
       const rawDate = findKey(row, COLUMN_ALIASES.returnDate);
       const returnDate = parseMeliDate(rawDate);
@@ -246,24 +259,59 @@ class ReclaMeliEngine {
 
       const dateStr = returnDate ? returnDate.toISOString().slice(0, 10) : 'S/F';
 
-      // 1. Siniestro / Extravío o pérdida de transporte
-      const isSiniestro = saleStatus === 'No entregado' ||
-        combinedStatus.includes('inconveniente en el envío y no podremos entregar') ||
-        saleStatus.includes('Cancelada. Tu transportista debe devolverte') ||
-        ['siniestrado', 'extraviado', 'perdido', 'robo', 'hurto'].some(k => combinedStatus.includes(k));
+      // 1. CASOS FLEX (Transporte propio del seller - Cancelada por demora de fletero)
+      const isFlexCancel = saleStatus.includes('Cancelada. Tu transportista debe devolverte') ||
+        (isFlex && saleStatus.includes('Cancelada') && combinedStatus.includes('demorado'));
 
-      if (isSiniestro) {
-        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, type: 'stalled' });
+      if (isFlexCancel) {
+        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull: false, carrier, shippingCost, type: 'flex_transport' });
         discrepancies.push({
           orderId,
           tracking,
           itemTitle,
           amount,
+          shippingCost,
+          carrier: carrier || 'Logística Flex',
+          deliveryMethod: 'Mercado Envíos Flex',
+          actionCategory: "3. Rendición Transporte Flex",
+          responsibleTarget: `Fletero Flex (${carrier || 'Transportista Privado'})`,
+          actionRequired: "Intimar a la empresa de Flex a rendir el paquete o debitar de su factura de fletes.",
+          dueDateText: "Esta semana (Control de flete)",
+          daysStalled,
+          daysToExpire: 7,
+          isThreeDayWindow: false,
+          hasExplicitDueDate: false,
+          carrierStatus: returnStatus || statusDesc || saleStatus,
+          claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
+          navigationGuide: generateNavigationGuide(orderId, 'flex_transport'),
+          dossierText: dossier
+        });
+        continue;
+      }
+
+      // 2. SINIESTRO OFICIAL DE CORREO MERCADO ENVÍOS (Andreani, Correo Arg, Colectas oficiales)
+      const isSiniestroOficial = saleStatus === 'No entregado' ||
+        combinedStatus.includes('inconveniente en el envío y no podremos entregar') ||
+        (!isFlex && ['siniestrado', 'extraviado', 'perdido', 'robo', 'hurto'].some(k => combinedStatus.includes(k)));
+
+      if (isSiniestroOficial) {
+        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, carrier: carrier || 'Correo Oficial', shippingCost, type: 'official_carrier_siniestro' });
+        discrepancies.push({
+          orderId,
+          tracking,
+          itemTitle,
+          amount,
+          shippingCost,
+          carrier: carrier || 'Correo Oficial',
+          deliveryMethod: deliveryMethod || 'Colecta de Mercado Envíos',
+          actionCategory: "1. Recupero Líquido Mercado Libre",
+          responsibleTarget: "Mercado Libre",
+          actionRequired: "Reclamar indemnización inmediata por siniestro oficial de transporte.",
+          dueDateText: "HOY (Cobro exigible)",
           daysStalled,
           daysToExpire,
           isThreeDayWindow: false,
           hasExplicitDueDate,
-          discrepancyType: "Siniestro / Extravío Logístico Sin Indemnizar",
           carrierStatus: returnStatus || statusDesc || saleStatus,
           claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
           navigationGuide: generateNavigationGuide(orderId, 'stalled'),
@@ -272,23 +320,30 @@ class ReclaMeliEngine {
         continue;
       }
 
-      // 2. Plazo crítico de revisión urgente (72hs / plazo inmediato)
+      // 3. PLAZO CRÍTICO DE REVISIÓN EN DEPÓSITO (Ventana de 72hs post-entrega)
       const is72h = combinedStatus.includes('devolución para revisar') ||
         combinedStatus.includes('la devolución llegará hoy') ||
         combinedStatus.includes('dentro del plazo');
 
       if (is72h) {
-        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, type: 'three_day_review' });
+        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, carrier: returnCarrier || carrier, shippingCost, type: 'three_day_review' });
+        const dueLabel = parsedDue ? `Vence el ${parsedDue.toLocaleDateString('es-AR')}` : (combinedStatus.includes('hasta el jueves') ? "Vence HOY (Jueves)" : "Vence en 72 hs");
         discrepancies.push({
           orderId,
           tracking,
           itemTitle,
           amount,
+          shippingCost,
+          carrier: returnCarrier || carrier || 'Logística Inversa',
+          deliveryMethod: deliveryMethod || 'Correo y puntos de despacho',
+          actionCategory: "2. Alerta Depósito (Ventana Crítica 72hs)",
+          responsibleTarget: "Depósito Propio / Recepción",
+          actionRequired: "Inspeccionar estado en depósito. Si llegó roto o usado, subir fotos antes del vencimiento.",
+          dueDateText: dueLabel,
           daysStalled,
           daysToExpire: 1,
           isThreeDayWindow: true,
           hasExplicitDueDate: false,
-          discrepancyType: "Revisión Urgente (Plazo de 72hs post-entrega)",
           carrierStatus: returnStatus || statusDesc || saleStatus,
           claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
           navigationGuide: generateNavigationGuide(orderId, 'three_day_review'),
@@ -297,22 +352,30 @@ class ReclaMeliEngine {
         continue;
       }
 
-      // 3. Daño en Full / Retiro de stock con cobro indebido al vendedor
+      // 4. DAÑO EN FULL / DEVOLUCIÓN USADA ACEPTADA INDEBIDAMENTE POR MELI
       const isDanadoFull = combinedStatus.includes('devolución revisada. solicitá el retiro') ||
-        (combinedStatus.includes('no está en buenas condiciones') && String(row['Destino'] || '').toLowerCase().includes('vendedor'));
+        (combinedStatus.includes('marcas de uso') && isFull) ||
+        (combinedStatus.includes('no está en buenas condiciones') && isFull) ||
+        (String(row['Resultado'] || '').includes('No apto') && isFull);
 
       if (isDanadoFull) {
-        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, type: 'stalled' });
+        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull: true, carrier, shippingCost, type: 'full_dispute' });
         discrepancies.push({
           orderId,
           tracking,
           itemTitle,
           amount,
+          shippingCost,
+          carrier: 'Mercado Envíos Full',
+          deliveryMethod: 'Mercado Envíos Full',
+          actionCategory: "4. Disputa Full & Fletes",
+          responsibleTarget: "Mercado Libre (Soporte Full)",
+          actionRequired: "Impugnar devolución de mercadería usada aceptada por Full y exigir bonificación de flete.",
+          dueDateText: "Próximos 15 días",
           daysStalled,
           daysToExpire,
           isThreeDayWindow: false,
           hasExplicitDueDate,
-          discrepancyType: "Devolución Dañada / Retiro de Stock Full",
           carrierStatus: returnStatus || statusDesc || saleStatus,
           claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
           navigationGuide: generateNavigationGuide(orderId, 'stalled'),
@@ -321,20 +384,26 @@ class ReclaMeliEngine {
         continue;
       }
 
-      // 4. Cancelación Unilateral por Mercado Libre
+      // 5. CANCELACIÓN POR IRREGULARIDADES / SEGURIDAD
       const isCancelMeLi = combinedStatus.includes('paquete cancelado por mercado libre');
       if (isCancelMeLi) {
-        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, type: 'stalled' });
+        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, carrier, shippingCost, type: 'cancel_security' });
         discrepancies.push({
           orderId,
           tracking,
           itemTitle,
           amount,
+          shippingCost,
+          carrier: carrier || 'Colecta / Flex',
+          deliveryMethod: deliveryMethod || 'Transporte',
+          actionCategory: isFlex ? "3. Rendición Transporte Flex" : "1. Recupero Líquido Mercado Libre",
+          responsibleTarget: isFlex ? `Fletero Flex (${carrier || 'Transporte Flex'})` : "Mercado Libre / Colecta",
+          actionRequired: "Verificar si el paquete llegó a salir del depósito. Si salió y no volvió, reclamar pérdida.",
+          dueDateText: "Inmediato",
           daysStalled,
           daysToExpire,
           isThreeDayWindow: false,
           hasExplicitDueDate,
-          discrepancyType: "Cancelación Unilateral de Mercado Libre",
           carrierStatus: returnStatus || statusDesc || saleStatus,
           claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
           navigationGuide: generateNavigationGuide(orderId, 'stalled'),
@@ -343,21 +412,30 @@ class ReclaMeliEngine {
         continue;
       }
 
-      // 5. Devolución en tránsito con compromiso de entrega
+      // 6. DEVOLUCIÓN EN TRÁNSITO CON FECHA DE COMPROMISO
       const isDevolTransito = combinedStatus.includes('te devolveremos el paquete antes') ||
-        combinedStatus.includes('devolución en camino');
+        combinedStatus.includes('devolución en camino') ||
+        combinedStatus.includes('llegará el');
       if (isDevolTransito) {
-        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, type: 'stalled' });
+        const compromisoMatch = statusDesc.match(/antes del \d+ de \w+|llegará el \d+ de \w+/i) || saleStatus.match(/antes del \d+ de \w+|llegará el \d+ de \w+/i);
+        const fechaCompromiso = compromisoMatch ? compromisoMatch[0] : (rawDueDate || "Fecha comprometida");
+        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: fechaCompromiso, daysStalled, isFull, carrier, shippingCost, type: 'radar_due_date' });
         discrepancies.push({
           orderId,
           tracking,
           itemTitle,
           amount,
+          shippingCost,
+          carrier: carrier || 'Correo Oficial / Colecta',
+          deliveryMethod: deliveryMethod || 'Colecta de Mercado Envíos',
+          actionCategory: "5. Radar Preventivo (En Tránsito)",
+          responsibleTarget: "Mercado Libre (Seguimiento)",
+          actionRequired: "Monitorear fecha límite. Si no entra al depósito en la fecha fijada, reclamar siniestro.",
+          dueDateText: fechaCompromiso,
           daysStalled,
           daysToExpire,
           isThreeDayWindow: false,
           hasExplicitDueDate,
-          discrepancyType: "Devolución en Tránsito con Fecha Límite",
           carrierStatus: returnStatus || statusDesc || saleStatus,
           claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
           navigationGuide: generateNavigationGuide(orderId, 'stalled'),
@@ -366,19 +444,25 @@ class ReclaMeliEngine {
         continue;
       }
 
-      // 6. Envío demorado en riesgo
+      // 7. ENVÍO DEMORADO EN RIESGO DE CANCELACIÓN
       if (saleStatus.includes('Envío demorado')) {
-        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, type: 'stalled' });
+        const dossier = generateClaimDossier({ orderId, trackingCode: tracking, itemTitle, dateReturnDispatchedStr: dateStr, daysStalled, isFull, carrier, shippingCost, type: 'radar_due_date' });
         discrepancies.push({
           orderId,
           tracking,
           itemTitle,
           amount,
+          shippingCost,
+          carrier: carrier || 'Correo Oficial',
+          deliveryMethod: deliveryMethod || 'Colecta',
+          actionCategory: "5. Radar Preventivo (En Tránsito)",
+          responsibleTarget: "Mercado Libre / Transporte",
+          actionRequired: "Seguimiento preventivo. Si el comprador cancela por la demora, exigir devolución o pago.",
+          dueDateText: "En curso",
           daysStalled,
           daysToExpire,
           isThreeDayWindow: false,
           hasExplicitDueDate,
-          discrepancyType: "Envío Demorado en Riesgo de Cancelación",
           carrierStatus: returnStatus || statusDesc || saleStatus,
           claimUrl: `https://www.mercadolibre.com.ar/ventas/${orderId}/detalle`,
           navigationGuide: generateNavigationGuide(orderId, 'stalled'),
@@ -391,11 +475,26 @@ class ReclaMeliEngine {
     const totalAmount = discrepancies.reduce((acc, d) => acc + d.amount, 0);
     const expiringSoon = discrepancies.filter(d => (d.isThreeDayWindow && d.daysToExpire <= 2) || (!d.isThreeDayWindow && d.daysToExpire > 0 && d.daysToExpire <= 10)).length;
 
+    const meliLiquidAmount = discrepancies.filter(d => d.actionCategory.includes('Recupero Líquido')).reduce((acc, d) => acc + d.amount, 0);
+    const depositReviewAmount = discrepancies.filter(d => d.actionCategory.includes('Alerta Depósito')).reduce((acc, d) => acc + d.amount, 0);
+    const flexTransportAmount = discrepancies.filter(d => d.actionCategory.includes('Rendición Transporte Flex')).reduce((acc, d) => acc + d.amount, 0);
+    const fullDisputeAmount = discrepancies.filter(d => d.actionCategory.includes('Disputa Full')).reduce((acc, d) => acc + d.amount, 0);
+    const radarTransitAmount = discrepancies.filter(d => d.actionCategory.includes('Radar Preventivo')).reduce((acc, d) => acc + d.amount, 0);
+    const totalShippingDebit = discrepancies.reduce((acc, d) => acc + (d.shippingCost || 0), 0);
+
     return {
       totalSalesAudited: totalSales,
       totalDiscrepancies: discrepancies.length,
       totalAmountRecoverable: totalAmount,
       criticalExpiringSoon: expiringSoon,
+      breakdown: {
+        meliLiquidAmount,
+        depositReviewAmount,
+        flexTransportAmount,
+        fullDisputeAmount,
+        radarTransitAmount,
+        totalShippingDebit
+      },
       records: discrepancies
     };
   }
