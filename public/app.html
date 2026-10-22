@@ -95,7 +95,7 @@
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Usuario / Correo Oficial</label>
           <div class="relative">
             <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-            <input type="email" id="loginEmail" required autofocus class="touch-target w-full pl-10 pr-4 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition bg-slate-50 text-slate-900" placeholder="saldoaudit.oficial@gmail.com" value="">
+            <input type="text" id="loginEmail" required autofocus class="touch-target w-full pl-10 pr-4 py-3 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition bg-slate-50 text-slate-900" placeholder="saldoaudit.oficial@gmail.com o PIN" value="">
           </div>
         </div>
 
@@ -2982,7 +2982,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
     "fecha_proxima_accion": "2026-10-26",
     "notas": "Derivado directo de Nahuel Beneitez (Director de Marketing). Auditoría entregada el 21/10 con 15 órdenes críticas (.518,74 ARS)."
   }
-]];
+];
 
     // Sincronización con Supabase / Dataset SaldoAudit
     async function loadSellersFromSupabase(animate) {
