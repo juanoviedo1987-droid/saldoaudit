@@ -27,67 +27,60 @@ Un motor forense **Zero-Cloud Privacy** que procesa localmente en el navegador d
 
 ---
 
-## 2. Modelo de Negocio de 2 Vías (Dual Strategy)
+## 2. Modelo de Negocio: Micro-SaaS 100% Automatizado (Zero-Touch)
 
-Inspirado en el estándar de GETIDA para Amazon, SaldoAudit bifurca su modelo para eliminar la fricción de conversión y neutralizar la morosidad:
+SaldoAudit opera como un software de autoservicio puro con cobro previo a la entrega del reporte, eliminando el riesgo de morosidad y cualquier costo de intermediación humana:
 
 ```mermaid
 flowchart TD
-    A["Tráfico de Sellers a saldoaudit.com.ar"] --> B{"Volumen Mensual de Ventas"}
-    
-    B -- "Hasta 1.500 ventas (90% del mercado)" --> C["VÍA 1: Self-Service 100% Automático"]
-    C --> C1["Scan Forense Gratuito"]
-    C1 --> C2["Paywall Teaser: Total Recuperable + 3 Casos Muestra"]
-    C2 --> C3["Efecto Cortina con Candado sobre el resto"]
-    C3 --> C4["Checkout Mercado Pago: $39.000 ARS"]
-    C4 --> C5["Desbloqueo Inmediato (Auto-detección QR + localStorage)"]
-    C5 --> C6["Descarga Planilla con IDs y Dossiers (Cero costo humano)"]
-
-    B -- "+1.500 ventas / Corporativo (Hudson)" --> D["VÍA 2: Plan Enterprise Asistido"]
-    D --> D1["Auditoría Gratuita de Diagnóstico"]
-    D1 --> D2["Reunión Comercial 1 a 1 (WhatsApp / Meet)"]
-    D2 --> D3["20% a Éxito sobre Fondos Efectivamente Acreditados"]
-    D3 --> D4["Dossiers listos para ejecución por el equipo del seller"]
-    D4 --> D5["Monitoreo Mensual Recurrente"]
+    A["Seller ingresa a saldoaudit.com.ar"] --> B["1. Scan Forense Gratuito (Zero-Cloud en 1 seg)"]
+    B --> C["2. Pantalla Teaser con Candado"]
+    C --> C1["Muestra Total Reclamable Detectado (ej. +$180.000 ARS)"]
+    C --> C2["Muestra 3 casos de prueba con ID enmascarado"]
+    C --> C3["Efecto Cortina sobre el resto de órdenes"]
+    C --> D["3. Paywall Dinámico (15% Plano)"]
+    D --> D1["Backend genera preferencia MP por el 15% exacto al instante"]
+    D --> E["4. Cobro Inmediato (Saldo, Tarjeta o QR)"]
+    E --> F["5. Desbloqueo Automático Multidispositivo"]
+    F --> F1["Descarga Planilla Excel con enlaces directos a soporte"]
+    F --> F2["Textos periciales listos para copiar y pegar en MeLi"]
+    F --> G["Cero Comisiones Posteriores (85% neto para el seller)"]
 ```
 
-### VÍA 1: Self-Service Automático (Sellers Pequeños y Medianos)
-* **Público:** Vendedores de hasta 1.500 ventas/mes.
-* **Mecanismo:**
-  1. Subida de archivo 100% gratuita y privada (*Zero-Cloud*).
-  2. El sistema muestra la métrica de dinero recuperable total (ej. `+$184.500 ARS`) y un anticipo de 3 casos con ID enmascarado.
-  3. **Efecto Cortina con Candado:** Las filas restantes quedan bloqueadas con Data Masking real (inaccesibles por consola o F12).
-  4. **Desbloqueo:** Pago único de **$39.000 ARS** vía Mercado Pago Checkout Pro.
-  5. **Auto-desbloqueo QR:** Si el seller paga desde su celular escaneando el QR, el navegador de la computadora detecta la acreditación por polling automático y desbloquea el informe sin que el usuario deba hacer nada.
-  6. **Margen Bruto:** 100% limpio (cero horas hombre, cero costo de servidores).
+### Características del Modelo
 
-### VÍA 2: Plan Enterprise / Corporativo (+1.500 ventas / Tipo Hudson)
-* **Público:** Grandes marcas y cuentas corporativas.
-* **Estructura:** **$0 Upfront + 20% Success Fee** sobre recupero efectivo.
-* **Flujo Operativo Seguro:**
-  * Para evitar las limitaciones técnicas de Mercado Libre (donde el rol de colaborador suele estar bloqueado para abrir tickets de soporte oficial de logística y envíos), SaldoAudit genera los dossiers legales listos y orienta al equipo interno del cliente para su ejecución directa.
-  * Facturación quincenal o mensual del 20% contra el reporte de reintegros impactados en Mercado Pago.
-  * Transición a **Monitoreo Mensual Continuo** (retainer o success fee periódico).
+1. **Scan Forense Gratuito:** El seller sube su reporte de ventas a la web. El algoritmo procesa los datos localmente en el navegador en 1 segundo con privacidad *Zero-Cloud*.
+2. **Pantalla Teaser:** Muestra el monto total en verde recuperable (ej. `$180.000 ARS`) con el detalle de órdenes y enlaces bloqueados por candado.
+3. **Paywall de Desbloqueo Dinámico:** Se calcula automáticamente el **15% plano sobre el total detectado**. El backend genera la preferencia de Mercado Pago por ese monto exacto al instante.
+4. **Cobro Inmediato:** El cliente paga con saldo en cuenta, QR o tarjeta de crédito.
+5. **Descarga Instantánea:** La web se desbloquea sola (con soporte de detección de pago QR en celular) y habilita la descarga de la planilla Excel con IDs de venta, textos de reclamo y links directos a soporte de MeLi.
+6. **Comisiones Futuras:** 0% (el cliente se queda con el 85% restante acreditado directo en su Mercado Pago).
 
 ---
 
-## 3. Infraestructura y Seguridad Técnica
+## 3. Garantía Técnica
 
-1. **Frontend Público:** Single Page Application (Tailwind CSS, Lucide, SheetJS) alojada en Cloudflare Pages + GitHub Pages (`saldoaudit.com.ar`).
-2. **Backend de Pagos & Webhooks:** Servicio Python en Google Cloud Platform (`api.saldoaudit.com.ar`) protegido con SSL oficial Let's Encrypt y Caddy.
-3. **Idempotencia Antiduplicados:** Registro de `payment_id` procesados para evitar reenvío de notificaciones por email.
-4. **CRM & Suite Interna:** Panel de gestión operativo (`saldoaudit.com.ar/app.html`) conectado a Supabase para seguimiento de cartera de 50+ grandes sellers.
+* **Reintegro directo del 15%** correspondiente a cualquier caso de siniestro oficial que Mercado Libre rechace indemnizar, contra captura del ticket de soporte.
 
 ---
 
-## 4. Proyección Financiera (Primeros 6 Meses)
+## 4. Métricas y Unit Economics
 
-| Mes | Sellers Vía 1 (Self-Service $39k) | Cuentas Vía 2 (20% Éxito Prom $120k) | Facturación Mensual ARS | Margen Operativo |
-| :--- | :--- | :--- | :--- | :--- |
-| **Mes 1** | 5 ($195.000) | 2 ($240.000) | **$435.000 ARS** | > 92% |
-| **Mes 2** | 12 ($468.000) | 4 ($480.000) | **$948.000 ARS** | > 94% |
-| **Mes 3** | 25 ($975.000) | 8 ($960.000) | **$1.935.000 ARS** | > 95% |
-| **Mes 6** | 60 ($2.340.000) | 18 ($2.160.000) | **$4.500.000 ARS** | > 95% |
+* **Intervención humana:** 0 minutos por transacción.
+* **Costo marginal por usuario:** $0 ARS (cómputo cliente-side).
+* **Riesgo de morosidad:** 0% (cobro previo a la entrega del reporte).
+* **Margen operativo bruto:** > 95%.
+
+---
+
+## 5. Proyección Financiera (Primeros 6 Meses)
+
+| Mes | Sellers que Desbloquean | Recupero Promedio Detectado | Ticket Promedio SaldoAudit (15%) | Facturación Mensual ARS | Margen Operativo |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Mes 1** | 10 cuentas | $180.000 ARS | $27.000 ARS | **$270.000 ARS** | > 95% |
+| **Mes 2** | 25 cuentas | $220.000 ARS | $33.000 ARS | **$825.000 ARS** | > 95% |
+| **Mes 3** | 50 cuentas | $250.000 ARS | $37.500 ARS | **$1.875.000 ARS** | > 95% |
+| **Mes 6** | 120 cuentas | $300.000 ARS | $45.000 ARS | **$5.400.000 ARS** | > 95% |
 
 ---
 

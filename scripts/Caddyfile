@@ -16,7 +16,7 @@ api.saldoaudit.com.ar, 34-135-56-126.sslip.io, 34.135.56.126.sslip.io {
     }
 
     @saldoauditWebhook {
-        path /webhook/saldoaudit-mp-payment /webhook/saldoaudit-mp-payment/* /check-payment-status /check-payment-status/*
+        path /webhook/saldoaudit-mp-payment* /check-payment-status* /create-preference*
     }
     handle @saldoauditWebhook {
         reverse_proxy 172.17.0.1:5055

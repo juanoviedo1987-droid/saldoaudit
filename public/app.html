@@ -252,11 +252,11 @@
 
           <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs">
             <div class="flex items-center justify-between text-slate-400 mb-1">
-              <span class="text-[11px] font-bold uppercase tracking-wider">Comisión Estimada</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider">Fee Desbloqueo (15%)</span>
               <i data-lucide="percent" class="w-4 h-4 text-emerald-600"></i>
             </div>
-            <div class="text-xl sm:text-2xl font-heading font-extrabold text-emerald-700" id="kpiComisionProyectada">$59.951</div>
-            <span class="text-[11px] text-slate-500 font-medium">Opción 10% | Si VIP (20%): $119.903</span>
+            <div class="text-xl sm:text-2xl font-heading font-extrabold text-emerald-700" id="kpiComisionProyectada">$89.928</div>
+            <span class="text-[11px] text-slate-500 font-medium">Tarifa Plana 15% al Desbloquear</span>
           </div>
 
           <div class="bg-white rounded-2xl p-4 border border-amber-200/90 bg-amber-50/30 shadow-2xs">
@@ -814,7 +814,7 @@
                   <span class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center">03</span>
                   <div>
                     <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-03: Protocolo de Entrega Comercial & Manejo de Objeciones</h3>
-                    <span class="text-xs text-slate-500">Cómo presentar los hallazgos por WhatsApp para cerrar el 10% (Reporte) o el 20% (Gestión VIP)</span>
+                    <span class="text-xs text-slate-500">Cómo presentar los hallazgos por WhatsApp para cerrar el desbloqueo al 15% directo</span>
                   </div>
                 </div>
                 <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full border border-emerald-200">Cierre Comercial</span>
@@ -828,7 +828,7 @@
                       <i data-lucide="copy" class="w-3 h-3"></i> Copiar Guión
                     </button>
                   </div>
-                  <textarea id="txt-audio-guion" readonly class="w-full h-32 p-2.5 bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Hola [Nombre], ¿cómo va? Te habla Juan Oviedo de SaldoAudit. Terminamos de correr la auditoría forense sobre los últimos 60 días de [Empresa]. Sobre $[Bruto] auditados, detectamos [X] órdenes críticas con dinero retenido por siniestros de correo y devoluciones sin liquidar que suman $[Recuperable] ARS. Te dejo acá abajo el desglose. Decime si prefieren que les entreguemos el reporte llave en mano al 10% para que lo reclame tu equipo hoy, o si lo cargamos nosotros como colaboradores al 20% contra acreditación.</textarea>
+                  <textarea id="txt-audio-guion" readonly class="w-full h-32 p-2.5 bg-white border border-slate-200 rounded-xl text-slate-700 font-mono leading-relaxed select-all">Hola [Nombre], ¿cómo va? Te habla Juan Oviedo de SaldoAudit. Terminamos de correr la auditoría forense sobre los últimos 60 días de [Empresa]. Sobre $[Bruto] auditados, detectamos [X] órdenes críticas con dinero retenido por siniestros de correo y devoluciones sin liquidar que suman $[Recuperable] ARS. Te dejo acá abajo el desglose. Para desbloquear la planilla con los números de venta, enlaces directos a soporte y textos periciales para copiar y pegar, la tarifa única es del 15% ($[Monto15] ARS) sin ninguna comisión futura: el 85% restante se acredita 100% en tu cuenta.</textarea>
                 </div>
 
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
@@ -845,7 +845,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
 ⚠️ *Discrepancias críticas detectadas:* [Cantidad] órdenes
 💵 *Total recuperable identificado:* *$[Monto Recuperable] ARS*
 
-¿Avanzamos con la entrega de la planilla con los links y scripts listos (Modalidad 10%) o preferís que gestionemos nosotros cada ticket hasta que entre la plata en Mercado Pago (Modalidad VIP 20%)?</textarea>
+Para acceder a los expedientes completos con los links directos a soporte de MeLi y argumentos periciales, la tarifa única de desbloqueo es del 15% (*$[Monto15] ARS*). El 85% restante es 100% tuyo sin comisiones posteriores. ¿Te paso el link de acceso?</textarea>
                 </div>
               </div>
 
@@ -863,7 +863,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
                   </div>
                   <div class="p-3 bg-white rounded-xl border border-emerald-100">
                     <strong class="text-slate-900 block mb-1">3. "¿Y si Mercado Libre no me paga?"</strong>
-                    <p class="text-slate-600">En el Plan VIP (20%) solo cobramos sobre el dinero que efectivamente ya se acreditó en tu Mercado Pago. Si MeLi no paga, nuestro honorario es <code>$0</code>.</p>
+                    <p class="text-slate-600">Contás con garantía total de reintegro: si MeLi desestima formalmente algún siniestro oficial, te devolvemos el 15% proporcional de ese caso contra captura del ticket.</p>
                   </div>
                 </div>
               </div>
@@ -887,8 +887,8 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
                 <div class="flex items-center gap-3">
                   <span class="w-9 h-9 rounded-xl bg-purple-700 text-white font-bold text-sm flex items-center justify-center">04</span>
                   <div>
-                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-04: Onboarding de Colaborador Oficial MeLi (Plan VIP 20%)</h3>
-                    <span class="text-xs text-slate-500">Configuración de permisos quirúrgicos sin acceso a fondos ni Mercado Pago</span>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">SOP-04: Gestión Asistida de Reclamos en Mercado Libre</h3>
+                    <span class="text-xs text-slate-500">Acompañamiento al equipo del seller para tramitar tickets sin riesgo de permisos</span>
                   </div>
                 </div>
                 <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-[10px] font-bold rounded-full border border-purple-200">Cero Riesgo Bancario</span>
@@ -959,7 +959,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
                 </div>
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-1.5">
                   <span class="font-bold text-slate-900 block">3. Liquidación y Renovación</span>
-                  <p class="text-slate-600 leading-relaxed">Se envía al cliente el <strong>Certificado de Recupero</strong> con las órdenes acreditadas, se factura el 10% o 20% acordado y se agenda la auditoría del mes siguiente.</p>
+                  <p class="text-slate-600 leading-relaxed">Se envía al cliente el <strong>Certificado de Recupero</strong> con las órdenes acreditadas y se agenda el scan automático del mes siguiente.</p>
                 </div>
               </div>
 
@@ -988,7 +988,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
               Marco Comercial, Tarifario & Confidencialidad (Ley 25.326)
             </div>
             <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Modelo Comercial, Tarifario Oficial & Acuerdo Legal</h2>
-            <p class="text-xs text-slate-500 mt-1">Fee de activación accesible + Success Fee automático sobre Certeza MeLi y Contrato NDA listo.</p>
+            <p class="text-xs text-slate-500 mt-1">Tarifa Plana de Desbloqueo Dinámico (15%). Cero comisiones futuras, cero costo humano y cero morosidad.</p>
           </div>
           <button type="button" onclick="copyAcuerdoText()" id="btnCopyAcuerdo" class="touch-target px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs transition self-start sm:self-center">
             <i data-lucide="copy" class="w-4 h-4"></i>
@@ -996,24 +996,24 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
           </button>
         </div>
 
-        <!-- Tesis Híbrida & Las 2 Vías de Monetización -->
+        <!-- Tesis Central: Micro-SaaS 100% Automatizado (Zero-Touch) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs">
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <span class="font-bold text-emerald-700 uppercase tracking-wider block">1. Vía 1: Self-Service Automático ($39.000 ARS)</span>
+            <span class="font-bold text-emerald-700 uppercase tracking-wider block">1. Scan Forense Gratuito ($0 ARS)</span>
             <p class="text-slate-600 leading-relaxed">
-              Scan forense gratis + Paywall Teaser para sellers de hasta 1.500 ventas. Desbloquea la totalidad de reclamos con auto-detección QR de Mercado Pago. 100% margen desatendido sin costo operativo.
+              El seller carga su reporte de ventas (.xlsx / .csv) de forma 100% privada en su navegador. El motor detecta en 1 segundo la totalidad de fondos retenidos y muestra un teaser pericial con 3 casos de muestra.
             </p>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs space-y-2">
-            <span class="font-bold text-amber-700 uppercase tracking-wider block">2. Vía 2: Plan Enterprise Asistido (20% a Éxito)</span>
+            <span class="font-bold text-amber-700 uppercase tracking-wider block">2. Paywall de Desbloqueo Dinámico (15%)</span>
             <p class="text-slate-600 leading-relaxed">
-              Para cuentas corporativas (+1.500 ventas). $0 upfront con liquidación mensual del 20% sobre fondos recuperados. Generamos los dossiers periciales para que ejecute el equipo del cliente, sin trabas de permisos en MeLi.
+              Se calcula automáticamente el 15% plano sobre el monto reclamable detectado. Cobrado al instante vía Mercado Pago (Checkout Pro, QR o saldo en cuenta) antes de entregar los enlaces y textos periciales. Cero morosidad.
             </p>
           </div>
           <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-md space-y-2">
             <span class="font-bold text-emerald-400 uppercase tracking-wider block">3. Caso Testigo Validado (Hudson Cocina)</span>
             <p class="text-slate-300 leading-relaxed">
-              Sobre <strong>8.016 ventas</strong>, detectamos <strong>$599.518,74 ARS</strong> en riesgo. El 20% a éxito representa <strong>$119.903 ARS</strong> limpios de honorarios para SaldoAudit, con retorno directo de capital para el cliente.
+              Sobre <strong>8.016 ventas</strong>, detectamos <strong>$599.518,74 ARS</strong> retenidos. El 15% de tarifa plana representa <strong>$89.928 ARS</strong> cobrados en el acto, y Hudson recupera <strong>$509.591 ARS limpios</strong> sin comisiones futuras.
             </p>
           </div>
         </div>
@@ -1050,54 +1050,53 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
               <i data-lucide="tag" class="w-4 h-4 text-emerald-600"></i> Estructura de Precios Oficial & Cobro Inmediato
             </h3>
             <span class="px-2.5 py-1 bg-emerald-50 text-emerald-800 text-[11px] font-bold rounded-lg border border-emerald-200">
-              Setup Accesible + Éxito sobre Certeza
+              Micro-SaaS 100% Automatizado (Zero-Touch)
             </span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <!-- Plan Self-Service Automático -->
+            <!-- Columna 1: Tarifa Plana de Desbloqueo -->
             <div class="p-5 rounded-2xl border-2 border-emerald-600/30 bg-emerald-50/20 space-y-3 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-1">
-                  <span class="font-bold text-emerald-800 uppercase tracking-wider text-[11px]">Vía 1: Self-Service Automático</span>
-                  <span class="px-2 py-0.5 bg-emerald-600 text-white font-extrabold text-[10px] rounded-md">Pago Único</span>
+                  <span class="font-bold text-emerald-800 uppercase tracking-wider text-[11px]">Tarifa Plana de Desbloqueo</span>
+                  <span class="px-2 py-0.5 bg-emerald-600 text-white font-extrabold text-[10px] rounded-md">Al Desbloquear</span>
                 </div>
-                <div class="text-2xl font-black text-slate-900 mono my-2">$ 39.000 <span class="text-xs font-semibold text-slate-500">ARS</span></div>
+                <div class="text-2xl font-black text-slate-900 mono my-2">15% <span class="text-xs font-semibold text-slate-500">sobre monto reclamable detectado</span></div>
                 <p class="text-slate-600 leading-relaxed text-[11px]">
-                  Diseñado para sellers chicos y medianos (hasta 1.500 ventas/mes). Scan gratuito con candado teaser y desbloqueo inmediato por Mercado Pago.
+                  Cálculo automático y dinámico al instante. El backend genera la preferencia de Mercado Pago por el 15% exacto. Sin pisos ni techos.
                 </p>
                 <ul class="space-y-1.5 mt-3 text-slate-700 text-[11px]">
                   <li class="flex items-center gap-1.5">✓ Diagnóstico forense completo en 1 segundo (100% privado en navegador).</li>
-                  <li class="flex items-center gap-1.5">✓ Auto-desbloqueo multidispositivo vía QR de Mercado Pago.</li>
-                  <li class="flex items-center gap-1.5">✓ Descarga de planilla Excel con enlaces directos a soporte oficial de MeLi.</li>
-                  <li class="flex items-center gap-1.5">✓ Cero costo operativo ni intervención humana requerida.</li>
+                  <li class="flex items-center gap-1.5">✓ Auto-desbloqueo multidispositivo vía QR o saldo de Mercado Pago.</li>
+                  <li class="flex items-center gap-1.5">✓ Descarga de planilla Excel con enlaces directos a soporte y textos periciales.</li>
+                  <li class="flex items-center gap-1.5">✓ Cero costo operativo ni intervención humana requerida (0 minutos).</li>
                 </ul>
               </div>
               <div class="pt-3 border-t border-emerald-200/60 text-[11px] font-bold text-emerald-800">
-                100% margen bruto en cada cobro de $39.000 ARS.
+                100% margen bruto en cada transacción. Cero morosidad.
               </div>
             </div>
 
-            <!-- Plan Enterprise Asistido -->
+            <!-- Columna 2: Beneficios para el Seller & Garantía -->
             <div class="p-5 rounded-2xl border-2 border-slate-900 bg-slate-900 text-white space-y-3 flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-1">
-                  <span class="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">Vía 2: Plan Enterprise Asistido</span>
-                  <span class="px-2 py-0.5 bg-emerald-500 text-slate-950 font-extrabold text-[10px] rounded-md">+1.500 Ventas</span>
+                  <span class="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">Comisiones Posteriores</span>
+                  <span class="px-2 py-0.5 bg-emerald-500 text-slate-950 font-extrabold text-[10px] rounded-md">85% Limpio</span>
                 </div>
-                <div class="text-2xl font-black text-white mono my-2">20% <span class="text-xs font-semibold text-slate-400">a éxito sobre recupero efectivo</span></div>
+                <div class="text-2xl font-black text-white mono my-2">0% <span class="text-xs font-semibold text-slate-400">comisiones futuras para el seller</span></div>
                 <p class="text-slate-300 leading-relaxed text-[11px]">
-                  Para marcas y grandes cuentas (+1.500 ventas mensuales tipo Hudson). Cero fricción inicial: $0 de fee de entrada.
+                  El seller se queda con el 85% restante de todo el dinero que Mercado Libre acredite directamente en su balance.
                 </p>
                 <ul class="space-y-1.5 mt-3 text-slate-300 text-[11px]">
-                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Diagnóstico y auditoría inicial sin costo para demostrar la fuga de dinero.</li>
-                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Dossiers periciales masticados listos para que ejecute el equipo administrativo del cliente.</li>
-                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Liquidación mes vencido contra reintegros efectivamente impactados en Mercado Pago.</li>
-                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Sin riesgos de bloqueos de soporte por permisos de colaboradores.</li>
+                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> <strong>Garantía Técnica Total:</strong> Reintegro directo del 15% proporcional de cualquier siniestro oficial rechazado por MeLi.</li>
+                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Textos periciales con jurisprudencia y normativa interna de MeLi para evitar rechazos de bots.</li>
+                  <li class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> El seller abre los reclamos desde su propia cuenta sin ceder permisos ni claves.</li>
                 </ul>
               </div>
               <div class="pt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
-                Modelo probado de escala similar a GETIDA en Amazon FBA.
+                Retorno inmediato de capital: recupera su inversión en 48hs.
               </div>
             </div>
           </div>
@@ -1106,7 +1105,7 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
         <!-- Acuerdo Legal de Confidencialidad (NDA) y Términos de Servicio -->
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">Acuerdo de Confidencialidad (NDA) y Locación de Servicios</span>
+            <span class="text-xs font-bold text-slate-900 uppercase tracking-wider block">Acuerdo de Confidencialidad (NDA) y Términos de Servicio</span>
             <button type="button" onclick="copyAcuerdoText()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg flex items-center gap-1 text-xs transition">
               <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Contrato
             </button>
@@ -1115,16 +1114,15 @@ Cuenta auditada: *[Empresa]* (Últimos 60 días)
 
 Entre SALDOAUDIT (en adelante "El Auditor"), representado por Juan Manuel Oviedo, y [EMPRESA / RAZÓN SOCIAL DEL SELLER] (en adelante "El Cliente"), se conviene lo siguiente:
 
-PRIMERA (OBJETO): El Auditor realizará el relevamiento y análisis de reportes de ventas de la cuenta de Mercado Libre de El Cliente correspondientes a los últimos 60 días, con el fin de detectar reclamos pendientes, siniestros de envíos pasibles de indemnización, y emitir el protocolo de blindaje de recepción física en depósito (72 hs) y control de logística Flex.
+PRIMERA (OBJETO): El Auditor suministra la tecnología de motor forense para el relevamiento y análisis de reportes de ventas de Mercado Libre correspondientes a los últimos 60 días, con el fin de detectar reclamos pendientes, siniestros de envíos pasibles de indemnización y generar los expedientes periciales de recupero.
 
-SEGUNDA (CONFIDENCIALIDAD Y PROTECCIÓN DE DATOS - LEY 25.326): Toda información provista por El Cliente será tratada bajo estricto secreto profesional. El Auditor procesa los archivos en memoria local en el navegador, sin almacenar datos personales de compradores ni transferir información a terceros bajo apercibimiento de ley.
+SEGUNDA (CONFIDENCIALIDAD Y PROTECCIÓN DE DATOS - LEY 25.326): Toda información provista por El Cliente será tratada bajo estricto secreto profesional. El Auditor procesa los archivos en memoria local en el navegador del cliente (Zero-Cloud Privacy), sin almacenar datos personales ni transferir información a servidores de terceros bajo apercibimiento de ley.
 
 TERCERA (HONORARIOS Y CONDICIONES DE PAGO): 
-1. Fee de Setup y Auditoría Inicial: $ 39.000 ARS (pago único contra entrega del diagnóstico).
-2. Success Fee sobre Siniestros con Certeza: 20% (veinte por ciento) calculado exclusivamente sobre el monto total de las órdenes catalogadas con 'Certeza de Cobro Seguro' (siniestros oficiales reconocidos por Mercado Envíos / Correo), abonado en el momento de la entrega del reporte con los dossiers de reclamo y números de venta desbloqueados.
-3. Rescate Físico: $0 de comisión sobre mercadería reingresada a stock o paquetes restituidos por empresas de logística Flex.
+1. Tarifa Plana de Desbloqueo: 15% (quince por ciento) calculado sobre el monto total de las órdenes catalogadas como reclamables, abonado en el momento de la entrega del reporte completo y expedientes periciales desbloqueados.
+2. Comisiones Posteriores: 0% (cero por ciento). El Cliente retiene el 100% de los reembolsos que Mercado Libre acredite directamente en su cuenta de Mercado Pago.
 
-CUARTA (GARANTÍA INCONDICIONAL DE CERTEZA): Si Mercado Libre desestimare formalmente alguno de los casos catalogados con 'Certeza de Cobro Seguro' presentados conforme a los dossiers provistos, El Auditor reintegrará el importe equivalente al veinte por ciento (20%) percibido por dicho caso o lo acreditará a favor de El Cliente en su próxima auditoría.
+CUARTA (GARANTÍA TÉCNICA DE REINTEGRO): Si Mercado Libre desestimare formalmente alguno de los casos de siniestro oficial presentados conforme a los expedientes provistos por El Auditor, se reintegrará al Cliente el importe equivalente al 15% (quince por ciento) percibido sobre dicho caso particular contra presentación de la constancia de resolución del soporte oficial.
 
 En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes de _________ de 2026.</textarea>
         </div>
@@ -3025,7 +3023,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
     function updateKpis() {
       const totalRecuperable = sellersData.reduce((acc, s) => acc + (Number(s.total_recuperable) || 0), 0);
       const totalSellers = sellersData.length;
-      const comision = totalRecuperable * 0.10;
+      const comision = totalRecuperable * 0.15;
 
       document.getElementById('kpiTotalRecuperable').textContent = `$${Math.round(totalRecuperable).toLocaleString('es-AR')}`;
       document.getElementById('kpiSellersCount').textContent = `${totalSellers} cuentas`;

@@ -100,16 +100,16 @@ def process_payment_notification(payment_id):
     mark_payment_processed(str_pid)
 
     # 2. Email de Aviso de Cobro al Administrador (SaldoAudit)
-    admin_subject = f"💰 NUEVO COBRO EN SALDOAUDIT — $39.000 ARS de {payer_name}"
+    admin_subject = f"💰 NUEVO COBRO EN SALDOAUDIT — ${amount:,.0f} ARS de {payer_name}"
     admin_html = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
 <body style="font-family: Arial, sans-serif; background-color: #090D16; color: #F8FAFC; padding: 20px;">
   <div style="max-width: 550px; margin: 0 auto; background-color: #0F172A; border: 1px solid #1E293B; border-radius: 16px; padding: 24px;">
     <div style="display: inline-block; padding: 4px 10px; background-color: rgba(16, 185, 129, 0.2); border-radius: 8px; color: #34D399; font-weight: bold; font-size: 12px; margin-bottom: 15px;">
-      NUEVO COBRO CONFIRMADO
+      NUEVO COBRO CONFIRMADO (15% DESBLOQUEO)
     </div>
-    <h2 style="margin: 0 0 16px; color: #FFFFFF; font-size: 20px;">¡Cobro de $39.000 ARS Acreditado!</h2>
+    <h2 style="margin: 0 0 16px; color: #FFFFFF; font-size: 20px;">¡Cobro de ${amount:,.2f} ARS Acreditado!</h2>
     <table style="width: 100%; border-collapse: collapse; font-size: 13px; color: #94A3B8;">
       <tr>
         <td style="padding: 8px 0; border-bottom: 1px solid #1E293B;"><strong>Monto:</strong></td>
@@ -174,9 +174,9 @@ def process_payment_notification(payment_id):
             </div>
             <p style="margin:0 0 6px;font-size:13px;color:#E2E8F0;font-weight:600;">Instrucciones para iniciar tus reclamos:</p>
             <ol style="margin:0 0 20px;padding-left:20px;font-size:13px;line-height:1.7;color:#94A3B8;">
-              <li>Descargá la planilla con los números de orden y productos completos.</li>
-              <li>Utilizá el argumento legal redactado por peritos para exigir el recupero a Mercado Libre.</li>
-              <li>Recordá que el 20% a éxito se abona únicamente contra dinero acreditado. Si MeLi rechaza, costo = $0.</li>
+              <li>Descargá la planilla con los números de orden y enlaces oficiales directos.</li>
+              <li>Copiá el argumento legal redactado por peritos para exigir el recupero a Mercado Libre.</li>
+              <li>Recordá que tenés garantía total: si MeLi rechaza un caso oficial, te reintegramos el 15% de ese caso. ¡El 85% restante de dinero recuperado es 100% tuyo!</li>
             </ol>
             <p style="margin:0;font-size:12px;color:#64748B;">
               ¿Necesitás asistencia? Escribinos a <a href="mailto:contacto@saldoaudit.com.ar" style="color:#34D399;text-decoration:none;">contacto@saldoaudit.com.ar</a>.
@@ -254,6 +254,71 @@ class WebhookHandler(BaseHTTPRequestHandler):
         self.wfile.write(b'{"status":"saldoaudit_api_alive"}')
 
     def do_POST(self):
+        parsed = urlparse(self.path)
+
+        # 1. Endpoint dinámico para crear preferencia en Mercado Pago (15% Dinámico)
+        if parsed.path.startswith("/create-preference"):
+            try:
+                length = int(self.headers.get("Content-Length", 0))
+                body_str = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
+                body_json = json.loads(body_str) if body_str else {}
+                amount = float(body_json.get("amount", 39000))
+                amount = max(100.0, round(amount, 2))  # Asegurar importe válido
+                order_count = int(body_json.get("order_count", 1))
+
+                pref_url = "https://api.mercadopago.com/checkout/preferences"
+                pref_payload = {
+                    "items": [
+                        {
+                            "id": "saldoaudit-desbloqueo-15pct",
+                            "title": f"SaldoAudit — Desbloqueo Forense ({order_count} casos)",
+                            "description": "Desbloqueo de expedientes periciales con links directos y textos de reclamo",
+                            "quantity": 1,
+                            "currency_id": "ARS",
+                            "unit_price": amount
+                        }
+                    ],
+                    "back_urls": {
+                        "success": "https://saldoaudit.com.ar/?status=approved",
+                        "failure": "https://saldoaudit.com.ar/?status=failure",
+                        "pending": "https://saldoaudit.com.ar/?status=pending"
+                    },
+                    "auto_return": "approved",
+                    "notification_url": "https://api.saldoaudit.com.ar/webhook/saldoaudit-mp-payment",
+                    "statement_descriptor": "SALDOAUDIT"
+                }
+
+                req = urllib.request.Request(pref_url, data=json.dumps(pref_payload).encode("utf-8"), headers={
+                    "Authorization": f"Bearer {MP_ACCESS_TOKEN}",
+                    "Content-Type": "application/json"
+                })
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    pref_res = json.loads(resp.read().decode("utf-8"))
+                    init_point = pref_res.get("init_point")
+                    pref_id = pref_res.get("id")
+
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.send_cors_headers()
+                    self.end_headers()
+                    self.wfile.write(json.dumps({
+                        "success": True,
+                        "init_point": init_point,
+                        "pref_id": pref_id,
+                        "amount": amount
+                    }).encode("utf-8"))
+                    print(f"[PREF SUCCESS] Creada preferencia {pref_id} por ${amount:,.2f} ARS")
+                    return
+            except Exception as e:
+                print(f"[PREFERENCE ERROR] {e}")
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json")
+                self.send_cors_headers()
+                self.end_headers()
+                self.wfile.write(json.dumps({"success": False, "error": str(e)}).encode("utf-8"))
+                return
+
+        # 2. Webhook oficial de Mercado Pago
         try:
             length = int(self.headers.get("Content-Length", 0))
             body_str = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
