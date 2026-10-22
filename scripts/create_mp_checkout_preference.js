@@ -30,7 +30,7 @@ async function createPreference() {
       failure: "https://saldoaudit.com.ar/?status=failure"
     },
     auto_return: "approved",
-    notification_url: "https://34-135-56-126.sslip.io/webhook/saldoaudit-mp-payment",
+    notification_url: "https://api.saldoaudit.com.ar/webhook/saldoaudit-mp-payment",
     statement_descriptor: "SALDOAUDIT",
     external_reference: "saldoaudit_unlock_39k"
   };

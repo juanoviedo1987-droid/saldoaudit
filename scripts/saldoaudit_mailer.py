@@ -1,8 +1,10 @@
 import json
 import os
+import time
 import smtplib
 import urllib.request
 import urllib.error
+from urllib.parse import urlparse, parse_qs
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -28,6 +30,7 @@ def load_processed_payments():
 def mark_payment_processed(payment_id):
     try:
         processed_payments.add(str(payment_id))
+        recent_approved_pids[str(payment_id)] = time.time()
         with open(PROCESSED_FILE, "w", encoding="utf-8") as f:
             json.dump(list(processed_payments), f)
         print(f"[CACHE] Payment {payment_id} registrado como procesado.")
@@ -35,6 +38,7 @@ def mark_payment_processed(payment_id):
         print(f"[CACHE SAVE ERROR] {e}")
 
 processed_payments = load_processed_payments()
+recent_approved_pids = {pid: time.time() for pid in processed_payments}
 
 def send_email(to_email, subject, html_content):
     try:
@@ -196,15 +200,58 @@ def process_payment_notification(payment_id):
     return True
 
 class WebhookHandler(BaseHTTPRequestHandler):
+    def send_cors_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, HEAD")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_cors_headers()
+        self.end_headers()
+
     def do_HEAD(self):
         self.send_response(200)
+        self.send_cors_headers()
         self.end_headers()
 
     def do_GET(self):
+        parsed = urlparse(self.path)
+        
+        # Endpoint para que el navegador de la PC sondee si se aprobó el pago (Efecto QR)
+        if parsed.path.startswith("/check-payment-status"):
+            params = parse_qs(parsed.query)
+            pid = params.get("payment_id", [None])[0]
+            since_time = float(params.get("since", [0])[0])
+
+            is_unlocked = False
+            found_pid = None
+
+            if pid and str(pid) in processed_payments:
+                is_unlocked = True
+                found_pid = str(pid)
+            elif since_time > 0:
+                # Comprobar si hubo algún pago aprobado después de since_time
+                for p, t in recent_approved_pids.items():
+                    if t >= since_time:
+                        is_unlocked = True
+                        found_pid = p
+                        break
+
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_cors_headers()
+            self.end_headers()
+            res = {"unlocked": is_unlocked, "payment_id": found_pid}
+            self.wfile.write(json.dumps(res).encode("utf-8"))
+            return
+
+        # Health check general
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
+        self.send_cors_headers()
         self.end_headers()
-        self.wfile.write(b'{"status":"saldoaudit_webhook_alive"}')
+        self.wfile.write(b'{"status":"saldoaudit_api_alive"}')
 
     def do_POST(self):
         try:
@@ -215,6 +262,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
             # Responder 200 OK inmediatamente a Mercado Pago
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
+            self.send_cors_headers()
             self.end_headers()
             self.wfile.write(b'{"status":"ok"}')
 
@@ -241,5 +289,5 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     server = HTTPServer(("0.0.0.0", 5055), WebhookHandler)
-    print("SaldoAudit Webhook daemon listening on 0.0.0.0:5055...")
+    print("SaldoAudit API/Webhook daemon listening on 0.0.0.0:5055...")
     server.serve_forever()

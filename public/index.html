@@ -310,7 +310,7 @@
           </div>
 
           <div class="shrink-0 w-full xl:w-auto flex justify-center">
-            <a id="btnPayUnlock" href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-1d1271bb-ae2f-46da-8c2c-b99800b6af73" class="touch-target w-full sm:w-auto px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-sm sm:text-base rounded-xl transition shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 whitespace-nowrap">
+            <a id="btnPayUnlock" href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-52af7b7c-2ef9-4f49-a324-51610b2531e9" class="touch-target w-full sm:w-auto px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-heading font-black text-sm sm:text-base rounded-xl transition shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 whitespace-nowrap">
               <i data-lucide="lock-open" class="w-5 h-5"></i>
               <span>Desbloquear Informe ($39.000)</span>
             </a>
@@ -371,12 +371,18 @@
       <!-- Banner Compacto para Cuentas de Alto Volumen -->
       <div class="p-4 sm:p-5 bg-slate-900 text-white rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <strong class="text-xs sm:text-sm text-white block">¿Tenés alto volumen y preferís delegar la gestión de reclamos?</strong>
-          <span class="text-xs text-slate-400">Podemos tramitar el recupero con rol Colaborador oficial sin acceso a tu dinero.</span>
+          <strong class="text-xs sm:text-sm text-white block">¿Tenés alto volumen (+1.500 ventas) y preferís delegar la gestión?</strong>
+          <span class="text-xs text-slate-400">Auditoría pericial a éxito (0% upfront, 20% solo sobre dinero recuperado).</span>
         </div>
-        <button type="button" onclick="openContactModal()" class="touch-target px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition shrink-0">
-          Solicitar Asistencia
-        </button>
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="https://wa.me/5491172376197?text=Hola%20SaldoAudit,%20tengo%20una%20cuenta%20de%20alto%20volumen%20en%20Mercado%20Libre%20y%20quiero%20delegar%20el%20recupero%20de%20fondos." target="_blank" rel="noopener noreferrer" class="touch-target px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition inline-flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>Hablar por WhatsApp</span>
+          </a>
+          <button type="button" onclick="openContactModal()" class="touch-target px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-xl transition">
+            Formulario
+          </button>
+        </div>
       </div>
 
     </div>
@@ -534,6 +540,14 @@
       </button>
     </div>
 
+    <div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs flex items-center justify-between gap-2">
+      <span class="text-emerald-950 font-medium">¿Preferís coordinar por WhatsApp?</span>
+      <a href="https://wa.me/5491172376197?text=Hola%20SaldoAudit,%20tengo%20una%20cuenta%20de%20alto%20volumen%20en%20Mercado%20Libre%20y%20quiero%20delegar%20el%20recupero%20de%20fondos." target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition inline-flex items-center gap-1 shrink-0">
+        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+        <span>Abrir Chat</span>
+      </a>
+    </div>
+
     <form id="leadContactForm" onsubmit="handleLeadSubmit(event)" class="space-y-3 text-xs">
       <div>
         <label class="block font-semibold text-slate-700 mb-1">Nombre</label>
@@ -606,9 +620,14 @@
   <script>
     lucide.createIcons();
 
+    const MP_PREFERENCE_ID = "142574812-52af7b7c-2ef9-4f49-a324-51610b2531e9";
+    const MP_CHECKOUT_URL = `https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${MP_PREFERENCE_ID}`;
+
     let currentAuditSummary = null;
     let currentAuditRecords = [];
+    let _rawAuditRecords = [];
     let currentFileName = "reporte_ventas.xlsx";
+    let qrPollingInterval = null;
 
     // Modal Handlers
     function openFaqModal() { document.getElementById('faqModal').showModal(); }
@@ -895,13 +914,59 @@ Número de Seguimiento: ${tracking}`;
       return localStorage.getItem('saldoaudit_unlocked') === 'true';
     }
 
+    // Polling Automático para Pago QR desde Celular (Efecto QR)
+    function startQrPaymentPolling() {
+      if (qrPollingInterval || checkIsUnlocked()) return;
+      const pollStart = Date.now();
+      qrPollingInterval = setInterval(async () => {
+        try {
+          if (checkIsUnlocked()) {
+            clearInterval(qrPollingInterval);
+            qrPollingInterval = null;
+            return;
+          }
+          const res = await fetch('https://api.saldoaudit.com.ar/check-payment-status?since=' + (pollStart - 10 * 60 * 1000));
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.unlocked) {
+              clearInterval(qrPollingInterval);
+              qrPollingInterval = null;
+              localStorage.setItem('saldoaudit_unlocked', 'true');
+              if (currentAuditSummary) {
+                renderResults(currentAuditSummary);
+              }
+            }
+          }
+        } catch (e) {
+          // Fallback silencioso ante cortes de red
+        }
+      }, 3500);
+    }
+
     function renderResults(auditSummary) {
-      currentAuditSummary = auditSummary;
-      currentAuditRecords = auditSummary.records;
+      _rawAuditRecords = auditSummary.records || [];
+      const isUnlocked = checkIsUnlocked();
+
+      if (isUnlocked) {
+        currentAuditRecords = _rawAuditRecords;
+        if (qrPollingInterval) {
+          clearInterval(qrPollingInterval);
+          qrPollingInterval = null;
+        }
+      } else {
+        // Blindaje Anti-F12: sólo exponemos las primeras 3 en memoria pública
+        // El resto se calcula en métricas pero los IDs y URLs quedan protegidos en _rawAuditRecords
+        currentAuditRecords = _rawAuditRecords.slice(0, 3);
+        startQrPaymentPolling();
+      }
+
+      currentAuditSummary = {
+        ...auditSummary,
+        records: currentAuditRecords
+      };
 
       document.getElementById('resultsSection').classList.remove('hidden');
 
-      const isUnlocked = checkIsUnlocked();
       const unlockBanner = document.getElementById('unlockBanner');
       const unlockedSuccessBanner = document.getElementById('unlockedSuccessBanner');
       const lockedBadge = document.getElementById('toolbarLockedBadge');
@@ -953,17 +1018,16 @@ Número de Seguimiento: ${tracking}`;
       tbody.innerHTML = '';
       mobileCards.innerHTML = '';
 
-      if (auditSummary.records.length === 0) {
+      if (_rawAuditRecords.length === 0) {
         tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500 font-semibold">Operación limpia: no se detectaron fondos retenidos en este período.</td></tr>`;
         mobileCards.innerHTML = `<div class="p-6 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">Operación limpia: sin siniestros detectados.</div>`;
         return;
       }
 
       // Si no está desbloqueado, mostramos máximo 3 filas como prueba y aplicamos efecto cortina al resto
-      const maxPreviewCount = (!isUnlocked && auditSummary.records.length > 3) ? 3 : auditSummary.records.length;
-      const previewRecords = auditSummary.records.slice(0, maxPreviewCount);
+      const displayRecords = isUnlocked ? _rawAuditRecords : currentAuditRecords;
 
-      previewRecords.forEach((item, index) => {
+      displayRecords.forEach((item, index) => {
         // Enmascarar # de orden si no está desbloqueado
         const displayOrderId = isUnlocked ? item.orderId : `${item.orderId.slice(0, 8)}****** 🔒`;
 
@@ -990,7 +1054,7 @@ Número de Seguimiento: ${tracking}`;
                 Dossier
               </button>
             ` : `
-              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-1d1271bb-ae2f-46da-8c2c-b99800b6af73" class="touch-target px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
+              <a href="${MP_CHECKOUT_URL}" class="touch-target px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
                 <span>🔒 Desbloquear</span>
               </a>
             `}
@@ -1017,7 +1081,7 @@ Número de Seguimiento: ${tracking}`;
                 Ver Argumento y Reclamar
               </button>
             ` : `
-              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-1d1271bb-ae2f-46da-8c2c-b99800b6af73" class="touch-target px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1 shadow-2xs">
+              <a href="${MP_CHECKOUT_URL}" class="touch-target px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1 shadow-2xs">
                 <span>🔒 Desbloquear Informe ($39.000)</span>
               </a>
             `}
@@ -1027,9 +1091,9 @@ Número de Seguimiento: ${tracking}`;
       });
 
       // EFECTO CORTINA: Si no pagó y hay más de 3 órdenes, bloquear el resto con candado persuasivo
-      if (!isUnlocked && auditSummary.records.length > 3) {
-        const remainingCount = auditSummary.records.length - 3;
-        const remainingAmount = auditSummary.records.slice(3).reduce((acc, r) => acc + r.amount, 0);
+      if (!isUnlocked && _rawAuditRecords.length > 3) {
+        const remainingCount = _rawAuditRecords.length - 3;
+        const remainingAmount = _rawAuditRecords.slice(3).reduce((acc, r) => acc + r.amount, 0);
 
         // Desktop Curtain Row
         const curtainRow = document.createElement('tr');
@@ -1046,8 +1110,8 @@ Número de Seguimiento: ${tracking}`;
                 Hay <strong>${formatARS.format(remainingAmount)}</strong> adicionales protegidos en esta vista previa. Desbloqueá el informe completo para acceder a todas las órdenes, productos y argumentos periciales.
               </p>
               <div class="pt-1">
-                <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-1d1271bb-ae2f-46da-8c2c-b99800b6af73" class="touch-target inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-heading font-black transition shadow-lg shadow-emerald-600/25">
-                  <span>Desbloquear las ${auditSummary.records.length} Órdenes por $39.000</span>
+                <a href="${MP_CHECKOUT_URL}" class="touch-target inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-heading font-black transition shadow-lg shadow-emerald-600/25">
+                  <span>Desbloquear las ${_rawAuditRecords.length} Órdenes por $39.000</span>
                   <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
               </div>
@@ -1069,7 +1133,7 @@ Número de Seguimiento: ${tracking}`;
           <p class="text-xs text-slate-600">
             Hay <strong>${formatARS.format(remainingAmount)}</strong> adicionales en esta vista previa.
           </p>
-          <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-1d1271bb-ae2f-46da-8c2c-b99800b6af73" class="touch-target w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-md">
+          <a href="${MP_CHECKOUT_URL}" class="touch-target w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-md">
             <span>Desbloquear Todo ($39.000)</span>
             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
           </a>
@@ -1082,7 +1146,12 @@ Número de Seguimiento: ${tracking}`;
 
     // Dossier Modal
     function openDossierModal(idx) {
-      const item = currentAuditRecords[idx];
+      const isUnlocked = checkIsUnlocked();
+      if (!isUnlocked && idx >= 3) {
+        window.location.href = MP_CHECKOUT_URL;
+        return;
+      }
+      const item = isUnlocked ? _rawAuditRecords[idx] : currentAuditRecords[idx];
       if (!item) return;
 
       document.getElementById('modalTitle').textContent = `Orden #${item.orderId}`;
@@ -1105,15 +1174,15 @@ Número de Seguimiento: ${tracking}`;
 
     // Export Excel
     document.getElementById('btnExportExcel').addEventListener('click', () => {
-      if (!currentAuditRecords || currentAuditRecords.length === 0) return;
-
       const isUnlocked = checkIsUnlocked();
       if (!isUnlocked) {
-        window.location.href = "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-1d1271bb-ae2f-46da-8c2c-b99800b6af73";
+        window.location.href = MP_CHECKOUT_URL;
         return;
       }
 
-      const exportRows = currentAuditRecords.map(r => ({
+      if (!_rawAuditRecords || _rawAuditRecords.length === 0) return;
+
+      const exportRows = _rawAuditRecords.map(r => ({
         "# Orden": r.orderId,
         "Producto": r.itemTitle,
         "Monto Recuperable (ARS)": r.amount,
