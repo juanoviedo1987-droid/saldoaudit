@@ -72,7 +72,15 @@ async function buildStyledReport(inputFile, outputFile) {
     ['2. ALERTA DEPÓSITO (72 HORAS)', 'Devoluciones en recepción - Inspección física antes de caducar plazo fatal', result.breakdown.depositReviewAmount],
     ['3. RENDICIÓN TRANSPORTE FLEX', 'Ventas canceladas en reparto - Exigir restitución de paquete a Generation Intl', result.breakdown.flexTransportAmount],
     ['4. DISPUTAS FULL & FLETES', 'Devoluciones usadas aceptadas indebidamente por Full + fletes mal debitados', result.breakdown.fullDisputeAmount],
-    ['5. RADAR PREVENTIVO EN TRÁNSITO', 'Paquetes con fecha de entrega futura - Reclamar al día siguiente si no llegan', result.breakdown.radarTransitAmount]
+    ['5. RADAR PREVENTIVO EN TRÁNSITO', 'Paquetes con fecha de entrega futura - Reclamar al día siguiente si no llegan', result.breakdown.radarTransitAmount],
+    ['', '', ''],
+    ['BALANCE DE BENEFICIOS Y RETORNO DE INVERSIÓN (ROI)', 'IMPACTO ECONÓMICO', 'MÉTRICA'],
+    ['Inversión Total del Cliente (Setup + Certeza)', '$ 39.000 Setup + 20% sobre Certeza MeLi', 57175.86],
+    ['Liquidez Inmediata Garantizada (Cobro MeLi)', 'Dinero en mano que cubre el 159% del costo del servicio', result.breakdown.meliLiquidAmount],
+    ['Mercadería y Fletes Protegidos', 'Stock salvado en depósito (72hs) + paquetes exigibles a fleteros Flex', result.breakdown.depositReviewAmount + result.breakdown.flexTransportAmount + result.breakdown.fullDisputeAmount],
+    ['Valor Económico Total Rescatado', 'Suma acumulada de beneficios líquidos y mercadería protegida', result.totalAmountRecoverable],
+    ['Retorno de Inversión Neto (ROI)', 'Por cada $ 1 invertido en SaldoAudit, el cliente rescata:', '10.5x ($ 10,49 por cada $ 1)'],
+    ['Garantía Incondicional de Certeza', 'Reintegro inmediato del 20% si MeLi desestima un caso con certeza', '100% GARANTIZADO']
   ];
 
   summaryData.forEach((row, i) => {
@@ -85,7 +93,7 @@ async function buildStyledReport(inputFile, outputFile) {
 
     const valCell = ws1.getCell(`C${rIdx}`);
     if (typeof row[2] === 'number') {
-      if (row[0].includes('Monto') || row[0].startsWith('1.') || row[0].startsWith('2.') || row[0].startsWith('3.') || row[0].startsWith('4.') || row[0].startsWith('5.')) {
+      if (row[0].includes('Monto') || row[0].includes('Inversión') || row[0].includes('Liquidez') || row[0].includes('Mercadería') || row[0].includes('Total Rescatado') || row[0].startsWith('1.') || row[0].startsWith('2.') || row[0].startsWith('3.') || row[0].startsWith('4.') || row[0].startsWith('5.')) {
         valCell.numFmt = '$ #,##0.00';
         valCell.font = { name: 'Calibri', size: 10, bold: true };
       } else {
@@ -93,7 +101,21 @@ async function buildStyledReport(inputFile, outputFile) {
       }
     }
 
-    if (row[0].startsWith('1.')) {
+    if (row[0].includes('BALANCE DE BENEFICIOS')) {
+      r.height = 24;
+      ['A', 'B', 'C'].forEach(col => {
+        ws1.getCell(`${col}${rIdx}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF059669' } };
+        ws1.getCell(`${col}${rIdx}`).font = { name: 'Calibri', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
+      });
+    } else if (row[0].includes('Retorno de Inversión')) {
+      r.font = { bold: true, size: 10.5 };
+      valCell.font = { bold: true, size: 11, color: { argb: 'FF059669' } };
+      ws1.getCell(`A${rIdx}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFECFDF5' } };
+    } else if (row[0].includes('Garantía Incondicional')) {
+      ws1.getCell(`A${rIdx}`).font = { bold: true, color: { argb: 'FF047857' } };
+      valCell.font = { bold: true, color: { argb: 'FF047857' } };
+      ws1.getCell(`A${rIdx}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFECFDF5' } };
+    } else if (row[0].startsWith('1.')) {
       ws1.getCell(`A${rIdx}`).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFECFDF5' } };
       ws1.getCell(`A${rIdx}`).font = { bold: true, color: { argb: 'FF065F46' } };
     } else if (row[0].startsWith('2.')) {
