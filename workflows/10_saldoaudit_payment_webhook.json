@@ -1,0 +1,189 @@
+{
+  "name": "SALDOAUDIT - 01 - Cobro Mercado Pago (Email Confirmación & Telegram)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "saldoaudit-mp-payment",
+        "responseMode": "onReceived",
+        "responseData": "{\"status\":\"ok\"}",
+        "options": {}
+      },
+      "id": "sa-webhook",
+      "name": "Webhook Mercado Pago",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [100, 300],
+      "webhookId": "saldoaudit-mp-hook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst body = input.body || input;\nconst query = input.query || {};\n\nlet paymentId = null;\nif (body && body.data && body.data.id) {\n  paymentId = body.data.id;\n} else if (query['data.id']) {\n  paymentId = query['data.id'];\n} else if (body && body.id) {\n  paymentId = body.id;\n} else if (query.id) {\n  paymentId = query.id;\n}\n\nif (!paymentId) {\n  return [];\n}\n\nreturn [{\n  json: {\n    paymentId: String(paymentId)\n  }\n}];"
+      },
+      "id": "sa-extract-payment-id",
+      "name": "Extraer Payment ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.mercadopago.com/v1/payments/{{ $json.paymentId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer APP_USR-7473723656950246-102214-e871bab63707479c340b6877091b9267-142574812"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "sa-get-payment",
+      "name": "Consultar Pago en MP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "approved",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "sa-check-approved",
+      "name": "¿Pago Aprobado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [760, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\n\nconst paymentId = item.id;\nconst amount = item.transaction_amount || 39000;\nconst payerEmail = (item.payer && item.payer.email) || 'saldoaudit.oficial@gmail.com';\nconst payerName = `${(item.payer && item.payer.first_name) || ''} ${(item.payer && item.payer.last_name) || ''}`.trim() || 'Seller de Mercado Libre';\nconst dateApproved = item.date_approved || new Date().toISOString();\n\nconst telegramText = `🎉 <b>¡NUEVO COBRO CONFIRMADO EN SALDOAUDIT!</b> 💰\\n\\n` +\n  `💵 <b>Monto:</b> $${amount.toLocaleString('es-AR')} ARS\\n` +\n  `👤 <b>Cliente:</b> ${payerName}\\n` +\n  `📧 <b>Email:</b> ${payerEmail}\\n` +\n  `🆔 <b>ID Pago MP:</b> <code>${paymentId}</code>\\n` +\n  `⏰ <b>Aprobado:</b> ${dateApproved}\\n\\n` +\n  `🚀 <i>Informe pericial desbloqueado en saldoaudit.com.ar y email de acceso enviado.</i>`;\n\nconst emailSubject = `✅ Acceso a tu Informe Pericial SaldoAudit (#${paymentId})`;\n\nconst emailHtml = `<!DOCTYPE html>\n<html>\n<head><meta charset=\"utf-8\"></head>\n<body style=\"margin:0;padding:0;background-color:#090D16;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#F8FAFC;\">\n  <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#090D16;padding:30px 15px;\">\n    <tr><td align=\"center\">\n      <table width=\"100%\" style=\"max-width:600px;background-color:#0F172A;border:1px solid #1E293B;border-radius:24px;overflow:hidden;\">\n        <tr>\n          <td style=\"padding:28px;background:linear-gradient(135deg,#059669 0%,#064E3B 100%);text-align:center;\">\n            <h1 style=\"margin:0;font-size:24px;font-weight:800;color:#FFFFFF;\">SaldoAudit</h1>\n            <p style=\"margin:4px 0 0;font-size:13px;color:#A7F3D0;font-weight:600;\">Auditoría Forense de Mercado Libre</p>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"padding:32px 28px;\">\n            <div style=\"display:inline-block;padding:4px 12px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:9999px;font-size:11px;font-weight:700;color:#34D399;margin-bottom:18px;\">\n              ✓ Pago Acreditado Exitosamente\n            </div>\n            <h2 style=\"margin:0 0 14px;font-size:20px;font-weight:700;color:#FFFFFF;\">¡Hola, ${payerName}!</h2>\n            <p style=\"margin:0 0 18px;font-size:14px;line-height:1.6;color:#94A3B8;\">\n              Confirmamos la acreditación de tu pago de <strong>$${amount.toLocaleString('es-AR')} ARS</strong> (Operación MP #${paymentId}). Tu <strong>Informe Pericial Forense y Dossier de Reclamos</strong> ya está 100% habilitado.\n            </p>\n            <div style=\"background-color:#090D16;border:1px solid #1E293B;border-radius:16px;padding:20px;margin-bottom:24px;text-align:center;\">\n              <p style=\"margin:0 0 14px;font-size:13px;color:#E2E8F0;\">Accedé de inmediato a tu informe haciendo clic abajo:</p>\n              <a href=\"https://saldoaudit.com.ar/?status=approved&payment_id=${paymentId}\" style=\"display:inline-block;padding:14px 28px;background-color:#10B981;color:#090D16;text-decoration:none;font-weight:800;font-size:14px;border-radius:12px;\">\n                Abrir Informe Completo (.xlsx)\n              </a>\n            </div>\n            <p style=\"margin:0 0 6px;font-size:13px;color:#E2E8F0;font-weight:600;\">Instrucciones para iniciar tus reclamos:</p>\n            <ol style=\"margin:0 0 20px;padding-left:20px;font-size:13px;line-height:1.7;color:#94A3B8;\">\n              <li>Descargá la planilla con los números de orden y productos completos.</li>\n              <li>Utilizá el argumento legal redactado por peritos para exigir el recupero a Mercado Libre.</li>\n              <li>Recordá que el 20% a éxito se abona únicamente contra dinero acreditado. Si MeLi rechaza, costo = $0.</li>\n            </ol>\n            <p style=\"margin:0;font-size:12px;color:#64748B;\">\n              ¿Necesitás asistencia? Escribinos a <a href=\"mailto:contacto@saldoaudit.com.ar\" style=\"color:#34D399;text-decoration:none;\">contacto@saldoaudit.com.ar</a>.\n            </p>\n          </td>\n        </tr>\n        <tr>\n          <td style=\"padding:20px;background-color:#090D16;border-top:1px solid #1E293B;text-align:center;font-size:11px;color:#64748B;\">\n            SaldoAudit Argentina &bull; saldoaudit.com.ar\n          </td>\n        </tr>\n      </table>\n    </td></tr>\n  </table>\n</body>\n</html>`;\n\nreturn [{\n  json: {\n    paymentId,\n    amount,\n    payerEmail,\n    payerName,\n    dateApproved,\n    telegramText,\n    emailSubject,\n    emailHtml\n  }\n}];"
+      },
+      "id": "sa-format-data",
+      "name": "Preparar Datos y Mensajes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [980, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "6465924150",
+        "text": "={{ $json.telegramText }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "sa-telegram",
+      "name": "Notificar Telegram a Juan",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1200, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegramApiGiuseppa",
+          "name": "Telegram Giuseppa Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://172.17.0.1:5055/send-confirmation",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"to\": \"{{ $json.payerEmail }}\",\n  \"subject\": \"{{ $json.emailSubject }}\",\n  \"html\": \"{{ $json.emailHtml }}\"\n}",
+        "options": {}
+      },
+      "id": "sa-send-email",
+      "name": "Enviar Email Transaccional",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 400]
+    }
+  ],
+  "connections": {
+    "Webhook Mercado Pago": {
+      "main": [
+        [
+          {
+            "node": "Extraer Payment ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Payment ID": {
+      "main": [
+        [
+          {
+            "node": "Consultar Pago en MP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar Pago en MP": {
+      "main": [
+        [
+          {
+            "node": "¿Pago Aprobado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Pago Aprobado?": {
+      "main": [
+        [
+          {
+            "node": "Preparar Datos y Mensajes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Datos y Mensajes": {
+      "main": [
+        [
+          {
+            "node": "Notificar Telegram a Juan",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enviar Email Transaccional",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

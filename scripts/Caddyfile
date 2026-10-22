@@ -1,0 +1,28 @@
+{
+    admin off
+}
+
+34-135-56-126.sslip.io, 34.135.56.126.sslip.io {
+    log {
+        output file /var/log/caddy/access.log
+    }
+
+    @meliProbe {
+        method GET HEAD
+        path /webhook/meli-notifications /webhook/meli-notifications/
+    }
+    handle @meliProbe {
+        respond "OK" 200
+    }
+
+    @saldoauditWebhook {
+        path /webhook/saldoaudit-mp-payment /webhook/saldoaudit-mp-payment/*
+    }
+    handle @saldoauditWebhook {
+        reverse_proxy 172.17.0.1:5055
+    }
+
+    handle {
+        reverse_proxy meli-tiendanube-n8n:5678
+    }
+}
