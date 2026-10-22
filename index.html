@@ -131,8 +131,8 @@
         <a href="#dolores" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
           ¿Qué Detectamos?
         </a>
-        <a href="#como-funciona" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-          ¿Cómo Funciona?
+        <a href="#auditar" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+          Auditoría en 3 Pasos
         </a>
         <button type="button" onclick="openFaqModal()" class="hidden md:inline-block text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
           Preguntas Frecuentes
@@ -245,77 +245,53 @@
     </div>
   </section>
 
-  <!-- ================= 3. LA SOLUCIÓN EN 3 PASOS ================= -->
-  <section id="como-funciona" class="py-14 sm:py-20 bg-slate-50 border-b border-slate-200">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      
-      <div class="text-center space-y-2 mb-12">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block">Proceso Ágil</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-          ¿Cómo auditar tu cuenta en 3 pasos?
-        </h2>
-        <p class="text-sm text-slate-500 max-w-xl mx-auto">
-          Cero integraciones complejas. No necesitás darnos contraseñas ni conectar APIs con permisos sensibles.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-        
-        <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
-          <div class="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
-            1
-          </div>
-          <h3 class="text-sm font-heading font-bold text-slate-900">Descargás tu Reporte</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">
-            Entrás a tu panel de Mercado Libre y exportás el Excel de tus ventas de los últimos 60 días.
-          </p>
-          <button type="button" onclick="openGuideModal()" class="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1 pt-1">
-            <span>¿Dónde descargarlo? Ver guía</span>
-            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
-
-        <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
-          <div class="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
-            2
-          </div>
-          <h3 class="text-sm font-heading font-bold text-slate-900">Lo Soltás en SaldoAudit</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">
-            El archivo se audita en tu propio navegador en segundos. Ningún dato sensible viaja a ningún servidor externo.
-          </p>
-          <span class="text-[11px] font-bold text-slate-400 inline-block pt-1">100% Confidencial</span>
-        </div>
-
-        <div class="p-6 bg-white rounded-3xl border border-slate-200 space-y-3 shadow-2xs">
-          <div class="w-10 h-10 mx-auto rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
-            3
-          </div>
-          <h3 class="text-sm font-heading font-bold text-slate-900">Reclamás y Cobrás</h3>
-          <p class="text-xs text-slate-500 leading-relaxed">
-            Obtenés la planilla con las órdenes siniestradas y el texto legal exacto para que soporte de MeLi te indemnice.
-          </p>
-          <span class="text-[11px] font-bold text-emerald-600 inline-block pt-1">Planilla Excel lista</span>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= 4. LA CONSOLA DE AUDITORÍA EN VIVO ================= -->
+  <!-- ================= 3. LA CONSOLA DE AUDITORÍA FORENSE (PASOS + DROPZONE) ================= -->
   <section id="auditar" class="py-14 sm:py-20 max-w-5xl mx-auto px-4 sm:px-6 w-full">
     
-    <div class="text-center space-y-2 mb-8">
+    <div class="text-center space-y-3 mb-10">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
         <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
         <span>Sello Zero-Cloud: Tus datos no tocan ningún servidor externo</span>
       </div>
-      <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+      <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-slate-900 tracking-tight">
         Comprobá cuánto dinero tenés para reclamar hoy
       </h2>
       <p class="text-sm text-slate-500 max-w-xl mx-auto">
         Subí tu archivo de ventas o hacé una prueba inmediata con el caso de ejemplo precargado.
       </p>
+
+      <!-- Los 3 Pasos integrados directamente en la cabecera -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 text-left max-w-3xl mx-auto">
+        <div class="p-3 bg-white rounded-2xl border border-slate-200 flex items-center gap-3 shadow-2xs">
+          <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-xs">1</span>
+          <div class="text-xs">
+            <strong class="text-slate-900 block font-semibold">Descargás tu Reporte</strong>
+            <span class="text-slate-500 text-[11px]">Ventas últimos 60 días (.xlsx)</span>
+          </div>
+        </div>
+        <div class="p-3 bg-white rounded-2xl border border-slate-200 flex items-center gap-3 shadow-2xs">
+          <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-xs">2</span>
+          <div class="text-xs">
+            <strong class="text-slate-900 block font-semibold">Lo Soltás Acá</strong>
+            <span class="text-slate-500 text-[11px]">Auditoría local en tu memoria</span>
+          </div>
+        </div>
+        <div class="p-3 bg-white rounded-2xl border border-slate-200 flex items-center gap-3 shadow-2xs">
+          <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-xs">3</span>
+          <div class="text-xs">
+            <strong class="text-slate-900 block font-semibold">Reclamás y Cobrás</strong>
+            <span class="text-slate-500 text-[11px]">Dossier con texto legal listo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerta Pro de Compatibilidad -->
+      <div class="pt-2">
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50/80 px-3 py-1 rounded-lg border border-emerald-200">
+          <i data-lucide="info" class="w-3.5 h-3.5 text-emerald-600"></i>
+          <span>Asegurate de exportar el reporte de <strong>Ventas</strong> (no el de facturación ni de Mercado Pago).</span>
+        </span>
+      </div>
     </div>
 
     <!-- Dropzone Area Amigable -->
