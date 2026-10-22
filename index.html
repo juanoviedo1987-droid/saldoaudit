@@ -282,26 +282,26 @@
 
           <!-- Item 2: Fee de Auditoría -->
           <div class="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-1">
-            <span class="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block">2. Auditoría Forense (Único pago):</span>
+            <span class="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block">2. Auditoría Forense (Único pago inicial):</span>
             <div class="text-2xl font-heading font-black text-white font-mono">$39.000 <span class="text-xs text-slate-400 font-normal">ARS</span></div>
-            <span class="text-[11px] text-slate-400 block">Desbloquea informe, links y textos</span>
+            <span class="text-[11px] text-slate-400 block">Desbloquea órdenes, links y argumentos</span>
           </div>
 
           <!-- Item 3: Comisión a Éxito -->
           <div class="p-4 bg-emerald-950/50 border border-emerald-500/40 rounded-2xl space-y-1">
-            <span class="text-[11px] font-semibold text-emerald-300 uppercase tracking-wider block">3. Comisión a Éxito:</span>
-            <div class="text-2xl font-heading font-black text-emerald-400 font-mono">20% <span class="text-xs font-normal">solo si cobrás</span></div>
-            <span class="text-[11px] text-emerald-200/80 block">Si MeLi no acredita, costo = $0</span>
+            <span class="text-[11px] font-semibold text-emerald-300 uppercase tracking-wider block">3. Comisión a Éxito (20%):</span>
+            <div id="roiSuccessFee" class="text-2xl font-heading font-black text-emerald-400 font-mono">$119.904 <span class="text-xs font-normal">ARS</span></div>
+            <span class="text-[11px] text-emerald-200/80 block">Solo se abona si MeLi te acredita el dinero</span>
           </div>
         </div>
 
         <!-- Callout de Ganancia Limpia + Botón de Pago -->
         <div class="p-5 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-5">
-          <div class="space-y-1 text-center md:text-left">
-            <div class="text-xs text-emerald-300 font-semibold">Tu Ganancia Neta Estimada para tu bolsillo:</div>
-            <div id="roiNetAmount" class="text-2xl sm:text-3xl font-heading font-black text-white font-mono">+$440.000+ ARS limpios</div>
-            <p class="text-[11px] text-slate-300 max-w-lg leading-relaxed">
-              Desbloqueá el informe para acceder al listado de órdenes ocultas, enlaces directos a mediaciones y el argumento legal redactado por peritos.
+          <div class="space-y-1.5 text-center md:text-left">
+            <div class="text-xs text-emerald-300 font-semibold uppercase tracking-wider">Tu Ganancia Neta Estimada en tu bolsillo:</div>
+            <div id="roiNetAmount" class="text-2xl sm:text-3xl font-heading font-black text-white font-mono">+$440.614 ARS limpios</div>
+            <p id="roiNetDetail" class="text-[11px] text-slate-300 max-w-xl leading-relaxed">
+              Recuperás $599.518 &minus; $39.000 (auditoría) &minus; $119.904 (20% éxito si cobrás). Si MeLi rechaza o no acredita algún caso, la comisión de ese caso es $0.
             </p>
           </div>
 
@@ -342,27 +342,23 @@
         </div>
       </div>
 
-      <!-- Tabla Desktop -->
+      <!-- Tabla Desktop (Sin scroll horizontal, adaptada 100% al ancho) -->
       <div class="hidden md:block bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-2xs">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
           <h4 class="text-sm font-heading font-bold text-slate-900">Detalle de Casos Detectados</h4>
           <span id="badgeCounter" class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md">0 casos</span>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-700">
-            <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
-              <tr>
-                <th class="px-6 py-3"># Orden</th>
-                <th class="px-6 py-3">Producto</th>
-                <th class="px-6 py-3">Monto (ARS)</th>
-                <th class="px-6 py-3">Motivo / Tipo</th>
-                <th class="px-6 py-3">Prioridad</th>
-                <th class="px-6 py-3 text-right">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="discrepanciesTable" class="divide-y divide-slate-100 font-normal"></tbody>
-          </table>
-        </div>
+        <table class="w-full text-left text-xs text-slate-700 table-fixed">
+          <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
+            <tr>
+              <th class="w-5/12 px-6 py-3.5">Orden & Producto</th>
+              <th class="w-3/12 px-4 py-3.5">Motivo & Plazo</th>
+              <th class="w-2/12 px-4 py-3.5 text-right">Monto</th>
+              <th class="w-2/12 px-6 py-3.5 text-right">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="discrepanciesTable" class="divide-y divide-slate-100 font-normal"></tbody>
+        </table>
       </div>
 
       <!-- Cards Mobile -->
@@ -902,12 +898,25 @@ Número de Seguimiento: ${tracking}`;
       document.getElementById('badgeCounter').textContent = `${auditSummary.totalDiscrepancies} casos`;
 
       // Actualizar ecuación financiera ROI
+      const totalRec = auditSummary.totalAmountRecoverable;
+      const successFee = Math.round(totalRec * 0.20);
+      const feeAuditoria = 39000;
+      const netEstimated = Math.max(0, totalRec - feeAuditoria - successFee);
+
       const roiTotalAmount = document.getElementById('roiTotalAmount');
-      if (roiTotalAmount) roiTotalAmount.textContent = formatARS.format(auditSummary.totalAmountRecoverable);
+      if (roiTotalAmount) roiTotalAmount.textContent = formatARS.format(totalRec);
+
+      const roiSuccessFee = document.getElementById('roiSuccessFee');
+      if (roiSuccessFee) roiSuccessFee.innerHTML = `${formatARS.format(successFee)} <span class="text-xs font-normal text-emerald-200/90">ARS</span>`;
+
       const roiNetAmount = document.getElementById('roiNetAmount');
       if (roiNetAmount) {
-        const netEstimated = Math.max(0, (auditSummary.totalAmountRecoverable * 0.8) - 39000);
-        roiNetAmount.textContent = `+${formatARS.format(netEstimated)} limpios`;
+        roiNetAmount.textContent = `+${formatARS.format(netEstimated)} ARS limpios`;
+      }
+
+      const roiNetDetail = document.getElementById('roiNetDetail');
+      if (roiNetDetail) {
+        roiNetDetail.innerHTML = `Recuperás <strong>${formatARS.format(totalRec)}</strong> &minus; <strong>${formatARS.format(feeAuditoria)}</strong> (auditoría pericial) &minus; <strong>${formatARS.format(successFee)}</strong> (20% éxito si cobrás). Si MeLi rechaza o no acredita algún caso, la comisión sobre ese caso es <strong>$0</strong>.`;
       }
 
       const tbody = document.getElementById('discrepanciesTable');
@@ -916,7 +925,7 @@ Número de Seguimiento: ${tracking}`;
       mobileCards.innerHTML = '';
 
       if (auditSummary.records.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500 font-semibold">Operación limpia: no se detectaron fondos retenidos en este período.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500 font-semibold">Operación limpia: no se detectaron fondos retenidos en este período.</td></tr>`;
         mobileCards.innerHTML = `<div class="p-6 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">Operación limpia: sin siniestros detectados.</div>`;
         return;
       }
@@ -929,22 +938,30 @@ Número de Seguimiento: ${tracking}`;
         // Enmascarar # de orden si no está desbloqueado
         const displayOrderId = isUnlocked ? item.orderId : `${item.orderId.slice(0, 8)}****** 🔒`;
 
-        // Desktop
+        // Desktop (4 columnas fijas, cero overflow horizontal)
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50/70 transition";
         tr.innerHTML = `
-          <td class="px-6 py-3 font-mono font-bold text-slate-900">${displayOrderId}</td>
-          <td class="px-6 py-3 max-w-xs truncate" title="${item.itemTitle}">${item.itemTitle}</td>
-          <td class="px-6 py-3 font-extrabold text-slate-900 whitespace-nowrap">${formatARS.format(item.amount)}</td>
-          <td class="px-6 py-3 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">${item.discrepancyType}</span></td>
-          <td class="px-6 py-3 whitespace-nowrap"><span class="px-2 py-0.5 rounded-md text-[11px] font-bold ${item.isThreeDayWindow ? 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse' : 'bg-slate-100 text-slate-700'}">${item.isThreeDayWindow ? 'Urgente 72h' : 'Prioritaria'}</span></td>
-          <td class="px-6 py-3 text-right whitespace-nowrap">
+          <td class="px-6 py-3.5 truncate">
+            <span class="font-mono font-bold text-slate-900 block text-xs">#${displayOrderId}</span>
+            <span class="text-xs text-slate-500 truncate block" title="${item.itemTitle}">${item.itemTitle}</span>
+          </td>
+          <td class="px-4 py-3.5">
+            <div class="flex flex-col gap-1 items-start">
+              <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">${item.discrepancyType}</span>
+              ${item.isThreeDayWindow ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">🚨 Urgente 72h</span>' : '<span class="text-[10px] text-slate-400">Plazo estándar 60d</span>'}
+            </div>
+          </td>
+          <td class="px-4 py-3.5 text-right">
+            <span class="font-mono font-extrabold text-slate-900 text-sm whitespace-nowrap">${formatARS.format(item.amount)}</span>
+          </td>
+          <td class="px-6 py-3.5 text-right whitespace-nowrap">
             ${isUnlocked ? `
-              <button type="button" onclick="openDossierModal(${index})" class="touch-target px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">
+              <button type="button" onclick="openDossierModal(${index})" class="touch-target px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition">
                 Dossier
               </button>
             ` : `
-              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
+              <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=142574812-7da1f218-0ecf-45d4-a8f1-059a640d71f8" class="touch-target px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
                 <span>🔒 Desbloquear</span>
               </a>
             `}
@@ -988,7 +1005,7 @@ Número de Seguimiento: ${tracking}`;
         // Desktop Curtain Row
         const curtainRow = document.createElement('tr');
         curtainRow.innerHTML = `
-          <td colspan="6" class="p-8 text-center bg-gradient-to-b from-slate-50 via-slate-100 to-emerald-50/60 border-t-2 border-dashed border-emerald-400">
+          <td colspan="4" class="p-8 text-center bg-gradient-to-b from-slate-50 via-slate-100 to-emerald-50/60 border-t-2 border-dashed border-emerald-400">
             <div class="max-w-md mx-auto space-y-3">
               <div class="w-12 h-12 mx-auto rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg shadow-xs">
                 <i data-lucide="lock" class="w-6 h-6 text-emerald-700"></i>
