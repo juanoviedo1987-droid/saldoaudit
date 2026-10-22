@@ -226,7 +226,7 @@
     <main class="flex-1 overflow-y-auto p-4 sm:p-6 max-w-[1440px] mx-auto w-full">
 
       <!-- ========================================================================= -->
-      <!-- MÓDULO 1: CRM & PIPELINE DE SELLERS (KANBAN + TABLA ESTILO NEXUM)          -->
+      <!-- MÓDULO 1: CRM & PIPELINE DE SELLERS (KANBAN + TABLA FORENSE SALDOAUDIT)     -->
       <!-- ========================================================================= -->
       <section id="view-pipeline" class="space-y-5">
         
@@ -303,7 +303,7 @@
               </button>
               <button type="button" onclick="setCrmLayout('table')" id="btnLayoutTable" class="px-3 py-1.5 rounded-lg font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition">
                 <i data-lucide="list" class="w-3.5 h-3.5"></i>
-                <span>Tabla Nexum</span>
+                <span>Vista Tabla</span>
               </button>
             </div>
 
@@ -385,7 +385,7 @@
 
         </div>
 
-        <!-- SUB-VISTA 1B: TABLA EJECUTIVA ESTILO NEXUM -->
+        <!-- SUB-VISTA 1B: TABLA EJECUTIVA FORENSE -->
         <div id="crmTableView" class="hidden bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs">
@@ -1417,7 +1417,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
   </div> <!-- /#appContainer -->
 
   <!-- ========================================================================= -->
-  <!-- MODAL 1: FICHA DE DETALLE & EDICIÓN DE SELLER (ESTILO NEXUM + SUPABASE)    -->
+  <!-- MODAL 1: FICHA DE DETALLE & EDICIÓN DE SELLER (SALDOAUDIT FORENSE)           -->
   <!-- ========================================================================= -->
   <div id="sellerDetailModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs hidden" onclick="closeSellerDetailModal()">
     <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl animate-modal overflow-hidden text-xs" onclick="event.stopPropagation()">
@@ -2361,100 +2361,7 @@ En prueba de conformidad, se suscribe en Buenos Aires, a los ___ días del mes d
       { id: '2000008854321098', fecha: '22 Ago', cat: 'Full Flete Indebido', prod: 'Espátula Silicona Hudson Gris', monto: 7200.00 }
     ];
 
-    // Base inicial de Sellers (Fallback local + Sincronización con Supabase)
-    sellersData = [
-      {
-        id: '1',
-        empresa: 'Hudson Kitchenware (Hudson Cocina)',
-        rubro: 'Bazar, Ollas & Artículos de Cocina',
-        tienda_oficial: 'HUDSON COCINA',
-        contacto_nombre: 'Tomás Blousson (E-commerce Lead) / Nahuel Beneitez',
-        contacto_cargo: 'E-commerce Lead',
-        contacto_telefono: '+54 9 11 3560-2902',
-        contacto_linkedin: 'https://www.linkedin.com/in/tomasblousson',
-        facturacion_mensual: 148445872,
-        estado_pipeline: 'informe_entregado',
-        total_recuperable: 599518.74,
-        total_ventas: 296891745.33,
-        prioridad: 'A',
-        proxima_accion: 'Seguimiento por WhatsApp post-revisión de los 15 reclamos',
-        fecha_proxima_accion: '2026-10-26',
-        notas: 'Auditoría real de 60 días (8.016 ventas) entregada por WhatsApp con audio + Excel el 21/10. Detectados $599.518,74 en 15 órdenes críticas.'
-      },
-      {
-        id: '2',
-        empresa: 'Pettish Bazar (Pettish Online)',
-        rubro: 'Bazar, Vajilla & Hogar',
-        tienda_oficial: 'PETTISH ONLINE',
-        contacto_nombre: 'Verónica Iñiges / Claudio Dapelo',
-        contacto_cargo: 'Responsable Tienda Online / Director',
-        contacto_telefono: '+54 9 11 3647-7000',
-        contacto_linkedin: 'https://www.linkedin.com/in/ver%C3%B3nica-i%C3%B1iges-b089b9364/',
-        facturacion_mensual: 90000000,
-        estado_pipeline: 'lead_contactado',
-        total_recuperable: 0,
-        total_ventas: 0,
-        prioridad: 'A',
-        proxima_accion: 'Enviar mensaje Outbound citando caso testigo de Hudson',
-        fecha_proxima_accion: '2026-10-23',
-        notas: 'Top seller en envíos por Correo y Full. Alto volumen de vajilla frágil con siniestros en correo.'
-      },
-      {
-        id: '3',
-        empresa: 'Suprabond (Adhesivos y Herramientas)',
-        rubro: 'Ferretería, Construcción e Industria',
-        tienda_oficial: 'SUPRABOND',
-        contacto_nombre: 'Martín Paolucci',
-        contacto_cargo: 'Head of E-Commerce',
-        contacto_telefono: '',
-        contacto_linkedin: 'https://www.linkedin.com/in/martin-paolucci-43899516',
-        facturacion_mensual: 75000000,
-        estado_pipeline: 'lead_contactado',
-        total_recuperable: 0,
-        total_ventas: 0,
-        prioridad: 'B',
-        proxima_accion: 'Contactar vía LinkedIn ofreciendo corrida sin cargo',
-        fecha_proxima_accion: '2026-10-24',
-        notas: 'Alto volumen en Full. Productos pesados e inflamables con fletes caros.'
-      },
-      {
-        id: '4',
-        empresa: 'Carestino Bebés',
-        rubro: 'Bebés, Cochecitos y Rodados',
-        tienda_oficial: 'CARESTINO',
-        contacto_nombre: 'Nicolás Pardo',
-        contacto_cargo: 'Technical Leader',
-        contacto_telefono: '',
-        contacto_linkedin: 'https://www.linkedin.com/in/ACoAAAIcYQEBwrwTKg1Yz64ARyovcJmNZGOW5-4',
-        facturacion_mensual: 200000000,
-        estado_pipeline: 'lead_contactado',
-        total_recuperable: 0,
-        total_ventas: 0,
-        prioridad: 'B',
-        proxima_accion: 'Pedir derivación con responsable de administración MeLi',
-        fecha_proxima_accion: '2026-11-01',
-        notas: 'Validó el problema: confirmó que MeLi sacó las alertas y los vendedores pierden fondos en silencio.'
-      },
-      {
-        id: '5',
-        empresa: 'TuGenesis3D',
-        rubro: 'Electrónica e Impresión 3D',
-        tienda_oficial: 'TUGENESIS3D',
-        contacto_nombre: 'Agustín Vignau',
-        contacto_cargo: 'Responsable de Automatización & Stock',
-        contacto_telefono: '',
-        contacto_linkedin: 'https://www.linkedin.com/in/agustinvignau',
-        facturacion_mensual: 45000000,
-        estado_pipeline: 'lead_contactado',
-        total_recuperable: 0,
-        total_ventas: 0,
-        prioridad: 'B',
-        proxima_accion: 'Monitorear respuesta InMail en LinkedIn',
-        fecha_proxima_accion: '2026-10-23',
-        notas: 'Manejo de 900 SKUs y cruces SQL con planillas.'
-      }
-    ];
-
+    // Sincronización con Supabase / Dataset SaldoAudit
     async function loadSellersFromSupabase(animate) {
       const icon = document.getElementById('syncIcon');
       if (animate && icon) icon.classList.add('animate-spin');
