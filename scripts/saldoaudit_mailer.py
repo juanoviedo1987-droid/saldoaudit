@@ -1,4 +1,5 @@
 import json
+import os
 import smtplib
 import urllib.request
 import urllib.error
@@ -12,14 +13,35 @@ SENDER = "SaldoAudit <contacto@saldoaudit.com.ar>"
 ADMIN_EMAIL = "saldoaudit.oficial@gmail.com"
 MP_ACCESS_TOKEN = "APP_USR-7473723656950246-102214-e871bab63707479c340b6877091b9267-142574812"
 
-def send_email(to_email, subject, html_content, bcc=None):
+CACHE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROCESSED_FILE = os.path.join(CACHE_DIR, "processed_payments.json")
+
+def load_processed_payments():
+    try:
+        if os.path.exists(PROCESSED_FILE):
+            with open(PROCESSED_FILE, "r", encoding="utf-8") as f:
+                return set(json.load(f))
+    except Exception as e:
+        print(f"[CACHE LOAD ERROR] {e}")
+    return set()
+
+def mark_payment_processed(payment_id):
+    try:
+        processed_payments.add(str(payment_id))
+        with open(PROCESSED_FILE, "w", encoding="utf-8") as f:
+            json.dump(list(processed_payments), f)
+        print(f"[CACHE] Payment {payment_id} registrado como procesado.")
+    except Exception as e:
+        print(f"[CACHE SAVE ERROR] {e}")
+
+processed_payments = load_processed_payments()
+
+def send_email(to_email, subject, html_content):
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
         msg["From"] = SENDER
         msg["To"] = to_email
-        if bcc:
-            msg["Bcc"] = bcc
         msg.attach(MIMEText(html_content, "html"))
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
@@ -46,24 +68,34 @@ def get_mp_payment(payment_id):
     return None
 
 def process_payment_notification(payment_id):
-    payment = get_mp_payment(payment_id)
+    str_pid = str(payment_id).strip()
+
+    # 1. Antiduplicados estricto (Idempotencia)
+    if str_pid in processed_payments:
+        print(f"[ANTI-DUPLICADO] Payment {str_pid} ya fue procesado y notificado anteriormente. Se omite.")
+        return True
+
+    payment = get_mp_payment(str_pid)
     if not payment:
-        print(f"[WARN] No se pudo obtener datos para payment_id: {payment_id}")
+        print(f"[WARN] No se pudo obtener datos para payment_id: {str_pid}")
         return False
 
     status = payment.get("status")
-    print(f"[MP PAYMENT {payment_id}] Status: {status}")
+    print(f"[MP PAYMENT {str_pid}] Status: {status}")
     if status != "approved":
-        print(f"[MP PAYMENT {payment_id}] No aprobado ({status}), ignorando envío.")
+        print(f"[MP PAYMENT {str_pid}] No aprobado ({status}), ignorando envío.")
         return False
 
     amount = payment.get("transaction_amount", 39000)
     payer = payment.get("payer", {}) or {}
-    payer_email = payer.get("email") or ADMIN_EMAIL
+    payer_email = (payer.get("email") or "").strip().lower()
     payer_name = f"{payer.get('first_name') or ''} {payer.get('last_name') or ''}".strip() or "Seller de Mercado Libre"
     date_approved = payment.get("date_approved") or "Recién"
 
-    # 1. Email de Aviso de Cobro al Administrador (SaldoAudit)
+    # Marcar como procesado inmediatamente para evitar colisiones concurrentes de webhooks
+    mark_payment_processed(str_pid)
+
+    # 2. Email de Aviso de Cobro al Administrador (SaldoAudit)
     admin_subject = f"💰 NUEVO COBRO EN SALDOAUDIT — $39.000 ARS de {payer_name}"
     admin_html = f"""<!DOCTYPE html>
 <html>
@@ -85,11 +117,11 @@ def process_payment_notification(payment_id):
       </tr>
       <tr>
         <td style="padding: 8px 0; border-bottom: 1px solid #1E293B;"><strong>Email:</strong></td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #1E293B; color: #38BDF8;">{payer_email}</td>
+        <td style="padding: 8px 0; border-bottom: 1px solid #1E293B; color: #38BDF8;">{payer_email or 'No provisto por MP'}</td>
       </tr>
       <tr>
         <td style="padding: 8px 0; border-bottom: 1px solid #1E293B;"><strong>ID Pago MP:</strong></td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #1E293B; color: #FFFFFF; font-family: monospace;">{payment_id}</td>
+        <td style="padding: 8px 0; border-bottom: 1px solid #1E293B; color: #FFFFFF; font-family: monospace;">{str_pid}</td>
       </tr>
       <tr>
         <td style="padding: 8px 0;"><strong>Fecha Aprobación:</strong></td>
@@ -104,9 +136,11 @@ def process_payment_notification(payment_id):
 </html>"""
     send_email(ADMIN_EMAIL, admin_subject, admin_html)
 
-    # 2. Email Transaccional al Cliente
-    client_subject = f"✅ Acceso a tu Informe Pericial SaldoAudit (#{payment_id})"
-    client_html = f"""<!DOCTYPE html>
+    # 3. Email Transaccional al Cliente (solo si el cliente tiene un email real y distinto al del admin)
+    admin_aliases = [ADMIN_EMAIL.lower(), "contacto@saldoaudit.com.ar", "juan@saldoaudit.com.ar"]
+    if payer_email and payer_email not in admin_aliases:
+        client_subject = f"✅ Acceso a tu Informe Pericial SaldoAudit (#{str_pid})"
+        client_html = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background-color:#090D16;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#F8FAFC;">
@@ -126,11 +160,11 @@ def process_payment_notification(payment_id):
             </div>
             <h2 style="margin:0 0 14px;font-size:20px;font-weight:700;color:#FFFFFF;">¡Hola, {payer_name}!</h2>
             <p style="margin:0 0 18px;font-size:14px;line-height:1.6;color:#94A3B8;">
-              Confirmamos la acreditación de tu pago de <strong>${amount:,.2f} ARS</strong> (Operación MP #{payment_id}). Tu <strong>Informe Pericial Forense y Dossier de Reclamos</strong> ya está 100% habilitado.
+              Confirmamos la acreditación de tu pago de <strong>${amount:,.2f} ARS</strong> (Operación MP #{str_pid}). Tu <strong>Informe Pericial Forense y Dossier de Reclamos</strong> ya está 100% habilitado.
             </p>
             <div style="background-color:#090D16;border:1px solid #1E293B;border-radius:16px;padding:20px;margin-bottom:24px;text-align:center;">
               <p style="margin:0 0 14px;font-size:13px;color:#E2E8F0;">Accedé de inmediato a tu informe pericial haciendo clic abajo:</p>
-              <a href="https://saldoaudit.com.ar/?status=approved&payment_id={payment_id}" style="display:inline-block;padding:14px 28px;background-color:#10B981;color:#090D16;text-decoration:none;font-weight:800;font-size:14px;border-radius:12px;">
+              <a href="https://saldoaudit.com.ar/?status=approved&payment_id={str_pid}" style="display:inline-block;padding:14px 28px;background-color:#10B981;color:#090D16;text-decoration:none;font-weight:800;font-size:14px;border-radius:12px;">
                 Abrir Informe Completo (.xlsx)
               </a>
             </div>
@@ -155,7 +189,10 @@ def process_payment_notification(payment_id):
   </table>
 </body>
 </html>"""
-    send_email(payer_email, client_subject, client_html)
+        send_email(payer_email, client_subject, client_html)
+    else:
+        print(f"[INFO] Payer email ({payer_email}) coincide con admin. Se evita enviar doble correo a la misma casilla.")
+
     return True
 
 class WebhookHandler(BaseHTTPRequestHandler):
